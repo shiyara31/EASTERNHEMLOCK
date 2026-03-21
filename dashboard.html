@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard | EASTERN HEMLOCK Premium Services</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/lucide-static@0.16.29/lib/index.min.js"></script>
+    <link rel="stylesheet" href="dashboard.css">
+</head>
+<body class="dark-theme">
+    <div id="bg-visuals">
+        <div class="bg-blur" style="background-image: url('assets/images/villa_pool.jpg');"></div>
+        <div class="overlay-grad"></div>
+    </div>
+
+    <!-- Login Container -->
+    <div id="login-wrap">
+        <div class="login-card glass">
+            <div class="login-logo">EASTERN HEMLOCK</div>
+            <p>ACCESS YOUR VILLA PROJECT</p>
+            <form id="login-form">
+                <input type="text" placeholder="Project ID" class="glass-input" value="EH-7829-DXB">
+                <input type="password" placeholder="Key" class="glass-input" value="********">
+                <button type="submit" class="btn btn-gold w-100">LOG IN</button>
+            </form>
+            <div class="login-meta">
+                <span>Request access</span>
+                <span>Forgot key</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Dashboard Container (Hidden Initial) -->
+    <div id="dashboard-wrap" style="opacity: 0; display: none;">
+        <!-- Left Sidebar -->
+        <aside class="sidebar glass">
+            <div class="sidebar-logo">EH</div>
+            <nav class="sidebar-nav">
+                <a href="#" class="active" data-lucide="layout-dashboard"></a>
+                <a href="#" data-lucide="calendar"></a>
+                <a href="#" data-lucide="file-text"></a>
+                <a href="#" data-lucide="settings"></a>
+            </nav>
+            <div class="sidebar-user">
+                <div class="user-avatar">AA</div>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="content">
+            <header class="dash-header">
+                <div class="header-left">
+                    <span class="welcome">Welcome back,</span>
+                    <h2>Ahmed Al-Mansoori</h2>
+                </div>
+                <div class="header-right">
+                    <div class="status-indicator">
+                        <span class="pulsing-dot"></span>
+                        Project Live: EH-7829-DXB
+                    </div>
+                </div>
+            </header>
+
+            <div class="dash-grid">
+                <!-- Project Status -->
+                <section class="dash-section project-status glass-card">
+                    <div class="section-top">
+                        <h3>Project Status</h3>
+                        <span class="completion-percent">72%</span>
+                    </div>
+                    <div class="progress-stages">
+                        <div class="stage" data-label="Design">
+                            <div class="progress-bar-wrap"> <div class="progress-bar filled" style="width: 100%;"></div> </div>
+                        </div>
+                        <div class="stage" data-label="Construction">
+                            <div class="progress-bar-wrap"> <div class="progress-bar filled" style="width: 100%;"></div> </div>
+                        </div>
+                        <div class="stage active" data-label="Pool Installation">
+                            <div class="progress-bar-wrap"> <div class="progress-bar filled" style="width: 45%;"></div> </div>
+                        </div>
+                        <div class="stage" data-label="Landscaping">
+                            <div class="progress-bar-wrap"> <div class="progress-bar" style="width: 0%;"></div> </div>
+                        </div>
+                        <div class="stage" data-label="Final Handover">
+                            <div class="progress-bar-wrap"> <div class="progress-bar" style="width: 0%;"></div> </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Project Timeline -->
+                <section class="dash-section timeline-section glass-card">
+                    <h3>Execution Timeline</h3>
+                    <div class="timeline-slider-container">
+                        <div class="timeline-track">
+                            <div class="timeline-event done">
+                                <span class="event-date">Jan 05</span>
+                                <div class="event-marker"></div>
+                                <span class="event-title">Initial Concepts</span>
+                            </div>
+                            <div class="timeline-event done">
+                                <span class="event-date">Jan 12</span>
+                                <div class="event-marker"></div>
+                                <span class="event-title">3D Renders Approval</span>
+                            </div>
+                            <div class="timeline-event current">
+                                <span class="event-date">Feb 20</span>
+                                <div class="event-marker"></div>
+                                <span class="event-title">Shell & Tube Construction</span>
+                            </div>
+                            <div class="timeline-event">
+                                <span class="event-date">Mar 15</span>
+                                <div class="event-marker"></div>
+                                <span class="event-title">Pool Filtration Setup</span>
+                            </div>
+                            <div class="timeline-event">
+                                <span class="event-date">Apr 10</span>
+                                <div class="event-marker"></div>
+                                <span class="event-title">Landscape Soft Planting</span>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Quotations -->
+                <section class="dash-section quotations glass-card">
+                    <div class="section-top">
+                        <h3>Service Quotations</h3>
+                        <a href="#" class="view-all">All Files <i data-lucide="external-link"></i></a>
+                    </div>
+                    <div class="quotation-grid">
+                        <div class="quote-card">
+                            <span class="quote-label">Swimming Pool</span>
+                            <span class="quote-amount">AED 245,000</span>
+                            <span class="quote-status status-accepted">Accepted</span>
+                        </div>
+                        <div class="quote-card">
+                            <span class="quote-label">Landscape Architecture</span>
+                            <span class="quote-amount">AED 180,000</span>
+                            <span class="quote-status status-accepted">Accepted</span>
+                        </div>
+                        <div class="quote-card active-border">
+                            <span class="quote-label">Outdoor Kitchen</span>
+                            <span class="quote-amount">AED 65,000</span>
+                            <span class="quote-status status-pending">Decision Pending</span>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Receipts & Invoices -->
+                <section class="dash-section invoices glass-card">
+                    <div class="section-top">
+                        <h3>Financial Summary</h3>
+                        <div class="total-paid">Total Paid: <span>AED 425,000</span></div>
+                    </div>
+                    <div class="invoice-list">
+                        <div class="invoice-item">
+                            <div class="inv-info">
+                                <span class="inv-id">INV-1029</span>
+                                <span class="inv-date">Feb 15, 2026</span>
+                            </div>
+                            <span class="inv-desc">Phase 2 Construction Fee</span>
+                            <span class="inv-total">AED 120,000</span>
+                            <div class="inv-actions">
+                                <i data-lucide="file-down"></i>
+                                <i data-lucide="eye"></i>
+                            </div>
+                        </div>
+                        <div class="invoice-item">
+                            <div class="inv-info">
+                                <span class="inv-id">INV-0982</span>
+                                <span class="inv-date">Jan 30, 2026</span>
+                            </div>
+                            <span class="inv-desc">Material Procurement - Tiles</span>
+                            <span class="inv-total">AED 85,000</span>
+                            <div class="inv-actions">
+                                <i data-lucide="file-down"></i>
+                                <i data-lucide="eye"></i>
+                            </div>
+                        </div>
+                        <div class="invoice-item">
+                            <div class="inv-info">
+                                <span class="inv-id">INV-0911</span>
+                                <span class="inv-date">Jan 10, 2026</span>
+                            </div>
+                            <span class="inv-desc">Initial Deposit</span>
+                            <span class="inv-total">AED 220,000</span>
+                            <div class="inv-actions">
+                                <i data-lucide="file-down"></i>
+                                <i data-lucide="eye"></i>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </main>
+    </div>
+
+    <script src="dashboard.js"></script>
+    <script>
+        // Use Lucide for icons
+        document.addEventListener('DOMContentLoaded', () => {
+            if (window.lucide) {
+                window.lucide.createIcons();
+            }
+        });
+    </script>
+</body>
+</html>
