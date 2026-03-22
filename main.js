@@ -1,11 +1,11 @@
 // Initialize Lenis for Smooth Scrolling
 const lenis = new Lenis({
-    duration: 1.2,
+    duration: 2.0, // Extremely slow & smooth
     easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
     orientation: 'vertical',
     gestureOrientation: 'vertical',
     smoothWheel: true,
-    wheelMultiplier: 1,
+    wheelMultiplier: 0.8,
     smoothTouch: false,
     touchMultiplier: 2,
     infinite: false,
@@ -18,266 +18,239 @@ function raf(time) {
 
 requestAnimationFrame(raf);
 
-// Cinematic Camera Movement Logic
-const heroLayers = Array.from(document.querySelectorAll('.hero-layer'));
-let currentHeroIndex = 0;
-
-function applyCinematicMovement(index) {
-    const slide = heroLayers[index];
-    if (!slide) return;
-
-    const tl = gsap.timeline({ defaults: { ease: "sine.inOut" } });
-    
-    // Reset initial state
-    gsap.set(slide, { scale: 1.15, rotation: 0, x: 0, y: 0 });
-
-    if (index === 0) { // Pool - Horizontal Pan
-        tl.to(slide, { x: 50, duration: 12 });
-    } else if (index === 1) { // Entrance - Upward Floating
-        tl.to(slide, { y: -40, duration: 12 });
-    } else { // 3rd Image - Panning
-        tl.to(slide, { x: -60, duration: 12 });
-    }
-}
-
-function cycleHeroLayers() {
-    const oldIndex = currentHeroIndex;
-    const nextIndex = (currentHeroIndex + 1) % heroLayers.length;
-    
-    // Fade Out old
-    gsap.to(heroLayers[oldIndex], { opacity: 0, duration: 3, ease: "power2.inOut" });
-    
-    // Fade In and start specific movement for next slide
-    gsap.to(heroLayers[nextIndex], { 
-        opacity: 1, 
-        duration: 3, 
-        ease: "power2.inOut",
-        onStart: () => {
-            gsap.set(heroLayers[nextIndex], { zIndex: 10 });
-            gsap.set(heroLayers[oldIndex], { zIndex: 5 });
-            applyCinematicMovement(nextIndex);
-        }
-    });
-
-    currentHeroIndex = nextIndex;
-}
-
-// Every 7 seconds cycle with 3-second blend overlap
-if (heroLayers.length > 0) {
-    gsap.set(heroLayers[0], { opacity: 1, zIndex: 10 });
-    applyCinematicMovement(0);
-    setInterval(cycleHeroLayers, 7000);
-}
-
-
-
-
-// Navbar Scroll Effect
-const navbar = document.getElementById('navbar');
-window.addEventListener('scroll', () => {
-    if (window.scrollY > 50) {
-        navbar.classList.add('scrolled');
-    } else {
-        navbar.classList.remove('scrolled');
-    }
-});
-
-// GSAP Animations
+// GSAP Animations Registration
 gsap.registerPlugin(ScrollTrigger);
 
-// Hero Animations
-const heroTl = gsap.timeline();
-heroTl.to('.fade-up', {
-    y: 0,
-    opacity: 1,
-    duration: 1.2,
-    stagger: 0.2,
-    ease: "power4.out",
-    delay: 0.5
-});
+// 1. Hero Cinematic Animation (Slices Falling)
+const heroBgWrapper = document.querySelector('.hero-bg-wrapper');
+const heroBgStrips = document.querySelector('.hero-bg-strips');
+const heroStrips = document.querySelectorAll('.hero-strip');
+const heroOverlay = document.querySelector('.hero-overlay');
+const heroTexts = document.querySelectorAll('.hero-anim');
 
-// Scroll Trigger Animations for Sections
-const fadeUpElements = document.querySelectorAll('.fade-up:not(.hero-content .fade-up)');
-fadeUpElements.forEach((el) => {
-    let animDelay = 0;
-    if (el.classList.contains('delay-1')) animDelay = 0.2;
-    if (el.classList.contains('delay-2')) animDelay = 0.4;
-    if (el.classList.contains('delay-3')) animDelay = 0.6;
+if (heroBgWrapper) {
+    const tlHero = gsap.timeline({ defaults: { ease: "power3.inOut" } });
+    
+    // Initial states: place strips above screen, remove wrapper mask
+    gsap.set(heroTexts, { y: 40, opacity: 0 });
+    gsap.set(heroStrips, { yPercent: -100 });
+    gsap.set(heroBgWrapper, { clipPath: 'none' }); // Remove old initial inset
 
-    gsap.to(el, {
-        scrollTrigger: {
-            trigger: el,
-            start: "top 85%",
-            toggleActions: "play none none none"
-        },
+    tlHero
+    // Step 1: Strip cascade from top
+    .to(heroStrips, {
+        yPercent: 0,
+        duration: 1.6,
+        stagger: 0.12,
+        ease: "power4.out",
+        delay: 0.2
+    })
+    // Step 2: Cinematic slow zoom-out of the combining container
+    .to(heroBgStrips, {
+        scale: 1,
+        duration: 3.5,
+        ease: "power2.out"
+    }, "-=1.0")
+    // Step 3: Subtle overlay fade in for text readability
+    .to(heroOverlay, {
+        opacity: 1,
+        duration: 2
+    }, "-=3.0")
+    // Step 4: Text elements fade in sequentially
+    .to(heroTexts, {
         y: 0,
         opacity: 1,
-        duration: 1,
-        delay: animDelay,
+        duration: 1.5,
+        stagger: 0.2,
         ease: "power3.out"
-    });
-});
+    }, "-=2.5");
 
-// Service Cards Animation (Staggering from above)
-gsap.from('.service-card', {
-    scrollTrigger: {
-        trigger: '.services-grid',
-        start: "top 80%",
-        toggleActions: "play none none none"
-    },
-    y: -60,
-    opacity: 0,
-    duration: 1.2,
-    stagger: 0.3,
-    ease: "power3.out"
-});
-
-// About Image Parallax
-gsap.to('.about-image img', {
-    scrollTrigger: {
-        trigger: '.about-image',
-        start: "top bottom",
-        end: "bottom top",
-        scrub: true
-    },
-    y: 100,
-    ease: "none"
-});
-
-// Portfolio Scroll Animation (Horizontal Peek)
-const portfolioItems = document.querySelectorAll('.portfolio-item');
-portfolioItems.forEach((item, index) => {
-    gsap.from(item, {
+    // Hero Image Parallax on Scroll down
+    gsap.to(heroBgStrips, {
+        yPercent: 20,
+        ease: "none",
         scrollTrigger: {
-            trigger: '#portfolio',
-            start: "top 80%",
-            toggleActions: "play none none none"
-        },
-        x: 100,
-        opacity: 0,
-        duration: 1,
-        delay: index * 0.2,
-        ease: "power3.out"
-    });
-});
-
-// Process Timeline Animation
-const timelineLine = document.querySelector('.timeline-line');
-if (timelineLine) {
-    gsap.to(timelineLine, {
-        scrollTrigger: {
-            trigger: '.process-timeline',
-            start: "top 70%",
-            end: "bottom 50%",
-            scrub: 2,
-        },
-        width: "100%",
-        ease: "none"
+            trigger: "#hero",
+            start: "top top",
+            end: "bottom top",
+            scrub: true
+        }
     });
 }
 
-// Portfolio Parallax Effect
-const portfolioSlider = document.querySelector('.portfolio-slider');
-gsap.to(portfolioSlider, {
-    scrollTrigger: {
-        trigger: '#portfolio',
-        start: "top bottom",
-        end: "bottom top",
-        scrub: 0.5
-    },
-    x: -200,
-    ease: "none"
-});
-
-// Testimonial Carousel Auto-scroll Simulation
-let scrollAmount = 0;
-const carousel = document.querySelector('.testimonial-carousel');
-
-function autoScroll() {
-    if (carousel) {
-        scrollAmount += 1;
-        if (scrollAmount >= carousel.scrollWidth - carousel.clientWidth) {
-            scrollAmount = 0;
+// 2. Services Stagger Reveal
+const serviceItems = document.querySelectorAll('.fade-stagger');
+if (serviceItems.length > 0) {
+    gsap.fromTo(serviceItems, 
+        { y: 60, opacity: 0 },
+        {
+            y: 0, 
+            opacity: 1,
+            duration: 1.6,
+            stagger: 0.2,
+            ease: "power3.out",
+            scrollTrigger: {
+                trigger: "#services",
+                start: "top 75%",
+                toggleActions: "play none none none"
+            }
         }
-        carousel.scrollLeft = scrollAmount;
+    );
+}
+
+// 3. Image Mask Reveals (Bottom to Top / Right to Left)
+const revealMasks = document.querySelectorAll('.reveal-mask');
+revealMasks.forEach(mask => {
+    let _clipStart = 'inset(100% 0 0 0)';
+    if(mask.classList.contains('right-reveal')) {
+        _clipStart = 'inset(0 0 0 100%)';
     }
-}
 
-// Dynamic Background Image Transitions
-const bgLayers = document.querySelectorAll('.bg-layer');
-const serviceSections = document.querySelectorAll('.service-card');
+    gsap.set(mask, { clipPath: _clipStart });
 
-serviceSections.forEach((card, index) => {
-    ScrollTrigger.create({
-        trigger: card,
-        start: "top 60%",
-        end: "bottom 40%",
-        onEnter: () => {
-            bgLayers.forEach(l => l.classList.remove('active'));
-            bgLayers[index].classList.add('active');
-        },
-        onEnterBack: () => {
-            bgLayers.forEach(l => l.classList.remove('active'));
-            bgLayers[index].classList.add('active');
+    const img = mask.querySelector('img');
+    if(img && !img.classList.contains('parallax-img')) {
+        gsap.set(img, { scale: 1.15 });
+    }
+
+    let tl = gsap.timeline({
+        scrollTrigger: {
+            trigger: mask,
+            start: "top 85%",
+            toggleActions: "play none none none"
+        }
+    });
+
+    tl.to(mask, {
+        clipPath: 'inset(0% 0% 0% 0%)',
+        duration: 1.8,
+        ease: "power4.inOut"
+    });
+
+    if(img && !img.classList.contains('parallax-img')) {
+        tl.to(img, {
+            scale: 1,
+            duration: 1.8,
+            ease: "power3.out"
+        }, "-=1.8");
+    }
+});
+
+// 4. Parallax Images within Showcases
+const parallaxImages = document.querySelectorAll('.parallax-img');
+parallaxImages.forEach(img => {
+    gsap.to(img, {
+        yPercent: 15,
+        ease: "none",
+        scrollTrigger: {
+            trigger: img.parentElement,
+            start: "top bottom",
+            end: "bottom top",
+            scrub: true
         }
     });
 });
 
-// Gallery Modal Logic
-const modal = document.getElementById('gallery-modal');
-const closeModal = document.getElementById('close-modal');
-const modalTitle = document.getElementById('modal-title');
-const galleryOverlay = document.querySelector('.modal-overlay');
+// 5. Fade & Slide Text Reveals
+const fadeSlideRight = document.querySelectorAll('.fade-slide-right');
+if (fadeSlideRight.length > 0) {
+    gsap.fromTo(fadeSlideRight, 
+        { x: -50, opacity: 0 },
+        {
+            x: 0, opacity: 1, duration: 1.5, ease: "power3.out",
+            scrollTrigger: {
+                trigger: fadeSlideRight[0],
+                start: "top 80%"
+            }
+        }
+    );
+}
 
-document.querySelectorAll('.card-link').forEach((link) => {
-    link.addEventListener('click', (e) => {
-        e.preventDefault();
-        const serviceName = link.closest('.card-content').querySelector('h3').innerText;
-        modalTitle.innerText = serviceName + " Gallery";
-        modal.classList.add('active');
-        document.body.style.overflow = 'hidden'; // Prevent scroll
+const fadeSlideUp = document.querySelectorAll('.fade-slide-up');
+fadeSlideUp.forEach(el => {
+    gsap.fromTo(el, 
+        { y: 80, opacity: 0 },
+        {
+            y: 0, opacity: 1, duration: 1.8, ease: "power3.out",
+            scrollTrigger: {
+                trigger: el,
+                start: "top 85%"
+            }
+        }
+    );
+});
+
+// 6. Luxury Menu Toggle Logic
+const hamburger = document.querySelector('.hamburger');
+const menuClose = document.querySelector('.menu-close');
+const menuOverlay = document.querySelector('.menu-overlay');
+const menuLinks = document.querySelectorAll('.menu-link');
+const menuSubLinks = document.querySelectorAll('.menu-sub-links li');
+const menuCols = document.querySelectorAll('.menu-col');
+
+let isMenuOpen = false;
+
+// GSAP Menu Timeline
+const menuTl = gsap.timeline({ paused: true });
+
+menuTl.to(menuOverlay, {
+    top: 0,
+    duration: 1.2,
+    ease: "power4.inOut"
+})
+.from('.menu-top', {
+    y: -20,
+    opacity: 0,
+    duration: 0.8,
+    ease: "power3.out"
+}, "-=0.6")
+.from(menuLinks, {
+    y: 100,
+    opacity: 0,
+    duration: 1,
+    stagger: 0.1,
+    ease: "power4.out"
+}, "-=0.8")
+.from(menuCols, {
+    y: 20,
+    opacity: 0,
+    duration: 0.8,
+    stagger: 0.1,
+    ease: "power3.out"
+}, "-=0.8");
+
+function openMenu() {
+    isMenuOpen = true;
+    menuOverlay.classList.add('active');
+    menuTl.play();
+    lenis.stop(); // Pause smooth scroll
+}
+
+function closeMenu() {
+    isMenuOpen = false;
+    menuTl.reverse();
+    setTimeout(() => {
+        menuOverlay.classList.remove('active');
+    }, 1200);
+    lenis.start(); // Resume smooth scroll
+}
+
+hamburger.addEventListener('click', openMenu);
+menuClose.addEventListener('click', closeMenu);
+
+// Close menu on link click
+menuLinks.forEach(link => {
+    link.addEventListener('click', () => {
+        closeMenu();
     });
 });
 
-const hideModal = () => {
-    modal.classList.remove('active');
-    document.body.style.overflow = ''; // Restore scroll
-};
-
-if (closeModal) closeModal.addEventListener('click', hideModal);
-if (galleryOverlay) galleryOverlay.addEventListener('click', hideModal);
-
-// Mobile Menu (Simple)
-const mobileMenu = document.getElementById('mobile-menu');
-const navLinks = document.querySelector('.nav-links');
-
-if (mobileMenu) {
-    mobileMenu.addEventListener('click', () => {
-        navLinks.classList.toggle('active');
-        mobileMenu.classList.toggle('active');
-    });
-}
-
-// Contact Form Simple Logic
-const contactForm = document.getElementById('contact-form');
-if (contactForm) {
-    contactForm.addEventListener('submit', (e) => {
-        e.preventDefault();
-        const btn = contactForm.querySelector('button');
-        const originalText = btn.innerText;
-        btn.innerText = "Sending...";
-        btn.disabled = true;
-        
-        setTimeout(() => {
-            btn.innerText = "Message Sent Successfully";
-            btn.style.backgroundColor = "#27ae60";
-            contactForm.reset();
-            
-            setTimeout(() => {
-                btn.innerText = originalText;
-                btn.style.backgroundColor = "";
-                btn.disabled = false;
-            }, 3000);
-        }, 2000);
-    });
-}
+// Hamburger Hover Animation
+hamburger.addEventListener('mouseenter', () => {
+    gsap.to('.hamburger-line:first-child', { width: 20, duration: 0.3 });
+    gsap.to('.hamburger-line:last-child', { width: 30, duration: 0.3 });
+});
+hamburger.addEventListener('mouseleave', () => {
+    gsap.to('.hamburger-line:first-child', { width: 30, duration: 0.3 });
+    gsap.to('.hamburger-line:last-child', { width: 30, duration: 0.3 });
+});
