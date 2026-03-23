@@ -21,11 +21,125 @@ requestAnimationFrame(raf);
 // GSAP Animations Registration
 gsap.registerPlugin(ScrollTrigger);
 
-// 1. Hero — Scroll Parallax (CSS handles the entrance animation)
-const heroBgImg = document.querySelector('.hero-bg-img');
-if (heroBgImg) {
-    gsap.to(heroBgImg, {
-        yPercent: 18,
+// 1. Hero — Falling Pieces Animation
+function initHeroAnimation() {
+    const heroImg = document.querySelector('.hero-bg-img');
+    const heroWrapper = document.querySelector('.hero-bg-wrapper');
+    const heroHeading = document.querySelector('.hero-heading');
+    const heroSubheading = document.querySelector('.hero-subheading');
+    const heroOverlay = document.querySelector('.hero-overlay');
+    const scrollIndicator = document.querySelector('.scroll-indicator');
+
+    if (!heroWrapper || !heroImg) return;
+
+    // We'll create a grid of pieces using clip-path on clones of the image
+    const rows = 8;
+    const cols = 6;
+    const pieces = [];
+
+    const src = heroImg.getAttribute('src'); // Get exact relative path to avoid absolute path encoding issues
+    
+    const pieceContainer = document.createElement('div');
+    pieceContainer.className = 'hero-pieces-container';
+    Object.assign(pieceContainer.style, {
+        position: 'absolute',
+        inset: '0',
+        zIndex: '1',
+        overflow: 'hidden'
+    });
+    heroWrapper.appendChild(pieceContainer);
+
+    for (let r = 0; r < rows; r++) {
+        for (let c = 0; c < cols; c++) {
+            const piece = document.createElement('div');
+            piece.className = 'hero-piece';
+            
+            // Calculate clip-path inset percentages: inset(top right bottom left)
+            const top = (r / rows) * 100;
+            const bottom = 100 - ((r + 1) / rows) * 100;
+            const left = (c / cols) * 100;
+            const right = 100 - ((c + 1) / cols) * 100;
+
+            Object.assign(piece.style, {
+                position: 'absolute',
+                inset: '0', 
+                backgroundImage: `url("${src}")`,
+                backgroundSize: 'cover',
+                backgroundPosition: 'center',
+                clipPath: `inset(${top}% ${right}% ${bottom}% ${left}%)`,
+                filter: 'brightness(0.65) contrast(1.05)',
+                willChange: 'transform'
+            });
+
+            pieceContainer.appendChild(piece);
+            pieces.push(piece);
+            
+            // Initial state for pieces (falling from high above)
+            gsap.set(piece, {
+                y: -window.innerHeight * 1.5,
+                rotation: gsap.utils.random(-15, 15),
+                z: gsap.utils.random(-300, 300),
+                opacity: 0
+            });
+        }
+    }
+
+    // Timeline for animation
+    const tl = gsap.timeline({
+        onComplete: () => {
+            // Once combined, show the original image and remove pieces to save DOM memory
+            gsap.set(heroImg, { opacity: 1 });
+            pieceContainer.remove();
+        }
+    });
+
+    // 1. Pieces fall from above
+    tl.to(pieces, {
+        y: 0,
+        rotation: 0,
+        z: 0,
+        opacity: 1,
+        duration: 2.2,
+        ease: "power4.out",
+        stagger: {
+            amount: 1.2,
+            from: "random"
+        }
+    });
+
+    // 2. Overlay fades in
+    tl.to(heroOverlay, {
+        opacity: 1,
+        duration: 2,
+        ease: "power2.inOut"
+    }, "-=1.5");
+
+    // 3. Writings come up
+    tl.to(heroHeading, {
+        opacity: 1,
+        y: 0,
+        duration: 1.2,
+        ease: "power3.out"
+    }, "-=1.0")
+    .to(heroSubheading, {
+        opacity: 1,
+        y: 0,
+        duration: 1.2,
+        ease: "power3.out"
+    }, "-=0.9");
+
+    // 4. Scroll indicator fades in late
+    if (scrollIndicator) {
+        tl.to(scrollIndicator, {
+            opacity: 1,
+            duration: 1.5,
+            ease: "power2.out"
+        }, "-=0.5");
+    }
+
+    // Scroll Parallax on the main image (runs independently on scroll after load)
+    gsap.to(heroImg, {
+        yPercent: 12, // subtle luxury parallax
         ease: 'none',
         scrollTrigger: {
             trigger: '#hero',
@@ -35,6 +149,7 @@ if (heroBgImg) {
         }
     });
 }
+document.addEventListener("DOMContentLoaded", initHeroAnimation);
 
 
 // 2. Services Stagger Reveal

@@ -373,28 +373,6 @@ a { text-decoration: none; color: inherit; }
 
 /* ─── 1. Hero Section ──────────────────────────────────── */
 
-/* Keyframe: image slides down from above + zooms to normal */
-@keyframes heroSlideDown {
-    from {
-        transform: translateY(-100%) scale(1.12);
-    }
-    to {
-        transform: translateY(0%)   scale(1);
-    }
-}
-
-/* Keyframe: overlay and text fade in */
-@keyframes heroFadeIn {
-    from { opacity: 0; }
-    to   { opacity: 1; }
-}
-
-/* Keyframe: text rises from below */
-@keyframes heroTextIn {
-    from { opacity: 0; transform: translateY(40px); }
-    to   { opacity: 1; transform: translateY(0); }
-}
-
 .hero-fullscreen {
     position: relative;
     height: 100vh;
@@ -403,18 +381,27 @@ a { text-decoration: none; color: inherit; }
     justify-content: center;
     text-align: center;
     overflow: hidden;
-    background: #111; /* fallback if image is slow */
+    background: #050505; /* Dark screen for cinematic start */
 }
 
-/* Wrapper clips the img as it slides in from above */
+/* Wrapper clips the reveal */
 .hero-bg-wrapper {
     position: absolute;
     inset: 0;
     overflow: hidden;
     z-index: 0;
+    perspective: 1200px;
 }
 
-/* img element — covers the wrapper, slides from above */
+.hero-image-container {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+}
+
+/* img element */
 .hero-bg-img {
     position: absolute;
     top: 0;
@@ -423,10 +410,11 @@ a { text-decoration: none; color: inherit; }
     height: 100%;
     object-fit: cover;
     object-position: center;
-    filter: brightness(0.55) contrast(1.05);
+    filter: brightness(0.65) contrast(1.05); /* Restored original crisp elegant lighting */
     display: block;
-    /* slides in from above */
-    animation: heroSlideDown 1.8s cubic-bezier(0.7, 0, 0.3, 1) 0.1s both;
+    transform: scale(1);
+    opacity: 0; /* Reset state */
+    will-change: transform, opacity;
 }
 
 /* Dark gradient overlay */
@@ -435,11 +423,11 @@ a { text-decoration: none; color: inherit; }
     inset: 0;
     background: linear-gradient(
         to bottom,
-        rgba(0,0,0,0.05) 0%,
-        rgba(0,0,0,0.65) 100%
+        rgba(0,0,0,0.1) 0%,
+        rgba(0,0,0,0.8) 100%
     );
     z-index: 1;
-    animation: heroFadeIn 2s ease 1.4s both;
+    opacity: 0; /* JS will fade this in */
 }
 
 /* Text container */
@@ -449,16 +437,67 @@ a { text-decoration: none; color: inherit; }
     padding: 0 5vw;
 }
 
-/* Staggered text entrance */
-.hero-anim {
+.hero-heading {
     opacity: 0;
-    animation: heroTextIn 1.2s cubic-bezier(0.3, 0, 0.2, 1) 1.6s both;
+    transform: translateY(30px);
 }
-.hero-anim:nth-child(2) {
-    animation-delay: 1.95s;
+
+.hero-subheading {
+    opacity: 0;
+    transform: translateY(20px);
+    margin-top: 2vh;
+}
+
+/* Scroll Indicator */
+.scroll-indicator {
+    position: absolute;
+    bottom: 5vh;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 4;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+    opacity: 0; /* Revealed by GSAP */
+}
+
+.scroll-text {
+    font-size: 0.75rem;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    font-weight: 300;
+    opacity: 0.6;
+}
+
+.scroll-line {
+    width: 1px;
+    height: 50px;
+    background: linear-gradient(to bottom, rgba(255,255,255,0.7), transparent);
+    animation: scrollBounce 2s cubic-bezier(0.7, 0, 0.3, 1) infinite;
+    transform-origin: top;
+}
+
+@keyframes scrollBounce {
+    0% { transform: scaleY(0); transform-origin: top; }
+    50% { transform: scaleY(1); transform-origin: top; }
+    50.1% { transform: scaleY(1); transform-origin: bottom; }
+    100% { transform: scaleY(0); transform-origin: bottom; }
 }
 
 
+/* Floating Animation for Services */
+@keyframes serviceFloat {
+    0%   { transform: translateY(0px) scale(1); }
+    50%  { transform: translateY(-15px) scale(1.01); }
+    100% { transform: translateY(0px) scale(1); }
+}
+
+.floating-anim {
+    animation: serviceFloat 5.5s ease-in-out infinite;
+    transform-origin: center bottom;
+    will-change: transform;
+}
 
 /* 2. Services Section */
 .services-grid-3 {
