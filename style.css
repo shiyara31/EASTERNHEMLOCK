@@ -95,15 +95,33 @@ a { text-decoration: none; color: inherit; }
 }
 
 .btn-outline {
-    border: 1px solid rgba(255,255,255,0.3);
+    border: none;
+    padding: 10px 0; /* Adjust padding for no-box look */
     color: var(--white);
+    background: transparent;
+}
+.btn-outline span::after {
+    content: '';
+    position: absolute;
+    bottom: -2px;
+    left: 0;
+    width: 100%;
+    height: 1px;
+    background-color: var(--white);
+    transform: scaleX(0);
+    transform-origin: right;
+    transition: transform 0.6s var(--transition-slow);
+}
+.btn-outline:hover span::after {
+    transform: scaleX(1);
+    transform-origin: left;
 }
 .btn-outline:hover::before {
     transform: scaleX(1);
     transform-origin: left;
 }
 .btn-outline:hover span {
-    color: var(--black);
+    color: var(--white); /* Keep white since we removed the fill effect for this text-only button */
 }
 
 .btn-primary {
@@ -353,7 +371,30 @@ a { text-decoration: none; color: inherit; }
     }
 }
 
-/* 1. Hero Section */
+/* ─── 1. Hero Section ──────────────────────────────────── */
+
+/* Keyframe: image slides down from above + zooms to normal */
+@keyframes heroSlideDown {
+    from {
+        transform: translateY(-100%) scale(1.12);
+    }
+    to {
+        transform: translateY(0%)   scale(1);
+    }
+}
+
+/* Keyframe: overlay and text fade in */
+@keyframes heroFadeIn {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+}
+
+/* Keyframe: text rises from below */
+@keyframes heroTextIn {
+    from { opacity: 0; transform: translateY(40px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+
 .hero-fullscreen {
     position: relative;
     height: 100vh;
@@ -362,43 +403,62 @@ a { text-decoration: none; color: inherit; }
     justify-content: center;
     text-align: center;
     overflow: hidden;
-}
-.hero-bg-wrapper {
-    position: absolute;
-    top: 0; left: 0; width: 100%; height: 100%;
-    z-index: -1;
-    overflow: hidden;
-    clip-path: inset(100% 0 0 0); /* Initial state for JS reveal */
-}
-.hero-bg-strips {
-    width: 100%; height: 100%;
-    position: relative;
-    transform: scale(1.15); /* GSAP will scale to 1 */
-}
-.hero-strip {
-    position: absolute;
-    top: 0; left: 0; width: 100%; height: 100%;
-    background-size: cover;
-    background-position: center;
-    filter: brightness(0.6) contrast(1.1);
-    will-change: transform;
-}
-.hero-strip:nth-child(1) { clip-path: polygon(0% 0%, 20% 0%, 20% 100%, 0% 100%); }
-.hero-strip:nth-child(2) { clip-path: polygon(20% 0%, 40% 0%, 40% 100%, 20% 100%); }
-.hero-strip:nth-child(3) { clip-path: polygon(40% 0%, 60% 0%, 60% 100%, 40% 100%); }
-.hero-strip:nth-child(4) { clip-path: polygon(60% 0%, 80% 0%, 80% 100%, 60% 100%); }
-.hero-strip:nth-child(5) { clip-path: polygon(80% 0%, 100% 0%, 100% 100%, 80% 100%); }
-.hero-overlay {
-    position: absolute;
-    top: 0; left: 0; width: 100%; height: 100%;
-    background: linear-gradient(to bottom, rgba(0,0,0,0.1) 0%, rgba(0,0,0,0.6) 100%);
-    opacity: 0; /* GSAP will fade in */
+    background: #111; /* fallback if image is slow */
 }
 
+/* Wrapper clips the img as it slides in from above */
+.hero-bg-wrapper {
+    position: absolute;
+    inset: 0;
+    overflow: hidden;
+    z-index: 0;
+}
+
+/* img element — covers the wrapper, slides from above */
+.hero-bg-img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    filter: brightness(0.55) contrast(1.05);
+    display: block;
+    /* slides in from above */
+    animation: heroSlideDown 1.8s cubic-bezier(0.7, 0, 0.3, 1) 0.1s both;
+}
+
+/* Dark gradient overlay */
+.hero-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+        to bottom,
+        rgba(0,0,0,0.05) 0%,
+        rgba(0,0,0,0.65) 100%
+    );
+    z-index: 1;
+    animation: heroFadeIn 2s ease 1.4s both;
+}
+
+/* Text container */
 .hero-content {
-    z-index: 2;
+    position: relative;
+    z-index: 3;
     padding: 0 5vw;
 }
+
+/* Staggered text entrance */
+.hero-anim {
+    opacity: 0;
+    animation: heroTextIn 1.2s cubic-bezier(0.3, 0, 0.2, 1) 1.6s both;
+}
+.hero-anim:nth-child(2) {
+    animation-delay: 1.95s;
+}
+
+
 
 /* 2. Services Section */
 .services-grid-3 {
@@ -511,4 +571,23 @@ a { text-decoration: none; color: inherit; }
 .contact-content-relative {
     position: relative;
     z-index: 2;
+}
+
+/* Mobile Specific Adjustments */
+@media (max-width: 768px) {
+    .btn {
+        padding: 12px 30px;
+        font-size: 0.7rem; /* Smaller font on mobile */
+        letter-spacing: 2px;
+    }
+    .btn-large {
+        padding: 15px 40px;
+        font-size: 0.85rem;
+    }
+    .nav-cta {
+        display: block; /* Ensure it stays visible */
+    }
+    .nav-cta .btn {
+        font-size: 0.65rem; /* Even smaller for the nav consultation */
+    }
 }

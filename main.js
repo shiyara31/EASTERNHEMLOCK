@@ -21,62 +21,21 @@ requestAnimationFrame(raf);
 // GSAP Animations Registration
 gsap.registerPlugin(ScrollTrigger);
 
-// 1. Hero Cinematic Animation (Slices Falling)
-const heroBgWrapper = document.querySelector('.hero-bg-wrapper');
-const heroBgStrips = document.querySelector('.hero-bg-strips');
-const heroStrips = document.querySelectorAll('.hero-strip');
-const heroOverlay = document.querySelector('.hero-overlay');
-const heroTexts = document.querySelectorAll('.hero-anim');
-
-if (heroBgWrapper) {
-    const tlHero = gsap.timeline({ defaults: { ease: "power3.inOut" } });
-    
-    // Initial states: place strips above screen, remove wrapper mask
-    gsap.set(heroTexts, { y: 40, opacity: 0 });
-    gsap.set(heroStrips, { yPercent: -100 });
-    gsap.set(heroBgWrapper, { clipPath: 'none' }); // Remove old initial inset
-
-    tlHero
-    // Step 1: Strip cascade from top
-    .to(heroStrips, {
-        yPercent: 0,
-        duration: 1.6,
-        stagger: 0.12,
-        ease: "power4.out",
-        delay: 0.2
-    })
-    // Step 2: Cinematic slow zoom-out of the combining container
-    .to(heroBgStrips, {
-        scale: 1,
-        duration: 3.5,
-        ease: "power2.out"
-    }, "-=1.0")
-    // Step 3: Subtle overlay fade in for text readability
-    .to(heroOverlay, {
-        opacity: 1,
-        duration: 2
-    }, "-=3.0")
-    // Step 4: Text elements fade in sequentially
-    .to(heroTexts, {
-        y: 0,
-        opacity: 1,
-        duration: 1.5,
-        stagger: 0.2,
-        ease: "power3.out"
-    }, "-=2.5");
-
-    // Hero Image Parallax on Scroll down
-    gsap.to(heroBgStrips, {
-        yPercent: 20,
-        ease: "none",
+// 1. Hero — Scroll Parallax (CSS handles the entrance animation)
+const heroBgImg = document.querySelector('.hero-bg-img');
+if (heroBgImg) {
+    gsap.to(heroBgImg, {
+        yPercent: 18,
+        ease: 'none',
         scrollTrigger: {
-            trigger: "#hero",
-            start: "top top",
-            end: "bottom top",
+            trigger: '#hero',
+            start: 'top top',
+            end:   'bottom top',
             scrub: true
         }
     });
 }
+
 
 // 2. Services Stagger Reveal
 const serviceItems = document.querySelectorAll('.fade-stagger');
