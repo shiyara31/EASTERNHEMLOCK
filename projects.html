@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Projects | EASTERN HEMLOCK</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400;500&family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=Josefin+Sans:wght@100;200;300&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/studio-freight/lenis@1.0.19/bundled/lenis.min.js"></script>
+</head>
+<body class="luxury-theme">
+    <div class="noise-overlay"></div>
+    <div class="cursor-dot"></div>
+    <div class="cursor-ring"></div>
+
+    <nav class="nav-minimal">
+        <div class="nav-container">
+            <a href="index.html" class="logo" style="text-decoration:none; color:inherit;">
+                <svg width="34" height="34" viewBox="0 0 100 100" fill="none" class="brand-icon">
+                    <circle cx="50" cy="50" r="46" stroke="#4AA0B5" stroke-width="4"/>
+                    <path d="M50 4 C 10 35, 90 65, 50 96" stroke="#4AA0B5" stroke-width="4" stroke-linecap="round"/>
+                    <path d="M25 50 C 25 25, 45 15, 45 15" stroke="#4AA0B5" stroke-width="4" stroke-linecap="round"/>
+                    <path d="M35 30 L 28 35 M 40 22 L 34 26" stroke="#4AA0B5" stroke-width="4" stroke-linecap="round"/>
+                    <path d="M75 50 C 75 75, 55 85, 55 85" stroke="#4AA0B5" stroke-width="4" stroke-linecap="round"/>
+                    <path d="M65 70 L 72 65 M 60 78 L 66 74" stroke="#4AA0B5" stroke-width="4" stroke-linecap="round"/>
+                    <circle cx="18" cy="46" r="3" fill="#4AA0B5"/>
+                    <circle cx="82" cy="54" r="3" fill="#4AA0B5"/>
+                </svg>
+                <span>EASTERN HEMLOCK</span>
+            </a>
+            <div class="nav-right">
+                <div class="nav-cta">
+                    <a href="contact.html" class="btn btn-outline" data-hover="Get Consultation"><span>Get Consultation</span></a>
+                </div>
+                <button class="hamburger" aria-label="Open Menu">
+                    <span class="hamburger-line"></span><span class="hamburger-line"></span><span class="hamburger-line"></span>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <div class="menu-overlay">
+        <div class="menu-bg"></div>
+        <div class="menu-container">
+            <div class="menu-top">
+                <div class="logo">
+                     <svg width="34" height="34" viewBox="0 0 100 100" fill="none" class="brand-icon">
+                        <circle cx="50" cy="50" r="46" stroke="#4AA0B5" stroke-width="4"/>
+                        <path d="M50 4 C 10 35, 90 65, 50 96" stroke="#4AA0B5" stroke-width="4" stroke-linecap="round"/>
+                        <path d="M25 50 C 25 25, 45 15, 45 15" stroke="#4AA0B5" stroke-width="4" stroke-linecap="round"/>
+                        <path d="M35 30 L 28 35 M 40 22 L 34 26" stroke="#4AA0B5" stroke-width="4" stroke-linecap="round"/>
+                        <path d="M75 50 C 75 75, 55 85, 55 85" stroke="#4AA0B5" stroke-width="4" stroke-linecap="round"/>
+                        <path d="M65 70 L 72 65 M 60 78 L 66 74" stroke="#4AA0B5" stroke-width="4" stroke-linecap="round"/>
+                        <circle cx="18" cy="46" r="3" fill="#4AA0B5"/>
+                        <circle cx="82" cy="54" r="3" fill="#4AA0B5"/>
+                    </svg>
+                    <span>EASTERN HEMLOCK</span>
+                </div>
+                <div class="menu-top-right">
+                    <button class="menu-close" aria-label="Close Menu">
+                        <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1"><path d="M18 6 6 18M6 6l12 12" /></svg>
+                    </button>
+                </div>
+            </div>
+
+            <div class="menu-center">
+                <ul class="nav-large-links">
+                    <li><a href="index.html" class="menu-link" data-text="Home">Home</a></li>
+                    <li><a href="about.html" class="menu-link" data-text="Our Story">Our Story</a></li>
+                    <li><a href="projects.html" class="menu-link" data-text="Projects">Projects</a></li>
+                    <li><a href="services.html" class="menu-link" data-text="Services">Services</a></li>
+                    <li><a href="dashboard.html" class="menu-link" data-text="Client Portal">Client Portal</a></li>
+                    <li><a href="contact.html" class="menu-link" data-text="Contact">Contact</a></li>
+                </ul>
+            </div>
+            
+            <div class="menu-bottom"></div>
+        </div>
+    </div>
+
+    <!-- Page Content -->
+    <section id="projects" class="project-promo-section" style="height: 100vh;">
+        <!-- Cinematic vertical grid lines -->
+        <div class="vertical-lines">
+            <div class="v-line"></div>
+            <div class="v-line"></div>
+            <div class="v-line"></div>
+            <div class="v-line"></div>
+        </div>
+        
+        <div class="promo-bg reveal-mask">
+            <img src="https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?auto=format&fit=crop&w=2000&q=100" alt="Projects Cover" class="parallax-img">
+            <div class="promo-overlay"></div>
+        </div>
+        
+        <div class="promo-content fade-slide-up">
+            <span class="eyebrow" style="color: var(--white); margin-bottom:15px; letter-spacing: 6px;">Explore Our Work</span>
+            <h1 class="promo-title">See what we can do together.</h1>
+            <button class="btn btn-outline-capsule mt-4 gallery-trigger" style="background:transparent; cursor:pointer;" data-filter="all">VIEW ALL PROJECTS</button>
+        </div>
+    </section>
+
+    <!-- Sub Nav Bar -->
+    <div class="project-subnav">
+        <div class="subnav-item gallery-trigger" data-filter="all">
+            <span class="plus-icon">+</span> DISCOVER
+        </div>
+        <div class="subnav-item gallery-trigger" data-filter="interiors">
+            INTERIORS
+        </div>
+        <div class="subnav-item gallery-trigger" data-filter="landscapes">
+            LANDSCAPES
+        </div>
+        <div class="subnav-item gallery-trigger" data-filter="pools">
+            SWIMMING POOLS
+        </div>
+    </div>
+
+    <!-- Luxury Fullscreen Gallery Modal -->
+    <div class="gallery-modal">
+        <div class="gallery-close">
+            <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1"><path d="M18 6 6 18M6 6l12 12"/></svg>
+        </div>
+        <div class="gallery-container">
+            <div class="gallery-header">
+                <h2>Our <i>Signatures</i></h2>
+                <div class="gallery-filters">
+                    <button class="filter-btn active" data-filter="all">All</button>
+                    <button class="filter-btn" data-filter="interiors">Interiors</button>
+                    <button class="filter-btn" data-filter="landscapes">Landscapes</button>
+                    <button class="filter-btn" data-filter="pools">Pools</button>
+                </div>
+            </div>
+            
+            <div class="gallery-track">
+                <!-- Dynamically generated via Javascript (30 luxury items) -->
+            </div>
+        </div>
+    </div>
+
+    <footer class="footer-minimal bg-black">
+        <div class="container">
+            <div class="footer-flex">
+                <div class="logo">
+                     <svg width="28" height="28" viewBox="0 0 100 100" fill="none" class="brand-icon">
+                        <circle cx="50" cy="50" r="46" stroke="#4AA0B5" stroke-width="4"/>
+                        <path d="M50 4 C 10 35, 90 65, 50 96" stroke="#4AA0B5" stroke-width="4" stroke-linecap="round"/>
+                        <path d="M25 50 C 25 25, 45 15, 45 15" stroke="#4AA0B5" stroke-width="4" stroke-linecap="round"/>
+                        <path d="M35 30 L 28 35 M 40 22 L 34 26" stroke="#4AA0B5" stroke-width="4" stroke-linecap="round"/>
+                    </svg>
+                    <span>EASTERN HEMLOCK</span>
+                </div>
+                <p>&copy; 2026 Eastern Hemlock. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+    <script src="main.js"></script>
+</body>
+</html>

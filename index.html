@@ -11,7 +11,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link
-        href="https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400;500&family=Playfair+Display:ital,wght@0,400;0,600;1,400&display=swap"
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400;500&family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=Josefin+Sans:wght@100;200;300&display=swap"
         rel="stylesheet">
 
     <!-- Styles -->
@@ -28,13 +28,26 @@
     <!-- Minimal Navigation -->
     <nav class="nav-minimal">
         <div class="nav-container">
-            <div class="logo">EASTERN HEMLOCK</div>
+            <div class="logo">
+                <svg width="34" height="34" viewBox="0 0 100 100" fill="none" class="brand-icon">
+                    <circle cx="50" cy="50" r="46" stroke="#4AA0B5" stroke-width="4"/>
+                    <path d="M50 4 C 10 35, 90 65, 50 96" stroke="#4AA0B5" stroke-width="4" stroke-linecap="round"/>
+                    <path d="M25 50 C 25 25, 45 15, 45 15" stroke="#4AA0B5" stroke-width="4" stroke-linecap="round"/>
+                    <path d="M35 30 L 28 35 M 40 22 L 34 26" stroke="#4AA0B5" stroke-width="4" stroke-linecap="round"/>
+                    <path d="M75 50 C 75 75, 55 85, 55 85" stroke="#4AA0B5" stroke-width="4" stroke-linecap="round"/>
+                    <path d="M65 70 L 72 65 M 60 78 L 66 74" stroke="#4AA0B5" stroke-width="4" stroke-linecap="round"/>
+                    <circle cx="18" cy="46" r="3" fill="#4AA0B5"/>
+                    <circle cx="82" cy="54" r="3" fill="#4AA0B5"/>
+                </svg>
+                <span>EASTERN HEMLOCK</span>
+            </div>
             <div class="nav-right">
                 <div class="nav-cta">
                     <a href="#contact" class="btn btn-outline" data-hover="Get Consultation"><span>Get
                             Consultation</span></a>
                 </div>
                 <button class="hamburger" aria-label="Open Menu">
+                    <span class="hamburger-line"></span>
                     <span class="hamburger-line"></span>
                     <span class="hamburger-line"></span>
                 </button>
@@ -48,7 +61,19 @@
         <div class="menu-container">
             <!-- Menu Top Section -->
             <div class="menu-top">
-                <div class="logo">EASTERN HEMLOCK</div>
+                <div class="logo">
+                    <svg width="34" height="34" viewBox="0 0 100 100" fill="none" class="brand-icon">
+                        <circle cx="50" cy="50" r="46" stroke="#4AA0B5" stroke-width="4"/>
+                        <path d="M50 4 C 10 35, 90 65, 50 96" stroke="#4AA0B5" stroke-width="4" stroke-linecap="round"/>
+                        <path d="M25 50 C 25 25, 45 15, 45 15" stroke="#4AA0B5" stroke-width="4" stroke-linecap="round"/>
+                        <path d="M35 30 L 28 35 M 40 22 L 34 26" stroke="#4AA0B5" stroke-width="4" stroke-linecap="round"/>
+                        <path d="M75 50 C 75 75, 55 85, 55 85" stroke="#4AA0B5" stroke-width="4" stroke-linecap="round"/>
+                        <path d="M65 70 L 72 65 M 60 78 L 66 74" stroke="#4AA0B5" stroke-width="4" stroke-linecap="round"/>
+                        <circle cx="18" cy="46" r="3" fill="#4AA0B5"/>
+                        <circle cx="82" cy="54" r="3" fill="#4AA0B5"/>
+                    </svg>
+                    <span>EASTERN HEMLOCK</span>
+                </div>
                 <div class="menu-top-right">
                     <div class="search-container">
                         <input type="text" placeholder="Search projects..." class="search-input">
@@ -70,11 +95,12 @@
             <!-- Menu Center Section (Main Links) -->
             <div class="menu-center">
                 <ul class="nav-large-links">
-                    <li><a href="#hero" class="menu-link" data-text="Home">Home</a></li>
-                    <li><a href="#services" class="menu-link" data-text="About Us">About Us</a></li>
-                    <li><a href="#showcase" class="menu-link" data-text="Projects">Projects</a></li>
-                    <li><a href="#services" class="menu-link" data-text="Services">Services</a></li>
-                    <li><a href="#contact" class="menu-link" data-text="Contact">Contact</a></li>
+                    <li><a href="index.html" class="menu-link" data-text="Home">Home</a></li>
+                    <li><a href="about.html" class="menu-link" data-text="Our Story">Our Story</a></li>
+                    <li><a href="projects.html" class="menu-link" data-text="Projects">Projects</a></li>
+                    <li><a href="services.html" class="menu-link" data-text="Services">Services</a></li>
+                    <li><a href="dashboard.html" class="menu-link" data-text="Client Portal">Client Portal</a></li>
+                    <li><a href="contact.html" class="menu-link" data-text="Contact">Contact</a></li>
                 </ul>
             </div>
 
@@ -125,6 +151,9 @@
         <div class="hero-content">
             <h1 class="hero-heading">Transforming Villas<br>Into <i>Luxury Living</i></h1>
             <p class="hero-subheading">Interior • Landscape • Pool Design in Dubai</p>
+            <div class="hero-cta">
+                <a href="#contact" class="btn btn-outline-capsule">SCHEDULE A CALL</a>
+            </div>
         </div>
         
         <!-- Scroll Indicator -->
@@ -134,6 +163,21 @@
         </div>
     </section>
 
+    <!-- Our Story Section -->
+    <section id="about" class="section-spaced bg-black">
+        <div class="container">
+            <div class="story-layout">
+                <div class="story-left fade-slide-right">
+                    <span class="eyebrow">The Eastern Hemlock Vision</span>
+                    <h2>Redefining <br><i>Architectural Grace</i></h2>
+                </div>
+                <div class="story-right fade-slide-up">
+                    <p>Rooted in the heart of Dubai, Eastern Hemlock brings an unprecedented level of sophistication to luxury living. We merge world-class interior design, breathtaking landscapes, and structural excellence to craft homes that are absolute sanctuaries.</p>
+                    <a href="#projects" class="btn btn-outline-capsule mt-4">Discover Our Legacy</a>
+                </div>
+            </div>
+        </div>
+    </section>
 
     <!-- 2. Services Section -->
     <section id="services" class="section-spaced bg-beige">
@@ -196,21 +240,57 @@
         </div>
     </section>
 
-    <!-- 4. Contact / Final Section -->
-    <section id="contact" class="section-contact bg-black">
-        <div class="contact-bg-wrapper reveal-mask">
-            <img class="parallax-img"
-                src="https://images.unsplash.com/photo-1613490900233-ffdff42416b9?auto=format&fit=crop&q=100&w=2560"
-                alt="Contact Exterior">
-            <div class="contact-overlay"></div>
+    <!-- Dedicated Projects Portfolio (Reference Match) -->
+    <section id="projects" class="project-promo-section">
+        <!-- Cinematic vertical grid lines -->
+        <div class="vertical-lines">
+            <div class="v-line"></div>
+            <div class="v-line"></div>
+            <div class="v-line"></div>
+            <div class="v-line"></div>
         </div>
-        <div class="container text-center fade-slide-up contact-content-relative">
-            <h2 class="contact-title">Let’s Build Your<br>Dream Villa</h2>
+        
+        <div class="promo-bg reveal-mask">
+            <img src="https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?auto=format&fit=crop&w=2000&q=100" alt="Projects Cover" class="parallax-img">
+            <div class="promo-overlay"></div>
+        </div>
+        
+        <div class="promo-content fade-slide-up">
+            <span class="eyebrow" style="color: var(--white); margin-bottom:15px; letter-spacing: 6px;">Explore Our Work</span>
+            <h2 class="promo-title">See what we can do together.</h2>
+            <button class="btn btn-outline-capsule mt-4 gallery-trigger" style="background:transparent; cursor:pointer;" data-filter="all">VIEW ALL PROJECTS</button>
+        </div>
+    </section>
+
+    <!-- Sub Nav Bar -->
+    <div class="project-subnav">
+        <div class="subnav-item gallery-trigger" data-filter="all">
+            <span class="plus-icon">+</span> DISCOVER
+        </div>
+        <div class="subnav-item gallery-trigger" data-filter="interiors">
+            INTERIORS
+        </div>
+        <div class="subnav-item gallery-trigger" data-filter="landscapes">
+            LANDSCAPES
+        </div>
+        <div class="subnav-item gallery-trigger" data-filter="pools">
+            SWIMMING POOLS
+        </div>
+    </div>
+
+    <!-- 4. Contact / Final Section -->
+    <section id="contact" class="section-contact" style="position:relative; overflow:hidden; padding: 15vh 0; min-height:100vh; display:flex; align-items:center;">
+        <div class="contact-bg-wrapper reveal-mask" style="position:absolute; inset:0; z-index:1;">
+            <img src="https://images.unsplash.com/photo-1600607687710-449e6f37ee0b?auto=format&fit=crop&w=2000&q=80" alt="Contact Us" class="parallax-img ambient-pan" style="width: 100%; height: 130%; object-fit: cover; top: -15%;">
+            <div class="contact-overlay" style="position:absolute; inset:0; background: linear-gradient(to top, rgba(255,255,255,0.95), rgba(255,255,255,0.4));"></div>
+        </div>
+        <div class="contact-content fade-slide-up" style="position:relative; z-index:2; text-align:center; width: 100%; color: var(--background);">
+            <h1 class="contact-title" style="font-weight: 300; letter-spacing: -1px;">Let’s Build Your<br>Dream Villa</h1>
             <br><br>
-            <a href="mailto:hello@easternhemlock.ae" class="btn btn-primary btn-large"
-                data-hover="Contact Us"><span>Contact Us</span></a>
-            <div class="contact-details">
+            <a href="mailto:hello@easternhemlock.ae" class="btn btn-outline-capsule" style="background:var(--background); color:var(--white); border:none; padding:20px 60px; font-weight: 500;">CONTACT US TODAY</a>
+            <div class="contact-details" style="margin-top: 40px; font-size: 1.2rem; letter-spacing:3px;">
                 <p>+971 4 000 0000 &nbsp; | &nbsp; hello@easternhemlock.ae</p>
+                <p style="margin-top: 10px; opacity: 0.8; font-size: 0.9rem;">Dubai Design District, UAE</p>
             </div>
         </div>
     </section>
@@ -219,11 +299,45 @@
     <footer class="footer-minimal bg-black">
         <div class="container">
             <div class="footer-flex">
-                <div class="logo">EASTERN HEMLOCK</div>
+                <div class="logo">
+                    <svg width="28" height="28" viewBox="0 0 100 100" fill="none" class="brand-icon">
+                        <circle cx="50" cy="50" r="46" stroke="#4AA0B5" stroke-width="4"/>
+                        <path d="M50 4 C 10 35, 90 65, 50 96" stroke="#4AA0B5" stroke-width="4" stroke-linecap="round"/>
+                        <path d="M25 50 C 25 25, 45 15, 45 15" stroke="#4AA0B5" stroke-width="4" stroke-linecap="round"/>
+                        <path d="M35 30 L 28 35 M 40 22 L 34 26" stroke="#4AA0B5" stroke-width="4" stroke-linecap="round"/>
+                        <path d="M75 50 C 75 75, 55 85, 55 85" stroke="#4AA0B5" stroke-width="4" stroke-linecap="round"/>
+                        <path d="M65 70 L 72 65 M 60 78 L 66 74" stroke="#4AA0B5" stroke-width="4" stroke-linecap="round"/>
+                        <circle cx="18" cy="46" r="3" fill="#4AA0B5"/>
+                        <circle cx="82" cy="54" r="3" fill="#4AA0B5"/>
+                    </svg>
+                    <span>EASTERN HEMLOCK</span>
+                </div>
                 <p>&copy; 2026 Eastern Hemlock. All rights reserved.</p>
             </div>
         </div>
     </footer>
+
+    <!-- Luxury Fullscreen Gallery Modal -->
+    <div class="gallery-modal">
+        <div class="gallery-close">
+            <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1"><path d="M18 6 6 18M6 6l12 12"/></svg>
+        </div>
+        <div class="gallery-container">
+            <div class="gallery-header">
+                <h2>Our <i>Signatures</i></h2>
+                <div class="gallery-filters">
+                    <button class="filter-btn active" data-filter="all">All</button>
+                    <button class="filter-btn" data-filter="interiors">Interiors</button>
+                    <button class="filter-btn" data-filter="landscapes">Landscapes</button>
+                    <button class="filter-btn" data-filter="pools">Pools</button>
+                </div>
+            </div>
+            
+            <div class="gallery-track">
+                <!-- Dynamically generated via Javascript (30 luxury items) -->
+            </div>
+        </div>
+    </div>
 
     <script src="main.js"></script>
 </body>

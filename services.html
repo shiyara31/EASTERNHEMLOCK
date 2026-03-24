@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Services | EASTERN HEMLOCK</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400;500&family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=Josefin+Sans:wght@100;200;300&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/studio-freight/lenis@1.0.19/bundled/lenis.min.js"></script>
+</head>
+<body class="luxury-theme">
+    <div class="noise-overlay"></div>
+    <div class="cursor-dot"></div>
+    <div class="cursor-ring"></div>
+
+    <nav class="nav-minimal">
+        <div class="nav-container">
+            <a href="index.html" class="logo" style="text-decoration:none; color:inherit;">
+                <svg width="34" height="34" viewBox="0 0 100 100" fill="none" class="brand-icon">
+                    <circle cx="50" cy="50" r="46" stroke="#4AA0B5" stroke-width="4"/>
+                    <path d="M50 4 C 10 35, 90 65, 50 96" stroke="#4AA0B5" stroke-width="4" stroke-linecap="round"/>
+                    <path d="M25 50 C 25 25, 45 15, 45 15" stroke="#4AA0B5" stroke-width="4" stroke-linecap="round"/>
+                    <path d="M35 30 L 28 35 M 40 22 L 34 26" stroke="#4AA0B5" stroke-width="4" stroke-linecap="round"/>
+                    <path d="M75 50 C 75 75, 55 85, 55 85" stroke="#4AA0B5" stroke-width="4" stroke-linecap="round"/>
+                    <path d="M65 70 L 72 65 M 60 78 L 66 74" stroke="#4AA0B5" stroke-width="4" stroke-linecap="round"/>
+                    <circle cx="18" cy="46" r="3" fill="#4AA0B5"/>
+                    <circle cx="82" cy="54" r="3" fill="#4AA0B5"/>
+                </svg>
+                <span>EASTERN HEMLOCK</span>
+            </a>
+            <div class="nav-right">
+                <div class="nav-cta">
+                    <a href="contact.html" class="btn btn-outline" data-hover="Get Consultation"><span>Get Consultation</span></a>
+                </div>
+                <button class="hamburger" aria-label="Open Menu">
+                    <span class="hamburger-line"></span><span class="hamburger-line"></span><span class="hamburger-line"></span>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <div class="menu-overlay">
+        <div class="menu-bg"></div>
+        <div class="menu-container">
+            <div class="menu-top">
+                <div class="logo">
+                     <svg width="34" height="34" viewBox="0 0 100 100" fill="none" class="brand-icon">
+                        <circle cx="50" cy="50" r="46" stroke="#4AA0B5" stroke-width="4"/>
+                        <path d="M50 4 C 10 35, 90 65, 50 96" stroke="#4AA0B5" stroke-width="4" stroke-linecap="round"/>
+                        <path d="M25 50 C 25 25, 45 15, 45 15" stroke="#4AA0B5" stroke-width="4" stroke-linecap="round"/>
+                        <path d="M35 30 L 28 35 M 40 22 L 34 26" stroke="#4AA0B5" stroke-width="4" stroke-linecap="round"/>
+                        <path d="M75 50 C 75 75, 55 85, 55 85" stroke="#4AA0B5" stroke-width="4" stroke-linecap="round"/>
+                        <path d="M65 70 L 72 65 M 60 78 L 66 74" stroke="#4AA0B5" stroke-width="4" stroke-linecap="round"/>
+                        <circle cx="18" cy="46" r="3" fill="#4AA0B5"/>
+                        <circle cx="82" cy="54" r="3" fill="#4AA0B5"/>
+                    </svg>
+                    <span>EASTERN HEMLOCK</span>
+                </div>
+                <div class="menu-top-right">
+                    <button class="menu-close" aria-label="Close Menu">
+                        <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1"><path d="M18 6 6 18M6 6l12 12" /></svg>
+                    </button>
+                </div>
+            </div>
+
+            <div class="menu-center">
+                <ul class="nav-large-links">
+                    <li><a href="index.html" class="menu-link" data-text="Home">Home</a></li>
+                    <li><a href="about.html" class="menu-link" data-text="Our Story">Our Story</a></li>
+                    <li><a href="projects.html" class="menu-link" data-text="Projects">Projects</a></li>
+                    <li><a href="services.html" class="menu-link" data-text="Services">Services</a></li>
+                    <li><a href="dashboard.html" class="menu-link" data-text="Client Portal">Client Portal</a></li>
+                    <li><a href="contact.html" class="menu-link" data-text="Contact">Contact</a></li>
+                </ul>
+            </div>
+            <div class="menu-bottom"></div>
+        </div>
+    </div>
+
+    <!-- 1. Intro Section -->
+    <section class="section-spaced bg-black" style="padding-top: 25vh; padding-bottom: 10vh; text-align: center;">
+        <div class="container fade-slide-up">
+            <span class="eyebrow" style="color:var(--gold);">Expertise</span>
+            <h1 style="font-size: 5rem; font-weight: 300; margin-bottom: 2rem;">Our <i>Services</i></h1>
+            <p style="font-size: 1.25rem; max-width: 900px; margin: 0 auto; line-height: 1.8; color:#ddd;">At Eastern Hemlock, we offer a full range of luxury services, including bespoke interior design, landscaping, swimming pool and Jacuzzi construction, pergola installations, home automation, approvals for all authorities and communities as per the local bylaws. We also provide comprehensive maintenance for villas, swimming pools, and gardens, ensuring your property remains in perfect condition year-round. Our turnkey solutions handle every aspect of design and construction with the highest standards of quality and elegance.</p>
+        </div>
+    </section>
+
+    <!-- 2. Design & Approvals Section -->
+    <section class="bg-beige section-spaced" style="padding: 15vh 0;">
+        <div class="container fade-slide-up">
+            <div style="display:flex; align-items:center; gap: 80px; flex-wrap: wrap;">
+                <div style="flex:1; min-width: 300px;">
+                    <h2 style="font-size: 3.5rem; font-weight:300; margin-bottom:20px; color:#111;">Design & <br><i>Approvals</i></h2>
+                    <p style="font-size: 1.15rem; line-height: 1.8; color:#444;">Eastern Hemlock, we provide complete design solutions that blend luxury, functionality, and innovation to create timeless interiors, landscapes, and outdoor spaces. Our expert designers craft customized plans tailored to your villa or commercial property, ensuring every detail reflects your unique style. We also handle all community and authority approvals with precision and efficiency, managing the entire process with Dubai's local authorities and communities. This ensures your project is fully compliant and hassle-free, allowing you to focus on the final outcome while we take care of all the formalities.</p>
+                </div>
+                <div style="flex:1; display:grid; grid-template-columns: 1fr 1fr; gap:25px;">
+                    <div class="img-3d-card" style="height: 350px; border-radius:15px; overflow:hidden; box-shadow: 0 20px 40px rgba(0,0,0,0.1);"><img src="interior_design.png" style="width:100%; height:100%; object-fit:cover;"></div>
+                    <div class="img-3d-card" style="height: 350px; border-radius:15px; overflow:hidden; box-shadow: 0 20px 40px rgba(0,0,0,0.1); transform: translateY(60px);"><img src="exterior_villa.png" style="width:100%; height:100%; object-fit:cover;"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 3. We Build Section -->
+    <section class="bg-black section-spaced" style="padding: 15vh 0;">
+        <div class="container fade-slide-up">
+            <div style="display:flex; align-items:center; gap: 80px; flex-direction: row-reverse; flex-wrap: wrap;">
+                <div style="flex:1; min-width: 300px;">
+                    <h2 style="font-size: 3.5rem; font-weight:300; margin-bottom:20px; color:var(--white);">We <br><i>Build</i></h2>
+                    <p style="font-size: 1.15rem; line-height: 1.8; color:#ddd;">Eastern Hemlock, we specialize in creating luxurious and functional living spaces through our expert landscaping, swimming pool, and home automation. Our landscape design team transforms outdoor areas with elegant gardens, water features, pergolas, BBQ zones, and sustainable greenery, tailored to complement your villa or commercial property. We bring the future of living into your home with cutting-edge automation solutions, integrating lighting, security, climate, and entertainment systems for seamless control and enhanced comfort. Additionally, our bespoke swimming pools - from modern infinity designs to spa-inspired jacuzzis - are crafted with premium quality and safety standards, delivering the perfect blend of style and functionality for your lifestyle.</p>
+                </div>
+                <div style="flex:1; display:grid; grid-template-columns: 1fr; gap:25px;">
+                    <div class="img-3d-card" style="height: 450px; border-radius:15px; overflow:hidden; width: 100%; box-shadow: 0 30px 60px rgba(0,0,0,0.4);"><img src="luxury_pool.png" style="width:100%; height:100%; object-fit:cover;"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 4. Maintenance Section -->
+    <section class="bg-beige section-spaced" style="padding: 15vh 0;">
+        <div class="container fade-slide-up text-center">
+            <h2 style="font-size: 3.5rem; font-weight:300; margin-bottom:20px; color:#111;">Maintenance & <br><i>Facility</i></h2>
+            <p style="font-size: 1.15rem; line-height: 1.8; color:#444; max-width: 900px; margin: 0 auto 60px auto;">Eastern Hemlock offers comprehensive maintenance solutions to keep your property in pristine condition. Our services include swimming pool maintenance, villa upkeep, repairs, and complete facility management - ensuring long-term performance, safety, and aesthetics. With expert care and prompt service, we help you maintain the luxury and comfort of your home or commercial space, hassle-free.</p>
+            
+            <div style="display:grid; grid-template-columns: repeat(3, 1fr); gap:30px;">
+                <div class="img-3d-card" style="height: 350px; border-radius:15px; overflow:hidden; box-shadow: 0 20px 40px rgba(0,0,0,0.1);"><img src="luxury_landscaping.png" style="width:100%; height:100%; object-fit:cover;"></div>
+                <div class="img-3d-card" style="height: 350px; border-radius:15px; overflow:hidden; box-shadow: 0 20px 40px rgba(0,0,0,0.1); transform: translateY(40px);"><img src="mansion_upkeep.png" style="width:100%; height:100%; object-fit:cover;"></div>
+                <div class="img-3d-card" style="height: 350px; border-radius:15px; overflow:hidden; box-shadow: 0 20px 40px rgba(0,0,0,0.1);"><img src="facility_tech.png" style="width:100%; height:100%; object-fit:cover;"></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- JS for the 3D scroll animations -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            if (typeof gsap !== 'undefined' && typeof ScrollTrigger !== 'undefined') {
+                gsap.registerPlugin(ScrollTrigger);
+
+                // True 3D card tilt and pop animation on scroll
+                gsap.utils.toArray('.img-3d-card').forEach(card => {
+                    gsap.from(card, {
+                        scrollTrigger: {
+                            trigger: card,
+                            start: "top 95%",
+                            end: "bottom 60%",
+                            scrub: 1.5
+                        },
+                        y: 120,
+                        rotationX: 35,
+                        rotationY: 10,
+                        opacity: 0,
+                        scale: 0.85,
+                        transformPerspective: 1500,
+                        transformOrigin: "center bottom"
+                    });
+                });
+            }
+        });
+    </script>
+
+    <footer class="footer-minimal bg-black">
+        <div class="container">
+            <div class="footer-flex">
+                <div class="logo">
+                     <svg width="28" height="28" viewBox="0 0 100 100" fill="none" class="brand-icon">
+                        <circle cx="50" cy="50" r="46" stroke="#4AA0B5" stroke-width="4"/>
+                        <path d="M50 4 C 10 35, 90 65, 50 96" stroke="#4AA0B5" stroke-width="4" stroke-linecap="round"/>
+                        <path d="M25 50 C 25 25, 45 15, 45 15" stroke="#4AA0B5" stroke-width="4" stroke-linecap="round"/>
+                        <path d="M35 30 L 28 35 M 40 22 L 34 26" stroke="#4AA0B5" stroke-width="4" stroke-linecap="round"/>
+                        <path d="M75 50 C 75 75, 55 85, 55 85" stroke="#4AA0B5" stroke-width="4" stroke-linecap="round"/>
+                        <path d="M65 70 L 72 65 M 60 78 L 66 74" stroke="#4AA0B5" stroke-width="4" stroke-linecap="round"/>
+                        <circle cx="18" cy="46" r="3" fill="#4AA0B5"/>
+                        <circle cx="82" cy="54" r="3" fill="#4AA0B5"/>
+                    </svg>
+                    <span>EASTERN HEMLOCK</span>
+                </div>
+                <p>&copy; 2026 Eastern Hemlock. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+    <script src="main.js"></script>
+</body>
+</html>

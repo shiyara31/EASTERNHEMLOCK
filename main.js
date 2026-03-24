@@ -126,7 +126,13 @@ function initHeroAnimation() {
         y: 0,
         duration: 1.2,
         ease: "power3.out"
-    }, "-=0.9");
+    }, "-=0.9")
+    .to('.hero-cta', {
+        opacity: 1,
+        y: 0,
+        duration: 1.2,
+        ease: "power3.out"
+    }, "-=0.8");
 
     // 4. Scroll indicator fades in late
     if (scrollIndicator) {
@@ -319,12 +325,115 @@ menuLinks.forEach(link => {
     });
 });
 
-// Hamburger Hover Animation
-hamburger.addEventListener('mouseenter', () => {
-    gsap.to('.hamburger-line:first-child', { width: 20, duration: 0.3 });
-    gsap.to('.hamburger-line:last-child', { width: 30, duration: 0.3 });
-});
-hamburger.addEventListener('mouseleave', () => {
-    gsap.to('.hamburger-line:first-child', { width: 30, duration: 0.3 });
-    gsap.to('.hamburger-line:last-child', { width: 30, duration: 0.3 });
-});
+// Hamburger Hover animation handled completely by CSS to prevent responsive layout jumps.
+
+// 7. Luxury Gallery Modal & Filters
+const galleryTriggers = document.querySelectorAll('.gallery-trigger');
+const galleryModal = document.querySelector('.gallery-modal');
+const galleryClose = document.querySelector('.gallery-close');
+const filterBtns = document.querySelectorAll('.filter-btn');
+
+if (galleryModal) {
+    const track = document.querySelector('.gallery-track');
+    if (track) {
+        const galleryData = [];
+        const interiorIds = ['1600210492486-724fe5c67fb0', '1618221195710-dd6b41faaea6', '1600607686527-6fb886090705', '1628042436063-2292f7e71f49', '1600596542815-ffad4c1539a9'];
+        const landscapeIds = ['1512917774080-9991f1c4c750', '1600585154340-be6161a56a0c', '1584318556661-d703bc681bca', '1600607687939-ce8a6c25118c', '1504307651254-35680f356dfd'];
+        const poolIds = ['1576013551627-0cc20b96c2a7', '1519710164309-8fac43ec29a4', '1533158326339-7f3cb6cebbfb', '1574362844322-6323a32f6381', '1573843981267-be11f611bfdd'];
+
+        function generateItems(category, ids, baseTitle) {
+            for(let i=1; i<=10; i++) {
+                galleryData.push({
+                    category: category,
+                    location: 'DUBAI, UAE',
+                    title: `${baseTitle} 0${i}`,
+                    date: `0${(i%9)+1}.15.26`,
+                    image: `https://images.unsplash.com/photo-${ids[i%5]}?auto=format&fit=crop&w=800&q=80`
+                });
+            }
+        }
+        // Generate exactly 10 images each
+        generateItems('interiors', interiorIds, 'Bespoke Interior');
+        generateItems('landscapes', landscapeIds, 'Private Estate Landscape');
+        generateItems('pools', poolIds, 'Infinity Pool Concept');
+
+        track.innerHTML = galleryData.map(item => `
+            <div class="gallery-item" data-category="${item.category}">
+                <div class="gallery-img-wrap">
+                    <img src="${item.image}" alt="${item.title}">
+                    <div class="card-overlay"></div>
+                    <div class="card-content">
+                        <div class="card-top">
+                            <span class="card-location">${item.location}</span>
+                            <h3 class="card-title">${item.title}</h3>
+                        </div>
+                        <div class="card-view-btn">VIEW</div>
+                        <div class="card-bottom">
+                            <span class="card-date">${item.date}</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        `).join('');
+    }
+
+    const galleryItems = document.querySelectorAll('.gallery-item');
+    const galleryTl = gsap.timeline({ paused: true });
+    
+    galleryTl.fromTo('.gallery-header', { y: -50, opacity: 0 }, { y: 0, opacity: 1, duration: 1.0, ease: "power3.out" })
+             .fromTo(galleryItems, { y: 150, opacity: 0, scale: 0.85 }, { y: 0, opacity: 1, scale: 1, duration: 1.5, stagger: 0.1, ease: "expo.out" }, "-=0.7");
+
+    function openGallery(filter = 'all') {
+        galleryModal.classList.add('active');
+        if(typeof lenis !== 'undefined') lenis.stop(); // Stop main layout scrolling
+        applyFilter(filter);
+        galleryTl.restart();
+    }
+
+    function closeGallery() {
+        galleryModal.classList.remove('active');
+        if(typeof lenis !== 'undefined') lenis.start();
+    }
+
+    function applyFilter(category) {
+        filterBtns.forEach(btn => {
+            if(btn.dataset.filter === category || (category==='all' && btn.dataset.filter === 'all')) btn.classList.add('active');
+            else btn.classList.remove('active');
+        });
+
+        galleryItems.forEach(item => {
+            if (category === 'all' || item.dataset.category === category) {
+                item.classList.remove('hidden');
+                gsap.fromTo(item, { scale: 0.85, opacity: 0, y: 50}, {scale: 1, opacity: 1, y: 0, duration: 0.8, ease: "power3.out"});
+            } else {
+                item.classList.add('hidden');
+            }
+        });
+    }
+
+    galleryTriggers.forEach(trigger => {
+        trigger.addEventListener('click', (e) => {
+            e.preventDefault();
+            const filter = trigger.dataset.filter || 'all';
+            openGallery(filter);
+        });
+    });
+
+    if(galleryClose) galleryClose.addEventListener('click', closeGallery);
+
+    filterBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+            applyFilter(btn.dataset.filter);
+        });
+    });
+
+    // Horizontal scroll override inside gallery track for smooth seamless tracking
+    if (track) {
+        track.addEventListener('wheel', (e) => {
+            if (e.deltaY !== 0) {
+                e.preventDefault();
+                track.scrollLeft += e.deltaY * 2.5;
+            }
+        });
+    }
+}
