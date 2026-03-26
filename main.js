@@ -21,7 +21,92 @@ requestAnimationFrame(raf);
 // GSAP Animations Registration
 gsap.registerPlugin(ScrollTrigger);
 
-// 1. Hero — Falling Pieces Animation
+// Cinematic Intro Branding Animation
+function initCinematicIntro() {
+    const introOverlay = document.querySelector('.intro-branding-overlay');
+    const introLogoWrap = document.querySelector('.intro-logo-wrap');
+    const nav = document.querySelector('.nav-minimal');
+    const navLogo = document.querySelector('.nav-minimal .logo');
+
+    if (!introOverlay || !navLogo) return;
+
+    // Stop scroll initially
+    if (typeof lenis !== 'undefined') lenis.stop();
+
+    // Initial state: Logo starts hidden to allow Intro centerpiece to emerge
+    const navLogoLink = document.querySelector('.nav-minimal .logo');
+    if (navLogoLink) navLogoLink.classList.remove('visible');
+    
+    gsap.set(introLogoWrap, { scale: 0.7, opacity: 0, y: 30 });
+
+    const introTl = gsap.timeline();
+
+    // 1. Pop-up the branding centerpiece
+    introTl.to(introLogoWrap, {
+        scale: 1,
+        opacity: 1,
+        y: 0,
+        duration: 2.5,
+        delay: 0.5,
+        ease: "expo.out",
+        onComplete: () => {
+            // Allow scrolling once the logo has settled
+            if (typeof lenis !== 'undefined') lenis.start();
+        }
+    });
+
+    // 2. Simple Fade & Reveal on Scroll logic
+    const scrollTl = gsap.timeline({
+        scrollTrigger: {
+            trigger: document.body,
+            start: "top top",
+            end: "400px top",
+            scrub: 1,
+            onLeave: () => {
+                const navLogoLink = document.querySelector('.nav-minimal .logo');
+                if (navLogoLink) navLogoLink.classList.add('visible');
+                gsap.to(introOverlay, { opacity: 0, pointerEvents: 'none', duration: 1.0 });
+            },
+            onEnterBack: () => {
+                const navLogoLink = document.querySelector('.nav-minimal .logo');
+                if (navLogoLink) navLogoLink.classList.remove('visible');
+                gsap.to(introOverlay, { opacity: 1, pointerEvents: 'all', duration: 0.8 });
+            }
+        }
+    });
+
+    // Fade out Intro Content as we scroll
+    scrollTl.to(introLogoWrap, {
+        opacity: 0,
+        y: -50,
+        ease: "power2.inOut"
+    }, 0);
+
+    // Fade in Navbar Elements
+    scrollTl.to(".hamburger, .nav-cta", {
+        opacity: 1,
+        visibility: "visible",
+        ease: "power2.inOut"
+    }, 0.2);
+
+    // Animate Navbar Glass Effect
+    scrollTl.to(nav, {
+        background: "rgba(10, 10, 10, 0.75)",
+        backdropFilter: "blur(20px)",
+        padding: "15px 0",
+        ease: "power2.inOut"
+    }, 0);
+}
+
+
+// Update DOMContentLoaded to initialize animations
+document.addEventListener("DOMContentLoaded", () => {
+    initCinematicIntro();
+    initHeroAnimation();
+});
+
+
+// 1. Hero — Simple Reveal (Plain & Clean)
 function initHeroAnimation() {
     const heroImg = document.querySelector('.hero-bg-img');
     const heroWrapper = document.querySelector('.hero-bg-wrapper');
@@ -32,109 +117,36 @@ function initHeroAnimation() {
 
     if (!heroWrapper || !heroImg) return;
 
-    // We'll create a grid of pieces using clip-path on clones of the image
-    const rows = 8;
-    const cols = 6;
-    const pieces = [];
+    // Remove the complex pieces logic and just show everything clearly with a simple timeline
+    const tl = gsap.timeline();
 
-    const src = heroImg.getAttribute('src'); // Get exact relative path to avoid absolute path encoding issues
+    // Initial Reveal (Plain & Clean)
+    gsap.set(heroImg, { opacity: 1, scale: 1 });
     
-    const pieceContainer = document.createElement('div');
-    pieceContainer.className = 'hero-pieces-container';
-    Object.assign(pieceContainer.style, {
-        position: 'absolute',
-        inset: '0',
-        zIndex: '1',
-        overflow: 'hidden'
-    });
-    heroWrapper.appendChild(pieceContainer);
-
-    for (let r = 0; r < rows; r++) {
-        for (let c = 0; c < cols; c++) {
-            const piece = document.createElement('div');
-            piece.className = 'hero-piece';
-            
-            // Calculate clip-path inset percentages: inset(top right bottom left)
-            const top = (r / rows) * 100;
-            const bottom = 100 - ((r + 1) / rows) * 100;
-            const left = (c / cols) * 100;
-            const right = 100 - ((c + 1) / cols) * 100;
-
-            Object.assign(piece.style, {
-                position: 'absolute',
-                inset: '0', 
-                backgroundImage: `url("${src}")`,
-                backgroundSize: 'cover',
-                backgroundPosition: 'center',
-                clipPath: `inset(${top}% ${right}% ${bottom}% ${left}%)`,
-                filter: 'brightness(0.65) contrast(1.05)',
-                willChange: 'transform'
-            });
-
-            pieceContainer.appendChild(piece);
-            pieces.push(piece);
-            
-            // Initial state for pieces (falling from high above)
-            gsap.set(piece, {
-                y: -window.innerHeight * 1.5,
-                rotation: gsap.utils.random(-15, 15),
-                z: gsap.utils.random(-300, 300),
-                opacity: 0
-            });
-        }
-    }
-
-    // Timeline for animation
-    const tl = gsap.timeline({
-        onComplete: () => {
-            // Once combined, show the original image and remove pieces to save DOM memory
-            gsap.set(heroImg, { opacity: 1 });
-            pieceContainer.remove();
-        }
-    });
-
-    // 1. Pieces fall from above
-    tl.to(pieces, {
-        y: 0,
-        rotation: 0,
-        z: 0,
-        opacity: 1,
-        duration: 2.2,
-        ease: "power4.out",
-        stagger: {
-            amount: 1.2,
-            from: "random"
-        }
-    });
-
-    // 2. Overlay fades in
     tl.to(heroOverlay, {
         opacity: 1,
         duration: 2,
         ease: "power2.inOut"
-    }, "-=1.5");
-
-    // 3. Writings come up
-    tl.to(heroHeading, {
+    })
+    .to(heroHeading, {
         opacity: 1,
         y: 0,
-        duration: 1.2,
+        duration: 1.5,
         ease: "power3.out"
     }, "-=1.0")
     .to(heroSubheading, {
         opacity: 1,
         y: 0,
-        duration: 1.2,
+        duration: 1.5,
         ease: "power3.out"
-    }, "-=0.9")
+    }, "-=1.2")
     .to('.hero-cta', {
         opacity: 1,
         y: 0,
-        duration: 1.2,
+        duration: 1.5,
         ease: "power3.out"
-    }, "-=0.8");
+    }, "-=1.1");
 
-    // 4. Scroll indicator fades in late
     if (scrollIndicator) {
         tl.to(scrollIndicator, {
             opacity: 1,
@@ -143,9 +155,9 @@ function initHeroAnimation() {
         }, "-=0.5");
     }
 
-    // Scroll Parallax on the main image (runs independently on scroll after load)
+    // Scroll Parallax on the main image remains for luxury depth
     gsap.to(heroImg, {
-        yPercent: 12, // subtle luxury parallax
+        yPercent: 12,
         ease: 'none',
         scrollTrigger: {
             trigger: '#hero',
@@ -155,7 +167,6 @@ function initHeroAnimation() {
         }
     });
 }
-document.addEventListener("DOMContentLoaded", initHeroAnimation);
 
 
 // 2. Services Stagger Reveal

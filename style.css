@@ -163,9 +163,11 @@ a { text-decoration: none; color: inherit; }
 .nav-minimal {
     position: fixed;
     top: 0; left: 0; width: 100%;
-    padding: 40px 0;
+    padding: 30px 0;
     z-index: 1000;
-    mix-blend-mode: difference; /* Ensures visibility on any bg */
+    transition: all 0.8s var(--transition-slow);
+    background: rgba(5, 5, 5, 0);
+    backdrop-filter: blur(0px);
 }
 .nav-container {
     display: flex;
@@ -179,6 +181,12 @@ a { text-decoration: none; color: inherit; }
     display: flex;
     align-items: center;
     gap: 30px;
+}
+
+.hamburger, .nav-cta {
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.8s var(--transition-slow), visibility 0.8s var(--transition-slow);
 }
 
 /* Hamburger */
@@ -1042,4 +1050,71 @@ a { text-decoration: none; color: inherit; }
         flex-direction: column !important;
         gap: 15px !important;
     }
+}
+
+/* --- GLOBAL BACKGROUND GLASSMORPHISM --- */
+.bg-black {
+    background: rgba(10, 10, 10, 0.6) !important;
+    backdrop-filter: blur(25px);
+    -webkit-backdrop-filter: blur(25px);
+    border-top: 1px solid rgba(255,255,255,0.05);
+}
+.bg-beige {
+    background: rgba(240, 235, 230, 0.75) !important;
+    backdrop-filter: blur(25px);
+    -webkit-backdrop-filter: blur(25px);
+    border-top: 1px solid rgba(255,255,255,0.4);
+}
+/* Ensure the body doesn't block the fixed bg */
+body {
+    background: transparent !important;
+}
+
+/* --- CINEMATIC INTRO STYLES --- */
+.intro-branding-overlay {
+    position: fixed;
+    inset: 0;
+    width: 100vw;
+    height: 100vh;
+    background: #050505;
+    z-index: 5000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    pointer-events: none; /* Allow scroll through once animated */
+    overflow: hidden;
+}
+
+.intro-bg-blur {
+    position: absolute;
+    inset: 0;
+    background-image: url('assets/intro_blur_bg.png');
+    background-size: cover;
+    background-position: center;
+    filter: blur(60px);
+    opacity: 0.45;
+    transform: scale(1.1);
+    z-index: -1;
+}
+
+.intro-logo-wrap {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    will-change: transform, opacity;
+}
+
+.nav-minimal {
+    opacity: 1; /* Keep nav controls visible */
+    transition: opacity 0.8s ease;
+}
+
+.nav-minimal .logo {
+    opacity: 0; /* Hide nav logo while Intro Logo is active */
+    transition: opacity 0.6s ease;
+}
+
+.nav-minimal .logo.visible {
+    opacity: 1;
 }
