@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Our Story | EASTERN HEMLOCK</title>
+    <title>Careers | EASTERN HEMLOCK</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400;500&family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=Josefin+Sans:wght@100;200;300&display=swap" rel="stylesheet">
@@ -14,9 +14,8 @@
 </head>
 <body class="luxury-theme">
     <div class="noise-overlay"></div>
-    <div class="cursor-dot"></div>
-    <div class="cursor-ring"></div>
 
+    <!-- Navigation -->
     <nav class="nav-minimal">
         <div class="nav-container">
             <a href="index.html" class="logo" style="text-decoration:none; color:inherit;">
@@ -34,6 +33,7 @@
         </div>
     </nav>
 
+    <!-- Menu Overlay -->
     <div class="menu-overlay">
         <div class="menu-bg"></div>
         <div class="menu-container">
@@ -59,84 +59,70 @@
                     <li><a href="services.html" class="menu-link" data-text="Services">Services</a></li>
                     <li><a href="dashboard.html" class="menu-link" data-text="Client Portal">Client Portal</a></li>
                     <li><a href="contact.html" class="menu-link" data-text="Contact">Contact</a></li>
+                    <li><a href="careers.html" class="menu-link" data-text="Careers">Careers</a></li>
                 </ul>
-            </div>
-            
-            <div class="menu-bottom">
-                <div class="menu-col">
-                    <h4>The Team</h4>
-                    <ul class="menu-sub-links">
-                        <li><a href="#">Lead Architects</a></li>
-                        <li><a href="#">Design Directors</a></li>
-                    </ul>
-                </div>
-                <div class="menu-col">
-                    <h4>Projects</h4>
-                    <ul class="menu-sub-links">
-                        <li><a href="#">Interior Design</a></li>
-                        <li><a href="#">Landscape Design</a></li>
-                    </ul>
-                </div>
             </div>
         </div>
     </div>
 
-    <!-- Page Content -->
-    <section id="our-story" class="bg-silk-premium" style="position: relative; min-height: 150vh; overflow: visible;">
-        <!-- Premium Scrolling Background Wrapper -->
-        <div style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; overflow: hidden; z-index: 0;">
-            <div class="story-3d-bg" style="position: absolute; top: -20%; left: 0; width: 100%; height: 140%; will-change: transform;">
-                <img src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=2560&q=100" alt="Resort Luxury Exterior" style="width: 100%; height: 100%; object-fit: cover;">
-            </div>
+    <!-- Careers Page Content -->
+    <section class="careers-hero bg-black">
+        <div class="container">
+            <h1 class="fade-slide-up">Join the <i>Artistry</i></h1>
+            <p class="fade-slide-up" style="margin-top: 20px; opacity: 0.6; letter-spacing: 2px; text-transform: uppercase; font-size: 0.9rem;">Elevate luxury with Eastern Hemlock</p>
         </div>
+    </section>
 
-        <!-- Floating Content Box -->
-        <div class="container" style="position: relative; z-index: 10; padding-top: 25vh; padding-bottom: 25vh; display: flex; justify-content: center;">
-            <div class="story-content-box" style="background: rgba(255, 255, 255, 0.98); padding: 70px 90px; max-width: 850px; box-shadow: 0 35px 60px -15px rgba(0,0,0,0.15); border: 1px solid rgba(255,255,255,0.4);">
-                <h2 style="font-size: 2.2rem; color: #111; margin-bottom: 35px; font-weight: 300; letter-spacing: -0.5px;">About us</h2>
-                
-                <p style="font-size: 1.05rem; color: #333; line-height: 1.8; margin-bottom: 25px; letter-spacing: 0.2px;">Founded in India on 2017, <strong>Eastern Hemlock for Building Contracting CO LLC SOC</strong> was born out of a passion for elevating luxury design standards in the region. Over the past 8 years, we have grown from a small, dedicated team into a leading name in interior design, landscaping, and swimming pool construction.</p>
-                
-                <p style="font-size: 1.05rem; color: #333; line-height: 1.8; letter-spacing: 0.2px;">Our journey has been driven by a relentless pursuit of excellence, blending craftsmanship and creativity in every project we undertake. Today, <strong>Eastern Hemlock for Building Contracting CO LLC SOC</strong> offers a full range of design and construction services, backed by a rich history of successful projects in Dubai and India. Each client and project we engage with contributes to our ongoing story, as we continue to redefine what's possible in the world of luxury living.</p>
+    <section class="careers-form-section section-spaced bg-black">
+        <div class="container">
+            <div class="form-container fade-slide-up">
+                <form action="#" class="luxury-form">
+                    <div class="form-group">
+                        <label>Full Name</label>
+                        <input type="text" placeholder="Your Name" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Email Address</label>
+                        <input type="email" placeholder="email@example.com" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Phone Number</label>
+                        <input type="tel" placeholder="+971 00 000 0000" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Position Applied For</label>
+                        <select required>
+                            <option value="" disabled selected>Select a position</option>
+                            <option value="architect">Lead Architect</option>
+                            <option value="designer">Interior Designer</option>
+                            <option value="landscape">Landscape Consultant</option>
+                            <option value="pool">Pool Technician</option>
+                        </select>
+                    </div>
+                    <div class="form-group full-width">
+                        <label>Message / Cover Letter</label>
+                        <textarea rows="5" placeholder="Tell us about your passion..."></textarea>
+                    </div>
+                    <div class="form-group full-width">
+                        <label>Resume / CV upload</label>
+                        <div class="file-upload">
+                            <input type="file" id="cv-upload" style="display:none;" required>
+                            <label for="cv-upload" style="cursor:pointer; color: var(--white);">
+                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" style="margin-bottom: 10px;"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg>
+                                <br>Click or drag your CV here to upload
+                            </label>
+                        </div>
+                    </div>
+                    <div class="form-group full-width" style="margin-top: 20px;">
+                        <button type="submit" class="btn btn-primary" style="width: 100%;">SUBMIT APPLICATION</button>
+                    </div>
+                </form>
             </div>
         </div>
     </section>
 
-    <!-- Elegant Scrolling Scripting -->
-    <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            if (typeof gsap !== 'undefined' && typeof ScrollTrigger !== 'undefined') {
-                gsap.registerPlugin(ScrollTrigger);
-                
-                // Premium Smooth Parallax Animation
-                gsap.to(".story-3d-bg", {
-                    scrollTrigger: {
-                        trigger: "#our-story",
-                        start: "top top",
-                        end: "bottom top",
-                        scrub: 1.2,
-                    },
-                    y: "25%",
-                    ease: "none"
-                });
-                
-                // Pop-up entrance for the box immediately on page load
-                gsap.fromTo(".story-content-box", 
-                    { scale: 0.85, opacity: 0, y: 40 },
-                    { 
-                        scale: 1,
-                        y: 0, 
-                        opacity: 1, 
-                        duration: 1.2, 
-                        ease: "back.out(1.5)",
-                        delay: 0.2
-                    }
-                );
-            }
-        });
-    </script>
-
-    <footer class="footer-minimal bg-black" style="margin-top: 5vh;">
+    <!-- Footer -->
+    <footer class="footer-minimal bg-black">
         <div class="container">
             <div class="footer-flex">
                 <div class="logo">
@@ -146,7 +132,8 @@
                 <p>&copy; 2026 Eastern Hemlock. All rights reserved.</p>
             </div>
         </div>
-    </footer>
+    </section>
+
     <script src="main.js"></script>
     <!-- WhatsApp Floating Button -->
     <a href="https://wa.me/971500000000" class="whatsapp-btn" target="_blank" aria-label="Chat on WhatsApp">

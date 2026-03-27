@@ -1,0 +1,17 @@
+<svg width="100" height="100" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <!-- Main Leaf Circle -->
+    <circle cx="50" cy="50" r="35" stroke="#4A8296" stroke-width="1.5" stroke-dasharray="2 2" opacity="0.3"/>
+    
+    <!-- Top Leaf -->
+    <path d="M50 50C50 35 60 25 75 25C70 45 60 50 50 50Z" stroke="#4A8296" stroke-width="2" stroke-linecap="round"/>
+    <path d="M55 42L62 35" stroke="#4A8296" stroke-width="1.5" stroke-linecap="round" opacity="0.6"/>
+    <path d="M60 46L68 40" stroke="#4A8296" stroke-width="1.5" stroke-linecap="round" opacity="0.6"/>
+    
+    <!-- Bottom Leaf (Inverted) -->
+    <path d="M50 50C50 65 40 75 25 75C30 55 40 50 50 50Z" stroke="#4A8296" stroke-width="2" stroke-linecap="round"/>
+    <path d="M45 58L38 65" stroke="#4A8296" stroke-width="1.5" stroke-linecap="round" opacity="0.6"/>
+    <path d="M40 54L32 60" stroke="#4A8296" stroke-width="1.5" stroke-linecap="round" opacity="0.6"/>
+    
+    <!-- S-Curve organic connector -->
+    <path d="M25 50C25 36.1929 36.1929 25 50 25M50 75C63.8071 75 75 63.8071 75 50" stroke="#4A8296" stroke-width="2" stroke-linecap="round"/>
+</svg>

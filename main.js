@@ -1,11 +1,11 @@
 // Initialize Lenis for Smooth Scrolling
 const lenis = new Lenis({
-    duration: 2.0, // Extremely slow & smooth
+    duration: 1.2, // Snappier scroll
     easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
     orientation: 'vertical',
     gestureOrientation: 'vertical',
     smoothWheel: true,
-    wheelMultiplier: 0.8,
+    wheelMultiplier: 1.0, // Standard multiplier
     smoothTouch: false,
     touchMultiplier: 2,
     infinite: false,
@@ -18,8 +18,11 @@ function raf(time) {
 
 requestAnimationFrame(raf);
 
-// GSAP Animations Registration
+// GSAP Animations Registration & Lenis Sync
 gsap.registerPlugin(ScrollTrigger);
+
+lenis.on('scroll', ScrollTrigger.update);
+gsap.ticker.lagSmoothing(0);
 
 // Cinematic Intro Branding Animation
 function initCinematicIntro() {
@@ -60,7 +63,7 @@ function initCinematicIntro() {
         scrollTrigger: {
             trigger: document.body,
             start: "top top",
-            end: "400px top",
+            end: "200px top", // Shortened transition for faster access
             scrub: 1,
             onLeave: () => {
                 const navLogoLink = document.querySelector('.nav-minimal .logo');
@@ -103,7 +106,139 @@ function initCinematicIntro() {
 document.addEventListener("DOMContentLoaded", () => {
     initCinematicIntro();
     initHeroAnimation();
+    initScrollStoryAnimation(); // New animation
 });
+
+// 1.5 Scroll-Driven Luxury Showcase Animation
+function initScrollStoryAnimation() {
+    const section = document.querySelector('.scroll-story-section');
+    const cardCenter = document.querySelector('.card-center');
+    const cardLeftInner = document.querySelector('.card-left-inner');
+    const cardRightInner = document.querySelector('.card-right-inner');
+    const cardLeftOuter = document.querySelector('.card-left-outer');
+    const cardRightOuter = document.querySelector('.card-right-outer');
+
+    if (!section || !cardCenter || !cardLeftInner || !cardRightInner) return;
+
+    const sideCards = [cardLeftOuter, cardLeftInner, cardRightInner, cardRightOuter];
+    const allCards = [cardCenter, ...sideCards];
+
+    // Responsive Animation Logic
+    let mm = gsap.matchMedia();
+
+    mm.add({
+        isDesktop: "(min-width: 1025px)",
+        isMobile: "(max-width: 1024px)"
+    }, (context) => {
+        let { isDesktop, isMobile } = context.conditions;
+
+        // 1. Initial State: Stacking cards behind center
+        gsap.set(allCards, { xPercent: -50, yPercent: -50 });
+        
+        gsap.set(sideCards, {
+            x: 0,
+            y: 0,
+            z: -300,
+            opacity: 0, // Keep clean start
+            scale: 0.8,
+            rotateY: 0
+        });
+
+        gsap.set(cardCenter, { z: 50, scale: 1, opacity: 1, x: 0, y: 0 });
+
+        // 2. Scroll Animation Timeline (Scroll DOWN = Cards Spread OUT Widely)
+        const tl = gsap.timeline({
+            scrollTrigger: {
+                trigger: section,
+                start: "top top",
+                end: "bottom bottom",
+                scrub: 1.2,
+                pin: ".scroll-sticky-container", // Use GSAP Pinning for mobile reliability
+                pinSpacing: false,
+                onUpdate: self => {
+                    // Force refresh for smoother synchronization on touch
+                    if (isMobile) ScrollTrigger.update();
+                }
+            }
+        });
+
+        // Spread Ease
+        const spreadEase = "power2.out";
+
+        // Center card scales up slightly for focus
+        tl.to(cardCenter, { scale: 1.15, z: 250, duration: 1 }, 0);
+
+        // Inner side cards spread (increased wide values as requested)
+        tl.to(cardLeftInner, {
+            x: isDesktop ? '-65%' : '-55%',
+            rotateY: isDesktop ? 18 : 14,
+            z: 0,
+            opacity: 1,
+            scale: isDesktop ? 1 : 0.95,
+            ease: spreadEase
+        }, 0.1);
+
+        tl.to(cardRightInner, {
+            x: isDesktop ? '65%' : '55%',
+            rotateY: isDesktop ? -18 : -14,
+            z: 0,
+            opacity: 1,
+            scale: isDesktop ? 1 : 0.95,
+            ease: spreadEase
+        }, 0.1);
+
+        // Outer side cards spread even further (Extra wide spread)
+        tl.to(cardLeftOuter, {
+            x: isDesktop ? '-140%' : '-125%',
+            rotateY: isDesktop ? 30 : 25,
+            z: -100,
+            opacity: 0.9,
+            scale: isDesktop ? 0.9 : 0.85,
+            ease: spreadEase
+        }, 0.2);
+
+        tl.to(cardRightOuter, {
+            x: isDesktop ? '140%' : '125%',
+            rotateY: isDesktop ? -30 : -25,
+            z: -100,
+            opacity: 0.9,
+            scale: isDesktop ? 0.9 : 0.85,
+            ease: spreadEase
+        }, 0.2);
+
+        // Ambient Glow Drifting (Matching Dark Theme)
+        const glows = document.querySelectorAll('.ambient-glow');
+        glows.forEach((glow, index) => {
+            tl.to(glow, {
+                x: index % 2 === 0 ? (isDesktop ? '35%' : '20%') : (isDesktop ? '-35%' : '-20%'),
+                y: index % 2 === 0 ? '20%' : '-20%',
+                scale: isDesktop ? 1.5 : 1.2,
+                duration: 1,
+                ease: "none"
+            }, 0);
+        });
+        
+        // Final refresh to ensure mobile layout sync
+        ScrollTrigger.refresh();
+
+        return () => {
+            // Cleanup logic if needed
+        };
+    });
+
+    // 3. Subtle Floating "Bouncing" Animation (Persistent)
+    allCards.forEach((card, index) => {
+        if (card) {
+            gsap.to(card, {
+                y: "-=20",
+                duration: 2.5 + (index * 0.3),
+                repeat: -1,
+                yoyo: true,
+                ease: "sine.inOut"
+            });
+        }
+    });
+}
 
 
 // 1. Hero — Simple Reveal (Plain & Clean)
@@ -271,7 +406,36 @@ fadeSlideUp.forEach(el => {
     );
 });
 
-// 6. Luxury Menu Toggle Logic
+gsap.fromTo(".fade-stagger", 
+    { y: 50, opacity: 0 },
+    {
+        y: 0, opacity: 1, duration: 1.5, stagger: 0.2, ease: "power3.out",
+        scrollTrigger: {
+            trigger: "#services .services-grid-3",
+            start: "top 80%"
+        }
+    }
+);
+
+// 5.5 Statistics Count-up Animation
+const statNumbers = document.querySelectorAll('.stat-number');
+statNumbers.forEach(stat => {
+    const target = parseInt(stat.getAttribute('data-target'));
+    if (stat) {
+        gsap.to(stat, {
+            innerText: target,
+            duration: 2.5,
+            snap: { innerText: 1 },
+            ease: "power2.out",
+            scrollTrigger: {
+                trigger: stat,
+                start: "top 90%",
+                toggleActions: "play none none none"
+            }
+        });
+    }
+});
+
 const hamburger = document.querySelector('.hamburger');
 const menuClose = document.querySelector('.menu-close');
 const menuOverlay = document.querySelector('.menu-overlay');

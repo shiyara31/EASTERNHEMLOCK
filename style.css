@@ -4,14 +4,23 @@
 */
 
 :root {
-    --black: #050505;
+    --black: #0d110f; /* Midnight Evergreen - High-End Organic Slate */
+    --black-pure: #000000;
     --white: #FFFFFF;
-    --beige: #EBE6DF;
+    --beige: #F5F1ED;
     --gold: #A6871F;
-    --text-muted: rgba(255, 255, 255, 0.5);
+    --text-muted: rgba(255, 255, 255, 0.45);
     
     --transition-slow: cubic-bezier(0.7, 0, 0.3, 1);
     --transition-fast: cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+body {
+    background-color: var(--black);
+    background-image: 
+        radial-gradient(circle at 50% 50%, #131a17 0%, var(--black) 100%),
+        url("https://www.transparenttextures.com/patterns/dark-matter.png"); /* Atmospheric Texture Overlay */
+    background-attachment: fixed;
 }
 
 * {
@@ -45,8 +54,11 @@ h1, h2, h3 {
     align-items: center;
     gap: 12px;
 }
-.brand-icon {
+.brand-icon, .intro-logo-img {
     flex-shrink: 0;
+    mix-blend-mode: normal; /* REVERT TO NORMAL: For high-fidelity alpha-transparent PNGs */
+    object-fit: contain;
+    background-color: transparent !important;
 }
 h1 i, h2 i {
     font-family: 'Playfair Display', serif;
@@ -62,7 +74,21 @@ h3 { font-size: 1.2rem; margin-bottom: 10px; font-weight: 400; letter-spacing: 3
 
 p { font-weight: 300; font-size: clamp(1rem, 1.2vw, 1.2rem); opacity: 0.8; }
 
-.bg-beige { background-color: var(--beige); color: var(--black); }
+.bg-beige { 
+    background-color: var(--beige);
+    color: var(--black); 
+}
+.bg-silk-premium {
+    background: radial-gradient(circle at center, #3a3a3a 0%, #111111 100%);
+    background-size: 100% 100%;
+    color: #EBEBEB;
+}
+
+@keyframes silkDrift {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
 .bg-black { background-color: var(--black); color: var(--white); }
 
 a { text-decoration: none; color: inherit; }
@@ -229,12 +255,11 @@ a { text-decoration: none; color: inherit; }
 
 .menu-bg {
     position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: var(--beige);
-    z-index: -1;
+    inset: 0;
+    background: var(--black);
+    transform: scaleY(0);
+    transform-origin: top;
+    transition: transform 1.2s var(--transition-slow);
 }
 
 .menu-container {
@@ -372,23 +397,6 @@ a { text-decoration: none; color: inherit; }
 }
 .menu-sub-links a:hover {
     color: var(--gold);
-}
-
-@media (max-width: 900px) {
-    .menu-bottom {
-        grid-template-columns: 1fr;
-        gap: 30px;
-        padding-bottom: 40px;
-    }
-    .menu-top-right {
-        gap: 20px;
-    }
-    .search-input {
-        width: 120px;
-    }
-    .nav-large-links li {
-        margin-bottom: 10px;
-    }
 }
 
 /* ─── 1. Hero Section ──────────────────────────────────── */
@@ -551,9 +559,7 @@ a { text-decoration: none; color: inherit; }
     gap: 5vw;
     margin-top: 5vh;
 }
-@media (max-width: 900px) {
-    .services-grid-3 { grid-template-columns: 1fr; gap: 8vh; }
-}
+
 
 .service-minimal {
     display: flex;
@@ -583,8 +589,9 @@ a { text-decoration: none; color: inherit; }
 .service-minimal:hover .service-img-wrapper img { transform: scale(1.03); }
 .service-minimal:hover .service-hover-overlay { opacity: 1; }
 
-.service-text { padding-top: 10px; }
-.service-text p { font-size: 0.95rem; opacity: 0.7; }
+.service-text { padding-top: 20px; text-align: center; }
+.service-text h3 { color: var(--black); font-size: 1.4rem; letter-spacing: 4px; margin-bottom: 8px; }
+.service-text p { font-size: 0.9rem; color: rgba(0,0,0,0.6); letter-spacing: 1px; }
 
 /* 3. Feature Showcase Section */
 .showcase-split {
@@ -593,9 +600,7 @@ a { text-decoration: none; color: inherit; }
     gap: 8vw;
     padding: 10vh 0;
 }
-@media (max-width: 900px) {
-    .showcase-split { flex-direction: column; text-align: center; }
-}
+
 .showcase-text { flex: 0.8; }
 .showcase-text p { font-size: 1.2rem; letter-spacing: 1px; text-transform: uppercase; margin-top: 20px;}
 
@@ -1076,7 +1081,7 @@ body {
     inset: 0;
     width: 100vw;
     height: 100vh;
-    background: #050505;
+    background: var(--black);
     z-index: 5000;
     display: flex;
     align-items: center;
@@ -1118,3 +1123,390 @@ body {
 .nav-minimal .logo.visible {
     opacity: 1;
 }
+
+/* ─── 1.5 Scroll-Driven Luxury Showcase (New) ───────────────── */
+
+.scroll-story-section {
+    position: relative;
+    height: 400vh;
+    background: #111111; /* Subtle Depth base */
+}
+
+.scroll-sticky-container {
+    position: relative; /* Changed from sticky */
+    width: 100%;
+    height: 100vh;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: radial-gradient(circle, #2c2c2c 0%, #111111 100%);
+}
+
+/* Premium Pastel Ambient Background */
+.scroll-story-ambient {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    z-index: 1;
+}
+
+.ambient-glow {
+    position: absolute;
+    width: 70vw;
+    height: 70vw;
+    border-radius: 100%;
+    filter: blur(160px);
+    opacity: 0.3; /* More visible on light bg */
+    mix-blend-mode: soft-light;
+    will-change: transform;
+}
+
+.glow-1 {
+    top: -10%;
+    left: -10%;
+    background: radial-gradient(circle, rgba(255, 255, 255, 0.08) 0%, transparent 70%); /* Soft Platinum */
+}
+
+.glow-2 {
+    bottom: -15%;
+    right: -10%;
+    background: radial-gradient(circle, rgba(255, 255, 255, 0.05) 0%, transparent 70%); /* Dim White */
+}
+
+.glow-3 {
+    top: 30%;
+    left: 40%;
+    width: 50vw;
+    height: 50vw;
+    background: radial-gradient(circle, rgba(255, 255, 255, 0.03) 0%, transparent 70%);
+}
+
+/* Elegant Grainy Noise */
+.cinematic-noise {
+    position: absolute;
+    inset: 0;
+    background-image: url("https://www.transparenttextures.com/patterns/dark-matter.png"); /* Subtle Dark Detail */
+    opacity: 0.15;
+    pointer-events: none;
+    mix-blend-mode: overlay;
+}
+
+.scroll-cards-wrapper {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transform-style: preserve-3d;
+    perspective: 2000px;
+    z-index: 10;
+}
+
+.scroll-card {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    /* GSAP will handle centering transform via xPercent: -50, yPercent: -50 */
+    width: clamp(200px, 15vw, 260px);
+    height: clamp(320px, 25vw, 420px);
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 40px 80px rgba(0, 0, 0, 0.6), 
+                0 15px 40px rgba(0, 0, 0, 0.4),
+                inset 0 0 0 1px rgba(255, 255, 255, 0.08);
+    background: rgba(18, 18, 19, 0.85);
+    backdrop-filter: blur(20px);
+    will-change: transform, opacity;
+    transform-origin: center center;
+}
+
+.scroll-card img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    filter: brightness(1.05) contrast(0.95); /* Softer aesthetic for light theme */
+    transition: transform 0.8s var(--transition-slow);
+}
+
+.scroll-card:hover img {
+    transform: scale(1.03);
+}
+
+/* Card Specific (Z-index layering - Central is top) */
+.card-center { z-index: 20; }
+.card-left-inner, .card-right-inner { z-index: 18; }
+.card-left-outer, .card-right-outer { z-index: 16; }
+
+/* Subtle Sheen for Pastel Glass */
+.scroll-card::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, rgba(255,255,255,0.4) 0%, transparent 50%);
+    pointer-events: none;
+    z-index: 5;
+}
+
+@media (max-width: 1024px) {
+    .scroll-card {
+        width: 160px;
+        height: 260px;
+        border-radius: 15px;
+    }
+}
+
+.card-label {
+    position: absolute;
+    bottom: 30px;
+    left: 20px;
+    color: var(--white);
+    font-size: 0.7rem;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    font-weight: 300;
+    z-index: 10;
+    opacity: 0.9;
+    transition: all 0.6s var(--transition-slow);
+}
+
+.scroll-card:hover .card-label {
+    transform: translateY(-5px);
+}
+
+/* --- NEW SECTIONS COMPONENT SYSTEM --- */
+
+/* 1. Statistics Section */
+.stats-section {
+    padding: 12vh 0;
+    background: linear-gradient(to bottom, #0d110f 0%, #171f1b 50%, #0d110f 100%);
+    border-top: 1px solid rgba(255,255,255,0.03);
+    border-bottom: 1px solid rgba(255,255,255,0.03);
+}
+
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 15px; /* Minimized gap for mobile fit */
+}
+
+.stat-item {
+    text-align: center;
+    border-left: 1px solid rgba(255,255,255,0.05);
+    padding-left: 20px;
+}
+
+/* Fluid Typography for 4-column Mobile Stats */
+.stat-number {
+    font-size: clamp(1rem, 4.5vw, 3.5rem);
+    font-weight: 200;
+    letter-spacing: -2px;
+    display: block;
+    margin-bottom: 5px;
+}
+
+.stat-label {
+    font-size: clamp(0.5rem, 1.8vw, 0.75rem);
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    color: var(--text-muted);
+}
+
+/* Removed mobile stack to ensure layout remains same as desktop */
+
+/* 2. Partner Scroller (Infinite Loop) */
+.partners-section {
+    padding: 80px 0;
+    background: var(--black);
+    overflow: hidden;
+    position: relative;
+    border-top: 1px solid rgba(255,255,255,0.02);
+}
+
+.partners-track {
+    display: flex;
+    width: calc(250px * 16); /* Large enough for loop */
+    animation: scrollInfinite 30s linear infinite;
+    gap: 80px;
+    align-items: center;
+}
+
+.partner-logo {
+    width: 200px;
+    font-family: 'Josefin Sans', sans-serif;
+    font-size: 1.2rem;
+    letter-spacing: 8px;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.3);
+    text-align: center;
+    white-space: nowrap;
+}
+
+@keyframes scrollInfinite {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(calc(-250px * 8)); }
+}
+
+/* 3. Social Media Section */
+.social-section {
+    padding: 8vh 0;
+    text-align: center;
+    border-top: 1px solid rgba(255,255,255,0.05);
+}
+
+.social-links {
+    display: flex;
+    justify-content: center;
+    gap: 40px;
+    margin-top: 30px;
+}
+
+.social-icon {
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 4px;
+    color: var(--text-muted);
+    transition: all 0.4s var(--transition-fast);
+    position: relative;
+}
+
+.social-icon::after {
+    content: '';
+    position: absolute;
+    bottom: -8px;
+    left: 0;
+    width: 100%;
+    height: 1px;
+    background: var(--white);
+    transform: scaleX(0);
+    transform-origin: right;
+    transition: transform 0.4s var(--transition-slow);
+}
+
+.social-icon:hover { color: var(--white); }
+.social-icon:hover::after { transform: scaleX(1); transform-origin: left; }
+
+/* 4. WhatsApp Button */
+.whatsapp-btn {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    width: 55px;
+    height: 55px;
+    background: #25d366;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 9999;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+    transition: all 0.4s var(--transition-fast);
+}
+
+.whatsapp-btn svg { width: 30px; height: 30px; fill: white; }
+.whatsapp-btn:hover { transform: scale(1.1) rotate(10deg); filter: brightness(1.1); }
+
+/* 5. Careers Page / Form styles */
+.careers-hero {
+    padding: 25vh 0 10vh;
+    text-align: center;
+}
+
+.form-container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 60px;
+    background: rgba(255,255,255,0.02);
+    border: 1px solid rgba(255,255,255,0.05);
+    border-radius: 4px;
+}
+
+.luxury-form {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 30px;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.form-group.full-width { grid-column: span 2; }
+
+.form-group label {
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    color: var(--text-muted);
+}
+
+.form-group input, 
+.form-group select, 
+.form-group textarea {
+    background: transparent;
+    border: none;
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+    padding: 12px 0;
+    color: var(--white);
+    font-family: inherit;
+    font-size: 0.9rem;
+    transition: border-color 0.4s;
+    outline: none;
+}
+
+.form-group input:focus, 
+.form-group textarea:focus {
+    border-bottom-color: var(--white);
+}
+
+.file-upload {
+    position: relative;
+    padding: 30px;
+    border: 1px dashed rgba(255,255,255,0.1);
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.4s;
+}
+
+.file-upload:hover { border-color: var(--white); background: rgba(255,255,255,0.02); }
+
+@media (max-width: 768px) {
+    .luxury-form { grid-template-columns: 1fr; }
+    .form-group.full-width { grid-column: span 1; }
+    .form-container { padding: 30px 20px; }
+}
+
+/* --- CONSOLIDATED RESPONSIVE OVERRIDES (Cascade Top Priority) --- */
+@media (max-width: 900px) {
+    .stats-grid {
+        grid-template-columns: 1fr !important; /* Forces Vertical Metrics */
+        gap: 40px;
+    }
+    .stat-item {
+        border-left: none;
+        border-bottom: 1px solid rgba(255,255,255,0.05);
+        padding: 0 0 25px 0;
+    }
+    .stat-item:last-child {
+        border-bottom: none;
+    }
+    .services-grid-3 {
+        grid-template-columns: 1fr !important; /* FORCED VERTICAL: Interior, Landscape, Pool */
+        gap: 60px;
+    }
+    .showcase-split {
+        flex-direction: column !important; /* Vertical Showcase Stacking */
+        text-align: center;
+    }
+    .story-layout {
+        flex-direction: column;
+        text-align: center;
+    }
+    .container {
+        padding: 0 20px !important;
+    }
+}
+
