@@ -29,75 +29,86 @@ function initCinematicIntro() {
     const introOverlay = document.querySelector('.intro-branding-overlay');
     const introLogoWrap = document.querySelector('.intro-logo-wrap');
     const nav = document.querySelector('.nav-minimal');
-    const navLogo = document.querySelector('.nav-minimal .logo');
 
-    if (!introOverlay || !navLogo) return;
+    if (!introOverlay || !introLogoWrap) return;
 
-    // Stop scroll initially
+    // Halt smooth scroll during intro
     if (typeof lenis !== 'undefined') lenis.stop();
 
-    // Initial state: Logo starts hidden to allow Intro centerpiece to emerge
-    const navLogoLink = document.querySelector('.nav-minimal .logo');
-    if (navLogoLink) navLogoLink.classList.remove('visible');
-    
+    // Prepare initial states
+    gsap.set([".hamburger", ".nav-cta", ".nav-minimal .logo"], { opacity: 0, visibility: "hidden" });
+    gsap.set(".hero-content", { opacity: 1 }); // Ensure parent is visible
+    gsap.set([".hero-heading", ".hero-subheading", ".hero-cta", ".scroll-indicator"], { opacity: 0, y: 30 });
     gsap.set(introLogoWrap, { scale: 0.7, opacity: 0, y: 30 });
 
-    const introTl = gsap.timeline();
-
-    // 1. Pop-up the branding centerpiece
-    introTl.to(introLogoWrap, {
-        scale: 1,
-        opacity: 1,
-        y: 0,
-        duration: 2.5,
-        delay: 0.5,
-        ease: "expo.out",
+    const introTl = gsap.timeline({
         onComplete: () => {
-            // Allow scrolling once the logo has settled
-            if (typeof lenis !== 'undefined') lenis.start();
-        }
-    });
-
-    // 2. Simple Fade & Reveal on Scroll logic
-    const scrollTl = gsap.timeline({
-        scrollTrigger: {
-            trigger: document.body,
-            start: "top top",
-            end: "200px top", // Shortened transition for faster access
-            scrub: 1,
-            onLeave: () => {
-                const navLogoLink = document.querySelector('.nav-minimal .logo');
-                if (navLogoLink) navLogoLink.classList.add('visible');
-                gsap.to(introOverlay, { opacity: 0, pointerEvents: 'none', duration: 1.0 });
-            },
-            onEnterBack: () => {
-                const navLogoLink = document.querySelector('.nav-minimal .logo');
-                if (navLogoLink) navLogoLink.classList.remove('visible');
-                gsap.to(introOverlay, { opacity: 1, pointerEvents: 'all', duration: 0.8 });
+            if (typeof lenis !== 'undefined') {
+                lenis.start();
+                ScrollTrigger.refresh();
             }
         }
     });
 
-    // Fade out Intro Content as we scroll
-    scrollTl.to(introLogoWrap, {
-        opacity: 0,
-        y: -50,
-        ease: "power2.inOut"
-    }, 0);
+    // 1. Logo Pop-up
+    introTl.to(introLogoWrap, {
+        scale: 1,
+        opacity: 1,
+        y: 0,
+        duration: 1.8,
+        delay: 0.4,
+        ease: "expo.out"
+    });
 
-    // Fade in Navbar Elements
-    scrollTl.to(".hamburger, .nav-cta", {
+    // 2. Automtic Fade-out (Faster, more premium feel)
+    introTl.to(introLogoWrap, {
+        opacity: 0,
+        y: -20,
+        scale: 0.98,
+        duration: 1.2,
+        delay: 1.0, // Reduced from 1.5s
+        ease: "power3.inOut"
+    })
+    .to(introOverlay, {
+        opacity: 0,
+        duration: 1.5,
+        ease: "power2.inOut",
+        onComplete: () => {
+            gsap.set(introOverlay, { pointerEvents: 'none', display: 'none' });
+        }
+    }, "-=1.0");
+
+    // 3. Reveal Site Content
+    introTl.to([".hero-heading", ".hero-subheading", ".hero-cta", ".scroll-indicator"], {
+        opacity: 1,
+        y: 0,
+        duration: 1.2,
+        stagger: 0.15,
+        ease: "power2.out"
+    }, "-=1.2")
+    .to([".nav-minimal .logo", ".hamburger", ".nav-cta"], {
         opacity: 1,
         visibility: "visible",
-        ease: "power2.inOut"
-    }, 0.2);
+        duration: 0.8,
+        stagger: 0.1,
+        ease: "power2.out"
+    }, "-=1.0");
 
-    // Animate Navbar Glass Effect
+    // 4. Parallax & Scroll Triggers (Simplified)
+    const scrollTl = gsap.timeline({
+        scrollTrigger: {
+            trigger: document.body,
+            start: "top top",
+            end: "500px top",
+            scrub: 1
+        }
+    });
+
     scrollTl.to(nav, {
-        background: "rgba(10, 10, 10, 0.75)",
+        background: "rgba(13, 17, 15, 0.98)",
         backdropFilter: "blur(20px)",
         padding: "15px 0",
-        ease: "power2.inOut"
+        ease: "none"
     }, 0);
 }
 
@@ -243,53 +254,15 @@ function initScrollStoryAnimation() {
 
 // 1. Hero — Simple Reveal (Plain & Clean)
 function initHeroAnimation() {
+    // We now handle the content reveal inside the Cinematic Intro timeline for better flow
     const heroImg = document.querySelector('.hero-bg-img');
-    const heroWrapper = document.querySelector('.hero-bg-wrapper');
-    const heroHeading = document.querySelector('.hero-heading');
-    const heroSubheading = document.querySelector('.hero-subheading');
     const heroOverlay = document.querySelector('.hero-overlay');
-    const scrollIndicator = document.querySelector('.scroll-indicator');
 
-    if (!heroWrapper || !heroImg) return;
-
-    // Remove the complex pieces logic and just show everything clearly with a simple timeline
-    const tl = gsap.timeline();
-
-    // Initial Reveal (Plain & Clean)
+    // Initial State for visual clarity: Background is ready, content handled by Intro
     gsap.set(heroImg, { opacity: 1, scale: 1 });
-    
-    tl.to(heroOverlay, {
-        opacity: 1,
-        duration: 2,
-        ease: "power2.inOut"
-    })
-    .to(heroHeading, {
-        opacity: 1,
-        y: 0,
-        duration: 1.5,
-        ease: "power3.out"
-    }, "-=1.0")
-    .to(heroSubheading, {
-        opacity: 1,
-        y: 0,
-        duration: 1.5,
-        ease: "power3.out"
-    }, "-=1.2")
-    .to('.hero-cta', {
-        opacity: 1,
-        y: 0,
-        duration: 1.5,
-        ease: "power3.out"
-    }, "-=1.1");
+    gsap.set(heroOverlay, { opacity: 1 });
 
-    if (scrollIndicator) {
-        tl.to(scrollIndicator, {
-            opacity: 1,
-            duration: 1.5,
-            ease: "power2.out"
-        }, "-=0.5");
-    }
-
+    // Initial State for visual clarity
     // Scroll Parallax on the main image remains for luxury depth
     gsap.to(heroImg, {
         yPercent: 12,
@@ -424,7 +397,7 @@ statNumbers.forEach(stat => {
     if (stat) {
         gsap.to(stat, {
             innerText: target,
-            duration: 2.5,
+            duration: 7.5, // Tripled from 2.5s
             snap: { innerText: 1 },
             ease: "power2.out",
             scrollTrigger: {

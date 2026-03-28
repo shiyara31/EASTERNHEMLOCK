@@ -20,7 +20,7 @@
     <nav class="nav-minimal">
         <div class="nav-container">
             <a href="index.html" class="logo" style="text-decoration:none; color:inherit;">
-                <img src="assets/logo_emblem.png" alt="EH Logo" class="brand-icon" width="34" height="34" style="object-fit: contain; clip-path: circle(50%);">
+                <img src="assets/logo_emblem.png" alt="EH Logo" class="brand-icon" width="34" height="34" style="object-fit: contain; clip-path: circle(50%); filter: brightness(0) invert(1);">
                 <span>EASTERN HEMLOCK</span>
             </a>
             <div class="nav-right">
@@ -28,6 +28,7 @@
                     <a href="contact.html" class="btn btn-outline" data-hover="Get Consultation"><span>Get Consultation</span></a>
                 </div>
                 <button class="hamburger" aria-label="Open Menu">
+                    <span style="font-size: 0.7rem; letter-spacing: 2px; margin-right: 15px; color: rgba(255,255,255,0.7); font-weight: 500;">MENU</span>
                     <span class="hamburger-line"></span><span class="hamburger-line"></span><span class="hamburger-line"></span>
                 </button>
             </div>
@@ -39,7 +40,7 @@
         <div class="menu-container">
             <div class="menu-top">
                 <div class="logo">
-                    <img src="assets/logo_emblem.png" alt="EH Logo" class="brand-icon" width="34" height="34" style="object-fit: contain; clip-path: circle(50%);">
+                    <img src="assets/logo_emblem.png" alt="EH Logo" class="brand-icon" width="34" height="34" style="object-fit: contain; clip-path: circle(50%); filter: brightness(0) invert(1);">
                     <span>EASTERN HEMLOCK</span>
                 </div>
                 <div class="menu-top-right">
@@ -60,7 +61,40 @@
                 </ul>
             </div>
             
-            <div class="menu-bottom"></div>
+            <div class="menu-bottom">
+                <div class="menu-col">
+                    <h4>The Team</h4>
+                    <ul class="menu-sub-links">
+                        <li><a href="about.html#team">Design Director</a></li>
+                        <li><a href="about.html#team">Architects</a></li>
+                        <li><a href="about.html#team">Engineers</a></li>
+                    </ul>
+                    <div class="menu-socials-inline" style="margin-top: 25px; display:flex; gap: 15px;">
+                        <a href="#" style="font-size: 0.7rem; color: #fff; text-decoration: none; opacity: 0.5;">INSTA</a>
+                        <a href="#" style="font-size: 0.7rem; color: #fff; text-decoration: none; opacity: 0.5;">FB</a>
+                        <a href="#" style="font-size: 0.7rem; color: #fff; text-decoration: none; opacity: 0.5;">YT</a>
+                        <a href="#" style="font-size: 0.7rem; color: #fff; text-decoration: none; opacity: 0.5;">LI</a>
+                    </div>
+                </div>
+                <div class="menu-col">
+                    <h4>Projects</h4>
+                    <ul class="menu-sub-links">
+                        <li><a href="projects.html?filter=interiors">Interior Design</a></li>
+                        <li><a href="projects.html?filter=landscapes">Landscape Design</a></li>
+                        <li><a href="projects.html?filter=pools">Swimming Pools</a></li>
+                        <li><a href="projects.html?filter=smarthomes">Smart Home</a></li>
+                        <li><a href="projects.html?filter=maintenance">Maintenance</a></li>
+                    </ul>
+                </div>
+                <div class="menu-col">
+                    <h4>INSPIRATIONS</h4>
+                    <ul class="menu-sub-links">
+                        <li><a href="#">Modern Furniture</a></li>
+                        <li><a href="#">Outdoor Spaces</a></li>
+                        <li><a href="#">Luxury Living</a></li>
+                    </ul>
+                </div>
+            </div>
         </div>
     </div>
 
@@ -100,6 +134,12 @@
         <div class="subnav-item gallery-trigger" data-filter="pools">
             SWIMMING POOLS
         </div>
+        <div class="subnav-item gallery-trigger" data-filter="smarthomes">
+            SMART HOME
+        </div>
+        <div class="subnav-item gallery-trigger" data-filter="maintenance">
+            MAINTENANCE
+        </div>
     </div>
 
     <!-- Luxury Fullscreen Gallery Modal -->
@@ -115,6 +155,8 @@
                     <button class="filter-btn" data-filter="interiors">Interiors</button>
                     <button class="filter-btn" data-filter="landscapes">Landscapes</button>
                     <button class="filter-btn" data-filter="pools">Pools</button>
+                    <button class="filter-btn" data-filter="smarthomes">Smart Home</button>
+                    <button class="filter-btn" data-filter="maintenance">Maintenance</button>
                 </div>
             </div>
             
@@ -137,7 +179,7 @@
     </footer>
     <script src="main.js"></script>
     <!-- WhatsApp Floating Button -->
-    <a href="https://wa.me/971500000000" class="whatsapp-btn" target="_blank" aria-label="Chat on WhatsApp">
+    <a href="https://wa.me/9718004365625" class="whatsapp-btn" target="_blank" aria-label="Chat on WhatsApp">
         <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.414 0 .018 5.393 0 12.03c0 2.123.553 4.197 1.605 6.046L0 24l6.117-1.605A11.803 11.803 0 0012.043 24h.008c6.635 0 12.03-5.393 12.033-12.03a11.75 11.75 0 00-3.518-8.484l-.001-.001z"/></svg>
     </a>
 </body>
