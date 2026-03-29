@@ -4,7 +4,7 @@ gsap.config({ force3D: true, nullTargetWarn: false }); // Enable GPU acceleratio
 
 // Initialize Lenis for Smooth Scrolling
 const lenis = new Lenis({
-    duration: 1.2, // Balanced for responsiveness and luxury
+    duration: 1.2, 
     easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)), 
     orientation: 'vertical',
     gestureOrientation: 'vertical',
@@ -12,7 +12,7 @@ const lenis = new Lenis({
     lerp: 0.1, 
     wheelMultiplier: 1,
     smoothTouch: true, 
-    touchMultiplier: 1.2, // Smoother follow on touch
+    touchMultiplier: 1.2, 
     infinite: false,
 });
 
@@ -180,8 +180,9 @@ function initScrollStoryAnimation() {
                 trigger: section,
                 start: "top top",
                 end: "bottom bottom",
-                scrub: 0.5, // Sharaper, more responsive card spread
+                scrub: 0.8, // More weighted 'cinematic' spread
                 pin: ".scroll-sticky-container",
+                invalidateOnRefresh: true, 
                 pinSpacing: false,
                 onUpdate: self => {
                     // Force refresh for smoother synchronization on touch

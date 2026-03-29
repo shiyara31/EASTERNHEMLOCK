@@ -1695,16 +1695,36 @@ body {
 /* --- CONSOLIDATED RESPONSIVE OVERRIDES (Cascade Top Priority) --- */
 @media (max-width: 900px) {
     .nav-minimal {
-        background: #111111 !important; /* Midnight Graphite */
-        min-height: 55px !important; /* Ensures stable height for logo/text */
-        padding: 0 5% !important; 
-        border-bottom: 1px solid rgba(166, 135, 31, 0.3) !important; /* Subtle Gold Contrast */
+        position: fixed !important;
+        top: 0 !important;
+        left: 0 !important;
+        width: 100% !important;
+        height: 60px !important; /* Explicit stable height */
+        background: #111111 !important; /* Solid Midnight Graphite */
+        padding: 0 15px !important; 
+        border-bottom: 1px solid rgba(166, 135, 31, 0.4) !important;
         opacity: 1 !important;
         visibility: visible !important;
-        z-index: 9999 !important; /* Maximum priority */
+        z-index: 10000 !important; /* Overwrite all layers */
         display: flex !important;
         align-items: center !important;
         justify-content: space-between !important;
+    }
+    /* Fix for mobile logo/cta visibility */
+    .nav-minimal .logo span {
+        font-size: 1.0rem !important; 
+        letter-spacing: 2px !important;
+    }
+    .hamburger {
+        display: block !important;
+        z-index: 10001 !important;
+    }
+    .nav-cta {
+        display: block !important;
+    }
+    .nav-cta .btn-outline {
+        padding: 6px 14px !important;
+        font-size: 0.7rem !important;
     }
     .hamburger {
         opacity: 1 !important;
