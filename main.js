@@ -4,15 +4,15 @@ gsap.config({ force3D: true, nullTargetWarn: false }); // Enable GPU acceleratio
 
 // Initialize Lenis for Smooth Scrolling
 const lenis = new Lenis({
-    duration: 1.2, 
+    duration: 1.5, /* Weighted Cinematic Duration */
     easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)), 
     orientation: 'vertical',
     gestureOrientation: 'vertical',
     smoothWheel: true,
-    lerp: 0.1, 
+    lerp: 0.05, /* Deeper weighted smoothness */
     wheelMultiplier: 1,
     smoothTouch: true, 
-    touchMultiplier: 1.2, 
+    touchMultiplier: 1.5, /* Enhanced mobile momentum */
     infinite: false,
 });
 
