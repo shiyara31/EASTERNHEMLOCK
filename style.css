@@ -3,6 +3,10 @@
     Minimalist Premium Design System
 */
 
+html {
+    scroll-behavior: initial !important; /* Final safety kickstart for smooth scroll */
+}
+
 :root {
     --black: #0d110f; /* Midnight Evergreen - High-End Organic Slate */
     --black-pure: #000000;
@@ -35,6 +39,27 @@ body {
     line-height: 1.5;
     overflow-x: hidden;
     -webkit-font-smoothing: antialiased;
+}
+
+/* Lenis Smooth Scroll Mandatory CSS */
+html.lenis, html.lenis body {
+    height: auto !important;
+}
+
+.lenis.lenis-smooth {
+    scroll-behavior: auto !important;
+}
+
+.lenis.lenis-smooth [data-lenis-prevent] {
+    overscroll-behavior: contain;
+}
+
+.lenis.lenis-stopped {
+    overflow: hidden;
+}
+
+.lenis.lenis-scrolling iframe {
+    pointer-events: none;
 }
 
 /* Typography Foundation */
@@ -1223,7 +1248,6 @@ body {
     height: 50vw;
     background: radial-gradient(circle, rgba(255, 255, 255, 0.03) 0%, transparent 70%);
 }
-
 /* Grainy Noise Removed for clarity */
 
 .scroll-cards-wrapper {

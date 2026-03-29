@@ -1,28 +1,26 @@
+// GSAP Animations Registration & Lenis Sync
+gsap.registerPlugin(ScrollTrigger);
+
 // Initialize Lenis for Smooth Scrolling
 const lenis = new Lenis({
-    duration: 1.2, // Snappier scroll
-    easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+    duration: 1.2, 
+    easing: (t) => 1 - Math.pow(1 - t, 4), 
     orientation: 'vertical',
     gestureOrientation: 'vertical',
     smoothWheel: true,
-    wheelMultiplier: 1.0, // Standard multiplier
+    wheelMultiplier: 1.15,
     smoothTouch: false,
     touchMultiplier: 2,
     infinite: false,
 });
 
-function raf(time) {
-    lenis.raf(time);
-    requestAnimationFrame(raf);
-}
-
-requestAnimationFrame(raf);
-
-// GSAP Animations Registration & Lenis Sync
-gsap.registerPlugin(ScrollTrigger);
+// GSAP Ticker for Lenis Sync (More robust than manual RAF)
+gsap.ticker.add((time) => {
+    lenis.raf(time * 1000);
+});
+gsap.ticker.lagSmoothing(0);
 
 lenis.on('scroll', ScrollTrigger.update);
-gsap.ticker.lagSmoothing(0);
 
 // Cinematic Intro Branding Animation
 function initCinematicIntro() {
@@ -605,4 +603,9 @@ if (galleryModal) {
             }
         });
     }
+}
+
+// Final safety kickstart for smooth scroll
+if (typeof lenis !== 'undefined') {
+    lenis.start();
 }
