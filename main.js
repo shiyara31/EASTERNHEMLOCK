@@ -133,8 +133,27 @@ function initCinematicIntro() {
 document.addEventListener("DOMContentLoaded", () => {
     initCinematicIntro();
     initHeroAnimation();
-    initScrollStoryAnimation(); // New animation
+    initScrollStoryAnimation();
+    initParallax();
 });
+
+// Parallax Optimization Engine
+function initParallax() {
+    gsap.utils.toArray(".parallax-img").forEach(img => {
+        gsap.to(img, {
+            y: "15%",
+            ease: "none",
+            scrollTrigger: {
+                trigger: img.parentElement,
+                start: "top bottom",
+                end: "bottom top",
+                scrub: 1.0, // Cinematic smooth scrub
+                invalidateOnRefresh: true,
+                force3D: true
+            }
+        });
+    });
+}
 
 // 1.5 Scroll-Driven Luxury Showcase Animation
 function initScrollStoryAnimation() {

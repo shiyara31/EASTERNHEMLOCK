@@ -1289,11 +1289,12 @@ body {
 }
 
 .nav-container {
-    padding: 0 5%; 
-    min-height: 35px; /* Stay razor thin */
+    padding: 0 10px !important; /* Absolute Edge Fringe Activation */
+    min-height: 35px;
     display: flex;
     align-items: center;
     justify-content: space-between;
+    width: 100%;
 }
 
 .nav-minimal .brand-icon {
@@ -1701,7 +1702,7 @@ body {
         width: 100% !important;
         height: 60px !important;
         background: #111111 !important;
-        padding: 0 15px !important; 
+        padding: 0 !important; /* Absolute Fringe Reset */
         border-bottom: 1px solid rgba(166, 135, 31, 0.4) !important;
         opacity: 1 !important;
         visibility: visible !important;
@@ -1710,35 +1711,62 @@ body {
         align-items: center !important;
         justify-content: space-between !important;
     }
-    .nav-left { flex: 0 0 auto !important; }
-    .nav-minimal .brand-icon { width: 32px !important; height: 32px !important; }
-    .nav-minimal .logo span {
-        font-size: 0.85rem !important;
-        letter-spacing: 2px !important;
-        margin-left: 8px !important;
+    .nav-minimal .logo {
+        margin-left: 5px !important; /* Ultimate left-corner anchor */
+        display: flex !important;
+        align-items: center !important;
     }
-    .nav-cta { margin-right: 10px !important; flex: 0 0 auto !important; }
+    .hamburger {
+        margin-right: 15px !important; /* Balance on right fringe */
+    }
+    .nav-minimal .brand-icon {
+        width: 32px !important;
+        height: 32px !important;
+        margin-right: -2px !important; /* Forces tighter overlap */
+    }
+    .nav-minimal .logo span {
+        font-size: 0.8rem !important;
+        letter-spacing: 2px !important;
+        margin-left: 2px !important; /* Absolute minimal gap */
+        display: block !important;
+        white-space: nowrap !important;
+    }
+    .nav-cta { 
+        margin-left: auto !important;
+        margin-right: 15px !important;
+        display: flex !important;
+        align-items: center !important;
+    }
     .nav-cta .btn-outline {
-        padding: 5px 10px !important;
+        padding: 4px 8px !important;
         font-size: 0.6rem !important;
-        letter-spacing: 1px !important;
+        letter-spacing: 1.5px !important;
+        border-radius: 4px !important;
+        line-height: 1 !important;
     }
     .hamburger {
         width: 30px !important;
-        height: 20px !important;
+        height: 18px !important;
         background: transparent !important;
-        border: none !important;
-        flex-shrink: 0 !important;
         display: flex !important;
         flex-direction: column !important;
         justify-content: space-between !important;
+        cursor: pointer !important;
+        flex-shrink: 0 !important;
         padding: 0 !important;
+        border: none !important;
+        opacity: 1 !important;
+        visibility: visible !important;
+        margin-left: 15px !important;
+        z-index: 10001 !important;
     }
     .hamburger-line {
+        display: block !important;
         width: 100% !important;
-        height: 1px !important; /* Extremely sharp luxury lines */
-        background: #fff !important;
-        margin: 0 !important;
+        height: 2px !important; /* High Visibility architectural lines */
+        background: #ffffff !important;
+        opacity: 1 !important;
+        visibility: visible !important;
     }
     .menu-overlay {
         background-color: #111111 !important; /* Midnight Graphite */
@@ -1749,10 +1777,14 @@ body {
         width: 45px !important;
         height: 45px !important;
     }
-    .nav-minimal .logo span {
-        font-size: 1.1rem !important;
-        letter-spacing: 2px !important;
+    .menu-top {
+        padding: 15px 0 !important;
+        margin-bottom: 20px !important;
     }
+    .menu-top .logo { font-size: 1.0rem !important; white-space: nowrap !important; }
+    .menu-top .brand-icon { width: 35px !important; height: 35px !important; }
+    .menu-close svg { width: 30px !important; height: 30px !important; }
+    .search-container { display: none !important; } /* Simplify mobile menu */
     .menu-overlay {
         background-color: #111111 !important;
         color: var(--white) !important;
