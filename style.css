@@ -1702,7 +1702,7 @@ body {
         width: 100% !important;
         height: 60px !important;
         background: #111111 !important;
-        padding: 0 !important; /* Absolute Fringe Reset */
+        padding: 0 !important;
         border-bottom: 1px solid rgba(166, 135, 31, 0.4) !important;
         opacity: 1 !important;
         visibility: visible !important;
@@ -1710,6 +1710,7 @@ body {
         display: flex !important;
         align-items: center !important;
         justify-content: space-between !important;
+        overflow: hidden !important; /* Prevent expansion */
     }
     .nav-minimal .logo {
         margin-left: 5px !important; /* Ultimate left-corner anchor */
@@ -1717,7 +1718,25 @@ body {
         align-items: center !important;
     }
     .hamburger {
-        margin-right: 15px !important; /* Balance on right fringe */
+        width: 28px !important;
+        height: 18px !important;
+        background: transparent !important;
+        display: flex !important;
+        flex-direction: column !important;
+        justify-content: space-between !important;
+        cursor: pointer !important;
+        flex-shrink: 0 !important;
+        padding: 0 !important;
+        border: none !important;
+        margin-right: 15px !important; /* Balanced on right fringe */
+        z-index: 10001 !important;
+    }
+    .hamburger-line {
+        display: block !important;
+        width: 100% !important;
+        height: 1px !important; /* Ultimate sharp luxury lines */
+        background: #ffffff !important;
+        transition: 0.3s ease !important;
     }
     .nav-minimal .brand-icon {
         width: 32px !important;
@@ -1744,30 +1763,6 @@ body {
         border-radius: 4px !important;
         line-height: 1 !important;
     }
-    .hamburger {
-        width: 30px !important;
-        height: 18px !important;
-        background: transparent !important;
-        display: flex !important;
-        flex-direction: column !important;
-        justify-content: space-between !important;
-        cursor: pointer !important;
-        flex-shrink: 0 !important;
-        padding: 0 !important;
-        border: none !important;
-        opacity: 1 !important;
-        visibility: visible !important;
-        margin-left: 15px !important;
-        z-index: 10001 !important;
-    }
-    .hamburger-line {
-        display: block !important;
-        width: 100% !important;
-        height: 2px !important; /* High Visibility architectural lines */
-        background: #ffffff !important;
-        opacity: 1 !important;
-        visibility: visible !important;
-    }
     .menu-overlay {
         background-color: #111111 !important; /* Midnight Graphite */
         color: var(--white) !important;
@@ -1778,41 +1773,87 @@ body {
         height: 45px !important;
     }
     .menu-top {
-        padding: 15px 0 !important;
-        margin-bottom: 20px !important;
+        padding: 0 !important;
+        margin-bottom: 30px !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: space-between !important;
+        width: 100% !important;
+        position: relative !important;
     }
-    .menu-top .logo { font-size: 1.0rem !important; white-space: nowrap !important; }
-    .menu-top .brand-icon { width: 35px !important; height: 35px !important; }
-    .menu-close svg { width: 30px !important; height: 30px !important; }
+    .menu-top .logo { 
+        font-size: 0.7rem !important; 
+        margin-left: 0 !important;
+        white-space: nowrap !important;
+        width: calc(100% - 60px) !important; /* Enhanced safety buffer */
+        display: flex !important;
+        align-items: center !important;
+    }
+    .menu-top .logo span { margin-left: 3px !important; letter-spacing: 1.5px !important; }
+    .menu-top .brand-icon { width: 42px !important; height: 42px !important; margin-right: 2px !important; }
+    .menu-close {
+        position: absolute !important;
+        right: 0 !important;
+        top: 0 !important;
+        z-index: 20001 !important;
+    }
+    .menu-close svg { 
+        width: 32px !important; 
+        height: 32px !important; 
+        stroke: #ffffff !important;
+    }
     .search-container { display: none !important; } /* Simplify mobile menu */
     .menu-overlay {
+        display: none; /* Forced initial state */
+        position: fixed !important;
+        top: 0 !important;
+        left: 0 !important;
+        width: 100% !important;
+        height: 100dvh !important;
         background-color: #111111 !important;
-        color: var(--white) !important;
-        padding: 40px 20px !important;
+        padding: 40px 10px !important; /* Extreme Left Fringe Lock */
         overflow-y: auto !important;
+        -webkit-overflow-scrolling: touch;
+        z-index: 20000 !important;
+    }
+    .menu-overlay.active {
+        display: flex !important; /* Activate on click */
     }
     .menu-container {
         min-height: 100%;
         display: flex !important;
         flex-direction: column !important;
-        justify-content: space-around !important;
+        justify-content: flex-start !important; /* Stack for scrolling */
+        gap: 50px !important;
+        padding-bottom: 120px !important; /* Ensure content clears floating buttons */
     }
-    .nav-large-links li { margin: 10px 0 !important; }
+    .nav-large-links {
+        display: flex !important;
+        flex-direction: column !important;
+        align-items: flex-start !important; /* Left Alignment fringe anchor */
+        text-align: left !important;
+    }
+    .nav-large-links li { margin: 10px 0 !important; text-align: left !important; }
     .nav-large-links li a {
         font-size: 1.8rem !important;
         letter-spacing: 1px !important;
+        text-align: left !important;
     }
     .menu-bottom {
         flex-direction: column !important;
+        align-items: flex-start !important; /* Left alignment for details */
+        text-align: left !important;
         gap: 30px !important;
     }
-    .menu-col h4 { font-size: 0.7rem !important; margin-bottom: 10px !important; }
-    .menu-sub-links li { margin-bottom: 5px !important; }
-    .menu-sub-links li a { font-size: 0.8rem !important; }
+    .menu-col { text-align: left !important; }
+    .menu-col h4 { font-size: 0.7rem !important; margin-bottom: 10px !important; text-align: left !important; }
+    .menu-sub-links li { margin-bottom: 5px !important; text-align: left !important; }
+    .menu-sub-links li a { font-size: 0.8rem !important; text-align: left !important; }
     .quote-centered {
         letter-spacing: 6px !important; 
         font-size: 0.7rem !important;
         line-height: 1.6;
+        text-align: left !important; /* Anchored to left */
     }
     
     .stats-grid {
