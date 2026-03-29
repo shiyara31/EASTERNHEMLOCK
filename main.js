@@ -1,16 +1,18 @@
 // GSAP Animations Registration & Lenis Sync
 gsap.registerPlugin(ScrollTrigger);
+gsap.config({ force3D: true, nullTargetWarn: false }); // Enable GPU acceleration globally
 
 // Initialize Lenis for Smooth Scrolling
 const lenis = new Lenis({
-    duration: 1.2, 
-    easing: (t) => 1 - Math.pow(1 - t, 4), 
+    duration: 1.5, // Slightly longer for true luxury feel
+    easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)), // High-end exponential ease
     orientation: 'vertical',
     gestureOrientation: 'vertical',
     smoothWheel: true,
-    wheelMultiplier: 1.15,
-    smoothTouch: false,
-    touchMultiplier: 2,
+    lerp: 0.1, // Consistent silky follow
+    wheelMultiplier: 1,
+    smoothTouch: true, // Luxury feel for mobile touch scrolling
+    touchMultiplier: 1.5,
     infinite: false,
 });
 
@@ -119,9 +121,9 @@ function initCinematicIntro() {
     });
 
     scrollTl.to(nav, {
-        background: "rgba(13, 17, 15, 0.98)",
-        backdropFilter: "blur(20px)",
-        padding: "15px 0",
+        background: "rgba(17,17,17,0.95)", /* Midnight Graphite Translucent */
+        backdropFilter: "blur(25px)",
+        padding: "0",
         ease: "none"
     }, 0);
 }

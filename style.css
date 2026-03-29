@@ -8,22 +8,27 @@ html {
 }
 
 :root {
-    --black: #0d110f; /* Midnight Evergreen - High-End Organic Slate */
-    --black-pure: #000000;
+    --black: #111111; /* Midnight Graphite - Deep Mixed Grey/Black */
     --white: #FFFFFF;
-    --beige: #F5F1ED;
+    --luxury-bg: #111111; 
     --gold: #A6871F;
-    --text-muted: rgba(255, 255, 255, 0.75); /* Increased for better legibility */
-    
-    --transition-slow: cubic-bezier(0.7, 0, 0.3, 1);
+    --transition-slow: cubic-bezier(0.2, 0.8, 0.2, 1);
     --transition-fast: cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 body {
     background-color: var(--black);
-    background-image: 
-        radial-gradient(circle at 50% 50%, #131a17 0%, var(--black) 100%);
+    /* Removed radial gradient as it can cause dithering particles on some screens */
     background-attachment: fixed;
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
 }
 
 * {
@@ -80,10 +85,24 @@ h1, h2, h3 {
     gap: 16px;
 }
 .brand-icon, .intro-logo-img {
+    display: inline-block;
+    width: 55px;
+    height: 55px;
+    background-color: transparent !important; /* Reverting mask background */
     flex-shrink: 0;
-    mix-blend-mode: normal; /* REVERT TO NORMAL: For high-fidelity alpha-transparent PNGs */
+    
+    /* Using the FINAL clean asset with screen blending for absolute black-transparency */
+    mix-blend-mode: screen; 
     object-fit: contain;
-    background-color: transparent !important;
+    
+    margin-right: 15px; 
+    z-index: 100;
+}
+
+/* Intro specific logo size override */
+.intro-logo-img {
+    width: 220px; 
+    height: 220px;
 }
 h1 i, h2 i {
     font-family: 'Playfair Display', serif;
@@ -279,21 +298,29 @@ a { text-decoration: none; color: inherit; }
     transition: opacity 0.8s var(--transition-slow), visibility 0.8s var(--transition-slow);
 }
 
-/* Hamburger */
+/* Hamburger (Improved Visibility for Desktop) */
 .hamburger {
     background: none;
     border: none;
     cursor: pointer;
     display: flex;
     flex-direction: column;
-    gap: 6px;
+    justify-content: center; /* Center lines within hitbox */
+    gap: 7px;
     z-index: 1001;
+    padding: 15px 5px; /* Added hitbox to prevent clipping from slim header */
+    height: auto;
+    transition: transform 0.3s;
 }
 .hamburger-line {
-    width: 30px;
-    height: 1px;
+    width: 32px;
+    height: 1.5px; /* Slightly thicker for premium visibility */
     background-color: var(--white);
+    display: block;
     transition: transform 0.4s var(--transition-fast), width 0.4s var(--transition-fast);
+}
+.hamburger:hover .hamburger-line {
+    background-color: var(--gold); /* Signal interaction state */
 }
 .hamburger:hover .hamburger-line:last-child {
     width: 20px;
@@ -306,15 +333,30 @@ a { text-decoration: none; color: inherit; }
     left: 0;
     width: 100%;
     height: 100vh;
-    background-color: rgba(235, 230, 223, 0.95); /* Slight transparency */
-    backdrop-filter: blur(20px); /* Luxury blur */
-    -webkit-backdrop-filter: blur(20px);
-    color: var(--black);
-    z-index: 2000;
+    background-color: #111111 !important; /* Unified Midnight Graphite */
+    color: var(--white);
+    z-index: 9999; 
     display: flex;
     flex-direction: column;
-    padding: 40px 5vw;
+    padding: 60px 8vw; 
     overflow-y: auto;
+    transition: top 0.8s var(--transition-slow);
+}
+
+.menu-overlay .logo, .menu-overlay .logo span {
+    color: var(--white) !important;
+}
+
+.menu-overlay .menu-link {
+    color: var(--white) !important;
+}
+
+.menu-overlay .menu-link:hover {
+    color: var(--gold) !important;
+}
+
+.menu-overlay .menu-close {
+    color: var(--white) !important;
 }
 
 .menu-bg {
@@ -400,14 +442,13 @@ a { text-decoration: none; color: inherit; }
     list-style: none;
 }
 .nav-large-links li {
-    margin-bottom: 20px;
-    overflow: hidden;
+    margin-bottom: 12px; /* Tighter vertical spacing */
 }
 .menu-link {
-    font-size: clamp(1.2rem, 2vw, 1.8rem);
+    font-size: clamp(1.1rem, 2.5vw, 1.6rem); /* Refined, smaller size */
     font-weight: 300;
     text-transform: uppercase;
-    letter-spacing: 8px;
+    letter-spacing: 6px;
     position: relative;
     display: inline-block;
     transition: color 0.4s var(--transition-fast);
@@ -415,11 +456,11 @@ a { text-decoration: none; color: inherit; }
 .menu-link::after {
     content: '';
     position: absolute;
-    bottom: 0px;
+    bottom: -2px;
     left: 0;
     width: 100%;
     height: 1px;
-    background-color: var(--black);
+    background-color: var(--white);
     transform: scaleX(0);
     transform-origin: right;
     transition: transform 0.6s var(--transition-slow);
@@ -436,9 +477,9 @@ a { text-decoration: none; color: inherit; }
 .menu-bottom {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    gap: 40px;
-    padding-top: 5vh;
-    border-top: 1px solid rgba(0,0,0,0.05);
+    gap: 30px;
+    padding-top: 3vh; /* Reduced padding to fit screen */
+    border-top: 1px solid rgba(255,255,255,0.05);
 }
 
 .menu-col h4 {
@@ -567,41 +608,8 @@ a { text-decoration: none; color: inherit; }
 
 /* Scroll Indicator */
 .scroll-indicator {
-    position: absolute;
-    bottom: 5vh;
-    left: 50%;
-    transform: translateX(-50%);
-    z-index: 4;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 15px;
-    opacity: 0; /* Revealed by GSAP */
+    display: none;
 }
-
-.scroll-text {
-    font-size: 0.75rem;
-    letter-spacing: 3px;
-    text-transform: uppercase;
-    font-weight: 300;
-    opacity: 0.6;
-}
-
-.scroll-line {
-    width: 1px;
-    height: 50px;
-    background: linear-gradient(to bottom, rgba(255,255,255,0.7), transparent);
-    animation: scrollBounce 2s cubic-bezier(0.7, 0, 0.3, 1) infinite;
-    transform-origin: top;
-}
-
-@keyframes scrollBounce {
-    0% { transform: scaleY(0); transform-origin: top; }
-    50% { transform: scaleY(1); transform-origin: top; }
-    50.1% { transform: scaleY(1); transform-origin: bottom; }
-    100% { transform: scaleY(0); transform-origin: bottom; }
-}
-
 
 /* Floating Animation for Services */
 @keyframes serviceFloat {
@@ -1154,24 +1162,38 @@ body {
     overflow: hidden;
 }
 
+/* Restored introductory background asset with high-blur for cleaning */
 .intro-bg-blur {
     position: absolute;
     inset: 0;
     background-image: url('assets/intro_blur_bg.png');
     background-size: cover;
     background-position: center;
-    filter: blur(60px);
-    opacity: 0.45;
-    transform: scale(1.1);
-    z-index: -1;
+    filter: blur(100px); /* Increased to 100px to effectively remove asset-level noise/particles */
+    opacity: 0.55; /* Refined opacity for cinematic depth */
+    transform: scale(1.2); /* Ensure no edge bleed with high blur */
+    pointer-events: none;
+    z-index: 1;
 }
 
 .intro-logo-wrap {
+    position: relative; 
+    z-index: 10; 
     display: flex;
     flex-direction: column;
     align-items: center;
     text-align: center;
     will-change: transform, opacity;
+}
+
+.intro-logo-text {
+    font-family: 'Inter', sans-serif;
+    font-weight: 300; /* Slightly thicker to avoid 'particle' text appearance */
+    letter-spacing: 18px; /* Slightly tighter for a cleaner look */
+    font-size: 2.2rem;
+    color: #fff;
+    text-transform: uppercase;
+    text-shadow: 0 0 15px rgba(0, 0, 0, 0.5); /* Hide background contrast noise */
 }
 
 .nav-minimal {
@@ -1224,7 +1246,7 @@ body {
     height: 70vw;
     border-radius: 100%;
     filter: blur(160px);
-    opacity: 0.3; /* More visible on light bg */
+    opacity: 0; /* REMOVED: Users see these as 'particles' */
     mix-blend-mode: soft-light;
     will-change: transform;
 }
@@ -1239,6 +1261,51 @@ body {
     bottom: -15%;
     right: -10%;
     background: radial-gradient(circle, rgba(255, 255, 255, 0.05) 0%, transparent 70%); /* Dim White */
+}
+
+.nav-minimal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 5000;
+    background: #111111 !important; /* Unified Midnight Graphite */
+    border-bottom: 2px solid var(--gold); 
+    display: flex;
+    flex-direction: column;
+}
+
+.nav-minimal .logo, .nav-minimal .logo span {
+    color: var(--white) !important; /* Restore White for Chocolate contrast */
+}
+
+/* Restore Logo Img for Dark Chocolate */
+.brand-icon {
+    filter: none; 
+}
+
+.hamburger-line {
+    background-color: var(--white) !important; /* Restore White Lines */
+}
+
+.nav-container {
+    padding: 0 5%; 
+    min-height: 35px; /* Stay razor thin */
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.nav-minimal .brand-icon {
+    width: 60px; /* Bolder size for impact */
+    height: 60px;
+    margin-right: 6px;
+}
+
+.logo span {
+    font-size: 1.5rem; /* Bolder size for impact */
+    letter-spacing: 5px;
+    font-weight: 300;
 }
 
 .glow-3 {
@@ -1345,7 +1412,7 @@ body {
 
 .stats-grid {
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: repeat(3, 1fr);
     gap: 15px; /* Minimized gap for mobile fit */
 }
 
@@ -1406,12 +1473,86 @@ body {
     100% { transform: translateX(calc(-250px * 8)); }
 }
 
-/* 3. Social Media Section */
-.social-section {
-    padding: 8vh 0;
-    text-align: center;
-    border-top: 1px solid rgba(255,255,255,0.05);
+/* 3. Project Promo Section (Fixed White Gaps) */
+.project-promo-header {
+    margin-top: -1px; /* Ensure no sub-pixel gaps */
 }
+
+.project-promo-section {
+    position: relative;
+    width: 100%;
+    min-height: 85vh; /* Larger coverage to eliminate white gaps */
+    height: auto;
+    overflow: hidden;
+    background: var(--black);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.promo-bg {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+}
+
+.promo-bg img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* ESSENTIAL: Covers all white space in the container */
+    filter: brightness(0.65); /* Maintain luxury dark tone */
+}
+
+.promo-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to bottom, 
+        rgba(13, 17, 15, 0.4) 0%, 
+        transparent 50%, 
+        rgba(0,0,0,0.6) 100%);
+    z-index: 2;
+}
+
+.promo-content {
+    position: relative;
+    z-index: 10;
+    text-align: center;
+    padding: 0 20px;
+    max-width: 800px;
+}
+
+.promo-title {
+    font-size: clamp(2.5rem, 8vw, 5.5rem);
+    font-weight: 300;
+    line-height: 1.1;
+    margin-bottom: 40px;
+    color: var(--white);
+}
+
+.project-subnav.quote-container {
+    display: flex;
+    justify-content: center;
+    padding: 30px 20px;
+    background: #0d110f;
+    border-top: 1px solid rgba(255,255,255,0.03);
+    border-bottom: 1px solid rgba(255,255,255,0.03);
+}
+
+.quote-centered {
+    font-family: 'Bodoni Moda', serif;
+    font-style: italic;
+    font-size: clamp(0.7rem, 2.5vw, 1rem);
+    text-transform: uppercase;
+    letter-spacing: 15px; /* Maximum luxury tracking */
+    color: rgba(255,255,255,0.7);
+    text-align: center;
+    padding: 0 5vw;
+    line-height: 2;
+}
+
+/* 4. Social Media Section */
 
 .social-links {
     display: flex;
@@ -1445,14 +1586,12 @@ body {
 .social-icon:hover { color: var(--white); }
 .social-icon:hover::after { transform: scaleX(1); transform-origin: left; }
 
-/* 4. WhatsApp Button */
-.whatsapp-btn {
+/* 4. WhatsApp & Download Buttons */
+.whatsapp-btn, .dl-floating-btn {
     position: fixed;
     bottom: 30px;
-    right: 30px;
     width: 55px;
     height: 55px;
-    background: #25d366;
     border-radius: 50%;
     display: flex;
     align-items: center;
@@ -1462,8 +1601,24 @@ body {
     transition: all 0.4s var(--transition-fast);
 }
 
-.whatsapp-btn svg { width: 30px; height: 30px; fill: white; }
-.whatsapp-btn:hover { transform: scale(1.1) rotate(10deg); filter: brightness(1.1); }
+.whatsapp-btn {
+    right: 30px;
+    background: #25d366;
+}
+
+.dl-floating-btn {
+    right: 100px; /* Positioned next to WhatsApp */
+    background: #1e1511; /* Luxury Dark Chocolate to match brand */
+    border: 1px solid rgba(255,255,255,0.1);
+}
+
+.whatsapp-btn svg, .dl-floating-btn svg { width: 28px; height: 28px; fill: white; }
+.whatsapp-btn:hover, .dl-floating-btn:hover { transform: scale(1.1); filter: brightness(1.1); }
+
+@media (max-width: 600px) {
+    .whatsapp-btn { bottom: 20px; right: 20px; width: 50px; height: 50px; }
+    .dl-floating-btn { bottom: 20px; right: 80px; width: 50px; height: 50px; }
+}
 
 /* 5. Careers Page / Form styles */
 .careers-hero {
@@ -1539,24 +1694,33 @@ body {
 
 /* --- CONSOLIDATED RESPONSIVE OVERRIDES (Cascade Top Priority) --- */
 @media (max-width: 900px) {
-    /* Force Nav Visibility on Mobile */
     .nav-minimal {
-        background: rgba(13, 17, 15, 0.96) !important; /* Solid Emerald-Black base */
-        padding: 15px 0 !important;
-        border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        background: #111111 !important; /* Midnight Graphite */
+        padding: 0 !important; /* Zero padding ultra-thin */
         opacity: 1 !important;
         visibility: visible !important;
+        z-index: 8000 !important;
     }
-    .hamburger, .nav-cta, .nav-minimal .logo {
-        opacity: 1 !important;
-        visibility: visible !important;
+    .menu-overlay {
+        background-color: #111111 !important; /* Midnight Graphite */
+        color: var(--white) !important;
+        padding: 50px 30px;
     }
-    .nav-minimal .logo {
-        font-size: 1.4rem !important; /* Slightly smaller for mobile fit */
+    .menu-top .logo {
+        font-size: 1.2rem !important;
+    }
+    .nav-large-links li a {
+        font-size: 2.2rem !important;
+        letter-spacing: 2px;
+    }
+    .quote-centered {
+        letter-spacing: 8px !important; 
+        font-size: 0.8rem !important;
+        line-height: 1.8;
     }
     
     .stats-grid {
-        grid-template-columns: 1fr !important; /* Forces Vertical Metrics */
+        grid-template-columns: 1fr !important; /* Stack vertically for clarity */
         gap: 40px;
     }
     .stat-item {
@@ -1568,15 +1732,11 @@ body {
         border-bottom: none;
     }
     .services-grid-3 {
-        grid-template-columns: 1fr !important; /* FORCED VERTICAL: Interior, Landscape, Pool */
+        grid-template-columns: 1fr !important; /* Forces Vertical: Design, Build, Maintain */
         gap: 60px;
     }
     .showcase-split {
-        flex-direction: column !important; /* Vertical Showcase Stacking */
-        text-align: center;
-    }
-    .story-layout {
-        flex-direction: column;
+        flex-direction: column !important; 
         text-align: center;
     }
     .container {
