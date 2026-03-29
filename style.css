@@ -18,8 +18,7 @@
 body {
     background-color: var(--black);
     background-image: 
-        radial-gradient(circle at 50% 50%, #131a17 0%, var(--black) 100%),
-        url("https://www.transparenttextures.com/patterns/dark-matter.png"); /* Atmospheric Texture Overlay */
+        radial-gradient(circle at 50% 50%, #131a17 0%, var(--black) 100%);
     background-attachment: fixed;
 }
 
@@ -50,9 +49,10 @@ h1, h2, h3 {
     font-weight: 200;
     text-transform: uppercase;
     letter-spacing: 6px; /* High tracking matching reference */
+    font-size: 1.25rem;
     display: flex;
     align-items: center;
-    gap: 12px;
+    gap: 16px;
 }
 .brand-icon, .intro-logo-img {
     flex-shrink: 0;
@@ -1167,8 +1167,8 @@ body {
 
 .scroll-story-section {
     position: relative;
-    height: 400vh;
-    background: #111111; /* Subtle Depth base */
+    height: 200vh;
+    background: #0d110f; /* Midnight Evergreen base */
 }
 
 .scroll-sticky-container {
@@ -1179,7 +1179,10 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
-    background: radial-gradient(circle, #2c2c2c 0%, #111111 100%);
+    background-image: linear-gradient(rgba(13, 17, 15, 0.2), rgba(13, 17, 15, 0.2)), url('assets/scroll_bg.png');
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
 }
 
 /* Premium Pastel Ambient Background */
@@ -1221,15 +1224,7 @@ body {
     background: radial-gradient(circle, rgba(255, 255, 255, 0.03) 0%, transparent 70%);
 }
 
-/* Elegant Grainy Noise */
-.cinematic-noise {
-    position: absolute;
-    inset: 0;
-    background-image: url("https://www.transparenttextures.com/patterns/dark-matter.png"); /* Subtle Dark Detail */
-    opacity: 0.15;
-    pointer-events: none;
-    mix-blend-mode: overlay;
-}
+/* Grainy Noise Removed for clarity */
 
 .scroll-cards-wrapper {
     position: relative;
@@ -1563,5 +1558,61 @@ body {
     .container {
         padding: 0 20px !important;
     }
+    
+    /* Reveal Masks Mobile Optimization */
+    .reveal-mask {
+        clip-path: none;
+        -webkit-clip-path: none;
+        opacity: 0;
+        transform: translateY(30px);
+        transition: opacity 1.2s ease, transform 1.2s ease;
+    }
+    .reveal-mask.gsap-revealed {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 
+/* --- Luxury Custom Section --- */
+.luxury-section {
+    height: 80vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(to bottom, #0b0f0e, #050807);
+    text-align: center;
+    padding: 0 20px;
+}
+
+.luxury-content h2 {
+    color: #ffffff;
+    font-size: 26px;
+    letter-spacing: 6px;
+    font-weight: 300;
+    margin-bottom: 20px;
+}
+
+.luxury-content p {
+    color: rgba(255, 255, 255, 0.6);
+    font-size: 14px;
+    max-width: 500px;
+    margin: auto;
+    line-height: 1.8;
+}
+
+.luxury-btn {
+    display: inline-block;
+    margin-top: 30px;
+    padding: 10px 30px;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    color: #ffffff;
+    text-decoration: none;
+    letter-spacing: 3px;
+    font-size: 12px;
+    transition: 0.3s ease;
+}
+
+.luxury-btn:hover {
+    background: #ffffff;
+    color: #000;
+}

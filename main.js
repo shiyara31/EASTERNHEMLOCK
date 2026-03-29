@@ -29,8 +29,23 @@ function initCinematicIntro() {
     const introOverlay = document.querySelector('.intro-branding-overlay');
     const introLogoWrap = document.querySelector('.intro-logo-wrap');
     const nav = document.querySelector('.nav-minimal');
+    const heroElements = [".hero-heading", ".hero-subheading", ".hero-cta", ".scroll-indicator", ".hamburger", ".nav-cta", ".nav-minimal .logo"];
 
     if (!introOverlay || !introLogoWrap) return;
+
+    // Optimized: Only play intro once per session
+    if (sessionStorage.getItem('eh_intro_played')) {
+        gsap.set(introOverlay, { display: 'none', opacity: 0, pointerEvents: 'none' });
+        gsap.set(heroElements, { opacity: 1, y: 0, visibility: "visible" });
+        if (typeof lenis !== 'undefined') {
+            lenis.start();
+            ScrollTrigger.refresh();
+        }
+        return;
+    }
+
+    // Mark as played for this session
+    sessionStorage.setItem('eh_intro_played', 'true');
 
     // Halt smooth scroll during intro
     if (typeof lenis !== 'undefined') lenis.stop();
@@ -55,28 +70,28 @@ function initCinematicIntro() {
         scale: 1,
         opacity: 1,
         y: 0,
-        duration: 1.8,
-        delay: 0.4,
+        duration: 1.2,
+        delay: 0.3,
         ease: "expo.out"
     });
 
     // 2. Automtic Fade-out (Faster, more premium feel)
     introTl.to(introLogoWrap, {
         opacity: 0,
-        y: -20,
-        scale: 0.98,
-        duration: 1.2,
-        delay: 1.0, // Reduced from 1.5s
+        y: -15,
+        scale: 0.99,
+        duration: 0.5, 
+        delay: 0.4, 
         ease: "power3.inOut"
     })
     .to(introOverlay, {
         opacity: 0,
-        duration: 1.5,
+        duration: 0.6,
         ease: "power2.inOut",
         onComplete: () => {
             gsap.set(introOverlay, { pointerEvents: 'none', display: 'none' });
         }
-    }, "-=1.0");
+    }, "-=0.4");
 
     // 3. Reveal Site Content
     introTl.to([".hero-heading", ".hero-subheading", ".hero-cta", ".scroll-indicator"], {
@@ -100,7 +115,8 @@ function initCinematicIntro() {
             trigger: document.body,
             start: "top top",
             end: "500px top",
-            scrub: 1
+            scrub: 1,
+            invalidateOnRefresh: true
         }
     });
 
@@ -163,7 +179,7 @@ function initScrollStoryAnimation() {
                 trigger: section,
                 start: "top top",
                 end: "bottom bottom",
-                scrub: 1.2,
+                scrub: 0.8,
                 pin: ".scroll-sticky-container", // Use GSAP Pinning for mobile reliability
                 pinSpacing: false,
                 onUpdate: self => {
@@ -277,25 +293,30 @@ function initHeroAnimation() {
 }
 
 
-// 2. Services Stagger Reveal
-const serviceItems = document.querySelectorAll('.fade-stagger');
-if (serviceItems.length > 0) {
-    gsap.fromTo(serviceItems, 
-        { y: 60, opacity: 0 },
-        {
-            y: 0, 
-            opacity: 1,
-            duration: 1.6,
-            stagger: 0.2,
-            ease: "power3.out",
-            scrollTrigger: {
-                trigger: "#services",
-                start: "top 75%",
-                toggleActions: "play none none none"
+// 2. Services Stagger Reveal (Optimized & Consolidated)
+const initServiceAnimations = () => {
+    const serviceSection = document.querySelector('#services');
+    const serviceItems = document.querySelectorAll('.fade-stagger');
+    
+    if (serviceItems.length > 0 && serviceSection) {
+        gsap.fromTo(serviceItems, 
+            { y: 50, opacity: 0 },
+            {
+                y: 0, 
+                opacity: 1,
+                duration: 1.5,
+                stagger: 0.2,
+                ease: "power3.out",
+                scrollTrigger: {
+                    trigger: serviceSection,
+                    start: "top 85%", // Trigger earlier on mobile
+                    toggleActions: "play none none none"
+                }
             }
-        }
-    );
+        );
+    }
 }
+initServiceAnimations();
 
 // 3. Image Mask Reveals (Bottom to Top / Right to Left)
 const revealMasks = document.querySelectorAll('.reveal-mask');
@@ -315,14 +336,15 @@ revealMasks.forEach(mask => {
     let tl = gsap.timeline({
         scrollTrigger: {
             trigger: mask,
-            start: "top 85%",
-            toggleActions: "play none none none"
+            start: "top bottom-=50", // Earlier trigger for mobile reliability
+            toggleActions: "play none none none",
+            onEnter: () => mask.classList.add('gsap-revealed')
         }
     });
 
     tl.to(mask, {
         clipPath: 'inset(0% 0% 0% 0%)',
-        duration: 1.8,
+        duration: 2.0, // Smoother reveal
         ease: "power4.inOut"
     });
 
@@ -379,17 +401,6 @@ fadeSlideUp.forEach(el => {
     );
 });
 
-gsap.fromTo(".fade-stagger", 
-    { y: 50, opacity: 0 },
-    {
-        y: 0, opacity: 1, duration: 1.5, stagger: 0.2, ease: "power3.out",
-        scrollTrigger: {
-            trigger: "#services .services-grid-3",
-            start: "top 80%"
-        }
-    }
-);
-
 // 5.5 Statistics Count-up Animation
 const statNumbers = document.querySelectorAll('.stat-number');
 statNumbers.forEach(stat => {
@@ -402,11 +413,21 @@ statNumbers.forEach(stat => {
             ease: "power2.out",
             scrollTrigger: {
                 trigger: stat,
-                start: "top 90%",
+                start: "top bottom-=50px", // Trigger when nearly in view
                 toggleActions: "play none none none"
             }
         });
     }
+});
+
+// Refresh ScrollTrigger on resize (critical for mobile)
+window.addEventListener('resize', () => {
+    ScrollTrigger.refresh();
+});
+
+// Added: Final refresh after all inits
+window.addEventListener('load', () => {
+    ScrollTrigger.refresh();
 });
 
 const hamburger = document.querySelector('.hamburger');
