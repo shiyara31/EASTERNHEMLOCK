@@ -4,15 +4,15 @@ gsap.config({ force3D: true, nullTargetWarn: false }); // Enable GPU acceleratio
 
 // Initialize Lenis for Smooth Scrolling
 const lenis = new Lenis({
-    duration: 1.5, // Slightly longer for true luxury feel
-    easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)), // High-end exponential ease
+    duration: 1.2, // Balanced for responsiveness and luxury
+    easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)), 
     orientation: 'vertical',
     gestureOrientation: 'vertical',
     smoothWheel: true,
-    lerp: 0.1, // Consistent silky follow
+    lerp: 0.1, 
     wheelMultiplier: 1,
-    smoothTouch: true, // Luxury feel for mobile touch scrolling
-    touchMultiplier: 1.5,
+    smoothTouch: true, 
+    touchMultiplier: 1.2, // Smoother follow on touch
     infinite: false,
 });
 
@@ -168,10 +168,11 @@ function initScrollStoryAnimation() {
             z: -300,
             opacity: 0, // Keep clean start
             scale: 0.8,
-            rotateY: 0
+            rotateY: 0,
+            force3D: true // Enable Hardware Acceleration
         });
 
-        gsap.set(cardCenter, { z: 50, scale: 1, opacity: 1, x: 0, y: 0 });
+        gsap.set(cardCenter, { z: 50, scale: 1, opacity: 1, x: 0, y: 0, force3D: true });
 
         // 2. Scroll Animation Timeline (Scroll DOWN = Cards Spread OUT Widely)
         const tl = gsap.timeline({
@@ -179,8 +180,8 @@ function initScrollStoryAnimation() {
                 trigger: section,
                 start: "top top",
                 end: "bottom bottom",
-                scrub: 0.8,
-                pin: ".scroll-sticky-container", // Use GSAP Pinning for mobile reliability
+                scrub: 0.5, // Sharaper, more responsive card spread
+                pin: ".scroll-sticky-container",
                 pinSpacing: false,
                 onUpdate: self => {
                     // Force refresh for smoother synchronization on touch

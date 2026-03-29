@@ -1696,18 +1696,32 @@ body {
 @media (max-width: 900px) {
     .nav-minimal {
         background: #111111 !important; /* Midnight Graphite */
-        padding: 0 !important; /* Zero padding ultra-thin */
+        min-height: 55px !important; /* Ensures stable height for logo/text */
+        padding: 0 5% !important; 
+        border-bottom: 1px solid rgba(166, 135, 31, 0.3) !important; /* Subtle Gold Contrast */
         opacity: 1 !important;
         visibility: visible !important;
-        z-index: 8000 !important;
+        z-index: 9999 !important; /* Maximum priority */
+        display: flex !important;
+        align-items: center !important;
+        justify-content: space-between !important;
+    }
+    .hamburger {
+        opacity: 1 !important;
+        visibility: visible !important;
     }
     .menu-overlay {
         background-color: #111111 !important; /* Midnight Graphite */
         color: var(--white) !important;
         padding: 50px 30px;
     }
-    .menu-top .logo {
-        font-size: 1.2rem !important;
+    .nav-minimal .brand-icon {
+        width: 45px !important;
+        height: 45px !important;
+    }
+    .nav-minimal .logo span {
+        font-size: 1.1rem !important;
+        letter-spacing: 2px !important;
     }
     .nav-large-links li a {
         font-size: 2.2rem !important;
