@@ -1774,27 +1774,26 @@ body {
     }
     .menu-top {
         padding: 0 !important;
-        margin-bottom: 30px !important;
-        display: flex !important;
+        margin-bottom: 35px !important;
+        display: grid !important;
+        grid-template-columns: 1fr 45px !important; /* Physically lock exit utility area */
         align-items: center !important;
-        justify-content: space-between !important;
         width: 100% !important;
         position: relative !important;
     }
     .menu-top .logo { 
-        font-size: 0.7rem !important; 
+        font-size: 0.5rem !important; 
         margin-left: 0 !important;
         white-space: nowrap !important;
-        width: calc(100% - 60px) !important; /* Enhanced safety buffer */
         display: flex !important;
         align-items: center !important;
     }
-    .menu-top .logo span { margin-left: 3px !important; letter-spacing: 1.5px !important; }
-    .menu-top .brand-icon { width: 42px !important; height: 42px !important; margin-right: 2px !important; }
+    .menu-top .logo span { margin-left: 2px !important; letter-spacing: 0 !important; }
+    .menu-top .brand-icon { width: 35px !important; height: 35px !important; margin-right: 2px !important; }
+    .menu-top-right { display: flex !important; justify-content: flex-end !important; }
     .menu-close {
-        position: absolute !important;
-        right: 0 !important;
-        top: 0 !important;
+        position: relative !important;
+        padding: 5px !important;
         z-index: 20001 !important;
     }
     .menu-close svg { 
@@ -1811,21 +1810,23 @@ body {
         right: 0 !important;
         bottom: 0 !important;
         background-color: #111111 !important;
-        padding: 60px 20px 0 10px !important;
-        overflow-y: auto !important;
+        padding: 80px 10px 0 10px !important; /* Expansion fringe lock */
+        overflow-y: scroll !important; /* Force native scroll context */
         overflow-x: hidden !important;
-        -webkit-overflow-scrolling: touch !important;
-        scroll-behavior: smooth !important; /* Cinematic Internal Scroll */
-        will-change: transform, scroll-position !important;
+        -webkit-overflow-scrolling: touch !important; /* Silk-Smooth Physics */
+        overscroll-behavior: contain !important; /* Absolute scroll boundary */
+        scroll-behavior: auto !important; /* Native for touch */
+        touch-action: pan-y !important; /* Browser prioritize vertical */
         z-index: 20000 !important;
     }
     .menu-overlay.active {
-        display: flex !important; /* Activate on click */
+        display: block !important; /* Activate on click */
     }
     .menu-container {
         display: block !important;
         width: 100% !important;
-        padding-bottom: 200px !important; /* Extreme clearance for scrolling */
+        min-height: calc(100% + 1px) !important; /* Force scroll engagement */
+        padding-bottom: 250px !important; /* Absolute clearance for scrolling */
     }
     .nav-large-links {
         display: flex !important;
@@ -1840,10 +1841,13 @@ body {
         text-align: left !important;
     }
     .menu-bottom {
-        flex-direction: column !important;
-        align-items: flex-start !important; /* Left alignment for details */
+        display: flex !important;
+        flex-direction: column !important; /* Force single column stacking */
+        align-items: flex-start !important; 
         text-align: left !important;
-        gap: 30px !important;
+        gap: 40px !important;
+        width: 100% !important;
+        margin-top: 50px !important;
     }
     .menu-col { text-align: left !important; }
     .menu-col h4 { font-size: 0.7rem !important; margin-bottom: 10px !important; text-align: left !important; }
