@@ -626,7 +626,24 @@ if (galleryModal) {
             }
         });
     }
+    // --- AUTO-OPEN GALLERY via URL PARAMETER ---
+    function checkUrlForGallery() {
+        const urlParams = new URLSearchParams(window.location.search);
+        const filter = urlParams.get('filter');
+        
+        if (filter) {
+            // Wait slightly for dynamic content generation
+            setTimeout(() => {
+                if (typeof openGallery === 'function') {
+                    openGallery(filter);
+                }
+            }, 600);
+        }
+    }
+
+    checkUrlForGallery();
 }
+
 
 // Final safety kickstart for smooth scroll
 if (typeof lenis !== 'undefined') {
