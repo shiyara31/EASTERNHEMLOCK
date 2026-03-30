@@ -4,25 +4,23 @@ gsap.config({ force3D: true, nullTargetWarn: false }); // Enable GPU acceleratio
 
 // Initialize Lenis for Smooth Scrolling
 const lenis = new Lenis({
-    duration: 1.5, /* Weighted Cinematic Duration */
+    duration: 1.2, /* Slightly faster for snappier feel */
     easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)), 
     orientation: 'vertical',
     gestureOrientation: 'vertical',
     smoothWheel: true,
-    lerp: 0.05, /* Deeper weighted smoothness */
+    lerp: 0.1, /* Snappier response */
     wheelMultiplier: 1,
-    smoothTouch: true, 
-    touchMultiplier: 1.5, /* Enhanced mobile momentum */
+    smoothTouch: false, /* CRITICAL: Disable smooth touch for mobile to use native scroll */
+    touchMultiplier: 1.5,
     infinite: false,
 });
 
-// GSAP Ticker for Lenis Sync (More robust than manual RAF)
+// GSAP Ticker for Lenis Sync
 gsap.ticker.add((time) => {
     lenis.raf(time * 1000);
 });
 gsap.ticker.lagSmoothing(0);
-
-lenis.on('scroll', ScrollTrigger.update);
 
 // Cinematic Intro Branding Animation
 function initCinematicIntro() {
@@ -199,14 +197,10 @@ function initScrollStoryAnimation() {
                 trigger: section,
                 start: "top top",
                 end: "bottom bottom",
-                scrub: 0.8, // More weighted 'cinematic' spread
+                scrub: 1.2, /* Slightly more 'drag' for reliability */
                 pin: ".scroll-sticky-container",
                 invalidateOnRefresh: true, 
-                pinSpacing: false,
-                onUpdate: self => {
-                    // Force refresh for smoother synchronization on touch
-                    if (isMobile) ScrollTrigger.update();
-                }
+                pinSpacing: false
             }
         });
 

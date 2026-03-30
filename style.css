@@ -19,17 +19,9 @@ html {
 
 body {
     background-color: var(--black);
-    /* Removed radial gradient as it can cause dithering particles on some screens */
-    background-attachment: fixed;
     margin: 0;
     padding: 0;
     overflow-x: hidden;
-}
-
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
 }
 
 * {
