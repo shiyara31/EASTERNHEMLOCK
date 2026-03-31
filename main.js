@@ -22,6 +22,14 @@ gsap.ticker.add((time) => {
 });
 gsap.ticker.lagSmoothing(0);
 
+// NEW: Link Lenis and ScrollTrigger for buttery smoothness on mobile
+lenis.on('scroll', ScrollTrigger.update);
+
+// Normalize scroll for mobile/touch to eliminate address bar jumps and jitter
+if (typeof ScrollTrigger !== 'undefined') {
+    ScrollTrigger.normalizeScroll(true);
+}
+
 // Cinematic Intro Branding Animation
 function initCinematicIntro() {
     const introOverlay = document.querySelector('.intro-branding-overlay');
