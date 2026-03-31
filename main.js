@@ -692,6 +692,28 @@ if (galleryModal) {
         });
     });
 
+    // --- GALLERY NAVIGATION ARROWS ---
+    const galleryPrev = document.querySelector('.gallery-prev');
+    const galleryNext = document.querySelector('.gallery-next');
+
+    if (galleryPrev && galleryNext && track) {
+        galleryNext.addEventListener('click', () => {
+            const item = track.querySelector('.gallery-item:not(.hidden)');
+            if (item) {
+                const itemWidth = item.offsetWidth;
+                track.scrollBy({ left: itemWidth, behavior: 'smooth' });
+            }
+        });
+
+        galleryPrev.addEventListener('click', () => {
+            const item = track.querySelector('.gallery-item:not(.hidden)');
+            if (item) {
+                const itemWidth = item.offsetWidth;
+                track.scrollBy({ left: -itemWidth, behavior: 'smooth' });
+            }
+        });
+    }
+
     // Horizontal scroll override inside gallery track for smooth seamless tracking
     if (track) {
         track.addEventListener('wheel', (e) => {

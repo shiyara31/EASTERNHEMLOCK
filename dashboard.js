@@ -1,5 +1,20 @@
 // Dashboard Logic & Animations
 document.addEventListener('DOMContentLoaded', () => {
+    // 1. Initialize Smooth Scroll (Lenis)
+    const lenis = new Lenis({
+        duration: 1.2,
+        easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+        smoothWheel: true,
+        smoothTouch: true,
+        touchMultiplier: 1.5,
+    });
+
+    function raf(time) {
+        lenis.raf(time);
+        requestAnimationFrame(raf);
+    }
+    requestAnimationFrame(raf);
+
     const loginForm = document.getElementById('login-form');
     const loginWrap = document.getElementById('login-wrap');
     const dashWrap = document.getElementById('dashboard-wrap');
