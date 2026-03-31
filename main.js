@@ -22,14 +22,6 @@ gsap.ticker.add((time) => {
 });
 gsap.ticker.lagSmoothing(0);
 
-// NEW: Link Lenis and ScrollTrigger for buttery smoothness on mobile
-lenis.on('scroll', ScrollTrigger.update);
-
-// Normalize scroll for mobile/touch to eliminate address bar jumps and jitter
-if (typeof ScrollTrigger !== 'undefined') {
-    ScrollTrigger.normalizeScroll(true);
-}
-
 // Cinematic Intro Branding Animation
 function initCinematicIntro() {
     const introOverlay = document.querySelector('.intro-branding-overlay');
@@ -580,13 +572,6 @@ if (galleryModal) {
         galleryData.push({
             category: 'pools',
             location: 'DUBAI, UAE',
-            title: 'Luxury Villa Pool',
-            date: '03.30.26',
-            image: 'assets/pools/pool_02.jpg'
-        });
-        galleryData.push({
-            category: 'pools',
-            location: 'DUBAI, UAE',
             title: 'Designer Pool Oasis 01',
             date: '03.30.26',
             image: 'assets/pools/pool_03.jpg'
@@ -736,8 +721,48 @@ if (galleryModal) {
     const lightboxImg = document.getElementById('lightbox-img');
     const lightboxCloseBtn = document.querySelector('.lightbox-close');
 
-    function openLightbox(src) {
+    // --- LIGHTBOX NAVIGATION ---
+    let currentLightboxIdx = -1;
+    let currentGalleryItems = [];
+
+    const lightboxPrev = document.querySelector('.lightbox-prev');
+    const lightboxNext = document.querySelector('.lightbox-next');
+
+    function updateLightbox(idx) {
+        if (idx < 0 || idx >= currentGalleryItems.length) return;
+        currentLightboxIdx = idx;
+        const targetItem = currentGalleryItems[idx];
+        const targetImg = targetItem.querySelector('img');
+        if (targetImg && lightboxImg) {
+            lightboxImg.src = targetImg.src;
+        }
+    }
+
+    if (lightboxNext) {
+        lightboxNext.addEventListener('click', (e) => {
+            e.stopPropagation();
+            let nextIdx = currentLightboxIdx + 1;
+            if (nextIdx >= currentGalleryItems.length) nextIdx = 0;
+            updateLightbox(nextIdx);
+        });
+    }
+
+    if (lightboxPrev) {
+        lightboxPrev.addEventListener('click', (e) => {
+            e.stopPropagation();
+            let prevIdx = currentLightboxIdx - 1;
+            if (prevIdx < 0) prevIdx = currentGalleryItems.length - 1;
+            updateLightbox(prevIdx);
+        });
+    }
+
+    function openLightbox(src, item) {
         if (!lightbox || !lightboxImg) return;
+        
+        // Populate current items for navigation (only visible ones)
+        currentGalleryItems = Array.from(track.querySelectorAll('.gallery-item:not(.hidden)'));
+        currentLightboxIdx = currentGalleryItems.indexOf(item);
+        
         lightboxImg.src = src;
         lightbox.classList.add('active');
         if(typeof lenis !== 'undefined') lenis.stop();
@@ -755,7 +780,7 @@ if (galleryModal) {
     if (lightboxCloseBtn) lightboxCloseBtn.addEventListener('click', closeLightbox);
     if (lightbox) {
         lightbox.addEventListener('click', (e) => {
-            if (e.target === lightbox) closeLightbox();
+            if (e.target === lightbox || e.target.classList.contains('lightbox-content')) closeLightbox();
         });
     }
 
@@ -770,10 +795,26 @@ if (galleryModal) {
             const imgWrap = e.target.closest('.gallery-img-wrap');
             if (viewBtn || imgWrap || item) {
                 const itemImg = item.querySelector('img');
-                if (itemImg) openLightbox(itemImg.src);
+                if (itemImg) openLightbox(itemImg.src, item);
             }
         });
     }
+
+    // --- GLOBAL NO DOWNLOAD PROTECTION ---
+    // Universal blocker for context menu on all images across the whole site
+    document.addEventListener('contextmenu', (e) => {
+        if (e.target.tagName === 'IMG' || e.target.closest('.gallery-track') || e.target.closest('.lightbox-portal')) {
+            e.preventDefault();
+            return false;
+        }
+    });
+
+    document.addEventListener('dragstart', (e) => {
+        if (e.target.tagName === 'IMG') {
+            e.preventDefault();
+            return false;
+        }
+    });
 
     // --- AUTO-OPEN GALLERY via URL PARAMETER ---
     function checkUrlForGallery() {

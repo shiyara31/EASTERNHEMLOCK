@@ -149,4 +149,19 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
     });
+
+    // --- GLOBAL NO DOWNLOAD PROTECTION ---
+    document.addEventListener('contextmenu', (e) => {
+        if (e.target.tagName === 'IMG') {
+            e.preventDefault();
+            return false;
+        }
+    });
+
+    document.addEventListener('dragstart', (e) => {
+        if (e.target.tagName === 'IMG') {
+            e.preventDefault();
+            return false;
+        }
+    });
 });
