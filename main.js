@@ -536,10 +536,98 @@ if (galleryModal) {
                 });
             }
         }
-        // Generate exactly 10 images each
-        generateItems('interiors', interiorIds, 'Bespoke Interior');
-        generateItems('landscapes', landscapeIds, 'Private Estate Landscape');
-        generateItems('pools', poolIds, 'Infinity Pool Concept');
+        // Removed generic interior, landscape and pool items as requested
+
+        // New: User Provided Interior Images
+        galleryData.push({ category: 'interiors', image: 'assets/interiors/interior_01.jpg' });
+        galleryData.push({ category: 'interiors', image: 'assets/interiors/interior_02.jpg' });
+        galleryData.push({ category: 'interiors', image: 'assets/interiors/interior_03.jpg' });
+        galleryData.push({ category: 'interiors', image: 'assets/interiors/interior_04.jpg' });
+        galleryData.push({ category: 'interiors', image: 'assets/interiors/interior_05.jpg' });
+        galleryData.push({ category: 'interiors', image: 'assets/interiors/interior_06.jpg' });
+        galleryData.push({ category: 'interiors', image: 'assets/interiors/interior_07.jpg' });
+        galleryData.push({ category: 'interiors', image: 'assets/interiors/interior_08.jpg' });
+        // Removed generic landscape and pool items as requested
+
+        // New: User Provided Landscape Images
+        galleryData.push({ category: 'landscapes', image: 'assets/landscapes/landscape_01.jpg' });
+        galleryData.push({ category: 'landscapes', image: 'assets/landscapes/landscape_02.jpg' });
+        galleryData.push({ category: 'landscapes', image: 'assets/landscapes/landscape_03.jpg' });
+        galleryData.push({ category: 'landscapes', image: 'assets/landscapes/landscape_04.jpg' });
+        galleryData.push({ category: 'landscapes', image: 'assets/landscapes/landscape_05.jpg' });
+        galleryData.push({ category: 'landscapes', image: 'assets/landscapes/landscape_06.jpg' });
+        galleryData.push({ category: 'landscapes', image: 'assets/landscapes/landscape_07.jpg' });
+        galleryData.push({ category: 'landscapes', image: 'assets/landscapes/landscape_08.jpg' });
+        galleryData.push({ category: 'landscapes', image: 'assets/landscapes/landscape_09.jpg' });
+        galleryData.push({ category: 'landscapes', image: 'assets/landscapes/landscape_10.jpg' });
+
+        // New: User Provided Pool Images
+        galleryData.push({
+            category: 'pools',
+            location: 'DUBAI, UAE',
+            title: 'Modern Infinity Pool',
+            date: '03.30.26',
+            image: 'assets/pools/pool_01.jpg'
+        });
+        galleryData.push({
+            category: 'pools',
+            location: 'DUBAI, UAE',
+            title: 'Luxury Villa Pool',
+            date: '03.30.26',
+            image: 'assets/pools/pool_02.jpg'
+        });
+        galleryData.push({
+            category: 'pools',
+            location: 'DUBAI, UAE',
+            title: 'Designer Pool Oasis 01',
+            date: '03.30.26',
+            image: 'assets/pools/pool_03.jpg'
+        });
+        galleryData.push({
+            category: 'pools',
+            location: 'DUBAI, UAE',
+            title: 'Premium Deck Pool 01',
+            date: '03.30.26',
+            image: 'assets/pools/pool_04.jpg'
+        });
+        galleryData.push({
+            category: 'pools',
+            location: 'DUBAI, UAE',
+            title: 'Skyline Pool Concept 01',
+            date: '03.30.26',
+            image: 'assets/pools/pool_05.jpg'
+        });
+        galleryData.push({
+            category: 'pools',
+            location: 'DUBAI, UAE',
+            title: 'Atmospheric Pool Design',
+            date: '03.30.26',
+            image: 'assets/pools/pool_06.jpg'
+        });
+        galleryData.push({
+            category: 'pools',
+            location: 'DUBAI, UAE',
+            title: 'Neon Glow Infinity',
+            date: '03.30.26',
+            image: 'assets/pools/pool_07.jpg'
+        });
+        galleryData.push({
+            category: 'pools',
+            location: 'DUBAI, UAE',
+            title: 'Midnight Oasis View',
+            date: '03.30.26',
+            image: 'assets/pools/pool_08.jpg'
+        });
+
+        // New: User Provided Maintenance Images
+        galleryData.push({ category: 'maintenance', image: 'assets/maintenance/maintenance_01.jpg' });
+        galleryData.push({ category: 'maintenance', image: 'assets/maintenance/maintenance_02.jpg' });
+        galleryData.push({ category: 'maintenance', image: 'assets/maintenance/maintenance_03.jpg' });
+        galleryData.push({ category: 'maintenance', image: 'assets/maintenance/maintenance_04.jpg' });
+        galleryData.push({ category: 'maintenance', image: 'assets/maintenance/maintenance_05.jpg' });
+
+        // New: User Provided Smart Home Images
+        galleryData.push({ category: 'smarthomes', image: 'assets/smarthome/smarthome_01.jpg' });
 
         track.innerHTML = galleryData.map(item => `
             <div class="gallery-item" data-category="${item.category}">
@@ -547,14 +635,7 @@ if (galleryModal) {
                     <img src="${item.image}" alt="${item.title}">
                     <div class="card-overlay"></div>
                     <div class="card-content">
-                        <div class="card-top">
-                            <span class="card-location">${item.location}</span>
-                            <h3 class="card-title">${item.title}</h3>
-                        </div>
                         <div class="card-view-btn">VIEW</div>
-                        <div class="card-bottom">
-                            <span class="card-date">${item.date}</span>
-                        </div>
                     </div>
                 </div>
             </div>
@@ -620,6 +701,50 @@ if (galleryModal) {
             }
         });
     }
+    // --- LIGHTBOX PORTAL LOGIC ---
+    const lightbox = document.getElementById('gallery-lightbox');
+    const lightboxImg = document.getElementById('lightbox-img');
+    const lightboxCloseBtn = document.querySelector('.lightbox-close');
+
+    function openLightbox(src) {
+        if (!lightbox || !lightboxImg) return;
+        lightboxImg.src = src;
+        lightbox.classList.add('active');
+        if(typeof lenis !== 'undefined') lenis.stop();
+    }
+
+    function closeLightbox() {
+        if (!lightbox) return;
+        lightbox.classList.remove('active');
+        // Only restart lenis if the gallery modal itself is not active
+        if (!galleryModal.classList.contains('active')) {
+            if(typeof lenis !== 'undefined') lenis.start();
+        }
+    }
+
+    if (lightboxCloseBtn) lightboxCloseBtn.addEventListener('click', closeLightbox);
+    if (lightbox) {
+        lightbox.addEventListener('click', (e) => {
+            if (e.target === lightbox) closeLightbox();
+        });
+    }
+
+    // Modal track click delegation for "VIEW" buttons & Image clicks
+    if (track) {
+        track.addEventListener('click', (e) => {
+            const item = e.target.closest('.gallery-item');
+            if (!item) return;
+
+            const viewBtn = e.target.closest('.card-view-btn');
+            
+            const imgWrap = e.target.closest('.gallery-img-wrap');
+            if (viewBtn || imgWrap || item) {
+                const itemImg = item.querySelector('img');
+                if (itemImg) openLightbox(itemImg.src);
+            }
+        });
+    }
+
     // --- AUTO-OPEN GALLERY via URL PARAMETER ---
     function checkUrlForGallery() {
         const urlParams = new URLSearchParams(window.location.search);
