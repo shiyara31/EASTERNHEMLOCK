@@ -943,6 +943,8 @@ a { text-decoration: none; color: inherit; }
     scrollbar-width: none;
     align-items: center;
     height: 100%;
+    will-change: scroll-position, transform;
+    -webkit-overflow-scrolling: touch;
 }
 .gallery-track::-webkit-scrollbar { display: none; }
 
@@ -1061,7 +1063,9 @@ a { text-decoration: none; color: inherit; }
     }
     /* Mobile Tap Interaction: Show full image and trigger lightbox on first touch */
     .gallery-track {
-        scroll-snap-type: x mandatory;
+        scroll-snap-type: x proximity; /* Proximity provides a smoother, less rigid swiping experience */
+        -webkit-overflow-scrolling: touch; /* Essential for momentum-based smooth scrolling on iOS */
+        scroll-behavior: smooth;
     }
     
     .gallery-item {

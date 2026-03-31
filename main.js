@@ -11,7 +11,7 @@ const lenis = new Lenis({
     smoothWheel: true,
     lerp: 0.1, /* Snappier response */
     wheelMultiplier: 1,
-    smoothTouch: false, /* CRITICAL: Disable smooth touch for mobile to use native scroll */
+    smoothTouch: true, /* Enabled: Pure smooth momentum-based touch scrolling for mobile */
     touchMultiplier: 1.5,
     infinite: false,
 });
