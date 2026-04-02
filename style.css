@@ -346,6 +346,7 @@ a { text-decoration: none; color: inherit; }
     flex-direction: column;
     padding: 60px 8vw; 
     overflow-y: auto;
+    -webkit-overflow-scrolling: touch; /* Momentum scrolling for iOS */
     transition: top 0.8s var(--transition-slow);
 }
 
@@ -375,9 +376,10 @@ a { text-decoration: none; color: inherit; }
 }
 
 .menu-container {
-    height: 100%;
+    min-height: 100%; /* Changed from height: 100% to allow content overflow */
     display: flex;
     flex-direction: column;
+    gap: 10vh; /* Better spacing for very long menus */
 }
 
 /* Menu Top */
@@ -709,14 +711,74 @@ a { text-decoration: none; color: inherit; }
 }
 .contact-title { font-size: clamp(3rem, 7vw, 6rem); line-height: 1.05; text-transform: none; font-family: 'Playfair Display', serif; font-style: italic; }
 
-.contact-details { margin-top: 10vh; font-size: 0.85rem; letter-spacing: 2px; text-transform: uppercase; }
+.contact-details { 
+    margin-top: 10vh; 
+    font-size: 1.25rem; 
+    letter-spacing: 4px; 
+    color: rgba(255,255,255,0.85); 
+    text-align: center;
+    width: 100%;
+}
+.contact-details p {
+    margin-bottom: 25px;
+    text-transform: lowercase;
+}
 
 /* Footer */
 .footer-minimal { padding: 50px 0; font-size: 0.8rem; letter-spacing: 1px; color: rgba(255,255,255,0.4); text-transform: uppercase; }
 .footer-flex { display: flex; justify-content: space-between; align-items: center; }
 .footer-minimal .logo { font-size: 1.5rem; color: #fff; }
-@media (max-width: 600px) {
-    .footer-flex { flex-direction: column; gap: 20px; }
+@media (max-width: 900px) {
+    .footer-minimal { 
+        text-align: center !important; 
+        padding: 40px 20px !important; 
+    }
+    .footer-flex { 
+        flex-direction: column !important; 
+        gap: 30px !important; 
+        align-items: center !important; 
+        justify-content: center !important;
+    }
+    .footer-minimal .logo { 
+        display: flex !important;
+        flex-direction: row !important;
+        justify-content: center !important; 
+        align-items: center !important;
+        gap: 15px !important;
+        margin-bottom: 15px !important;
+        width: 100% !important;
+        text-align: center !important;
+    }
+    .footer-minimal .logo span {
+        white-space: nowrap !important; /* Forces emblem and text to stay on the same line */
+        display: inline-block !important;
+    }
+    .footer-minimal p {
+        width: 100% !important;
+        text-align: center !important;
+        line-height: 1.6 !important;
+        margin-bottom: 25px !important;
+    }
+    .footer-developer {
+        width: 100% !important;
+        text-align: center !important;
+        display: flex !important;
+        justify-content: center !important;
+        margin-top: 25px !important;
+    }
+    .contact-details {
+        margin-top: 5vh !important;
+        font-size: 1rem !important;
+        letter-spacing: 2px !important;
+        padding: 0 20px !important;
+    }
+    .contact-details p {
+        display: flex !important;
+        flex-direction: column !important; /* Stack phone and email on mobile */
+        gap: 15px !important;
+        text-align: center !important;
+        align-items: center !important;
+    }
 }
 
 /* Initial GSAP States */
@@ -1504,14 +1566,25 @@ body {
 .card-left-inner, .card-right-inner { z-index: 18; }
 .card-left-outer, .card-right-outer { z-index: 16; }
 
-/* Subtle Sheen for Pastel Glass */
+/* Subtle Sheen & Bottom Shadow for improved text legibility */
 .scroll-card::before {
     content: '';
     position: absolute;
     inset: 0;
-    background: linear-gradient(135deg, rgba(255,255,255,0.4) 0%, transparent 50%);
+    background: linear-gradient(135deg, rgba(255,255,255,0.2) 0%, transparent 50%);
     pointer-events: none;
     z-index: 5;
+}
+.scroll-card::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 40%;
+    background: linear-gradient(to top, rgba(0,0,0,0.7) 0%, transparent 100%);
+    pointer-events: none;
+    z-index: 6;
 }
 
 @media (max-width: 1024px) {
@@ -1527,12 +1600,13 @@ body {
     bottom: 30px;
     left: 20px;
     color: var(--white);
-    font-size: 0.7rem;
+    font-size: 0.8rem; /* Slightly larger */
     letter-spacing: 4px;
     text-transform: uppercase;
-    font-weight: 300;
+    font-weight: 500; /* Bolder for visibility */
     z-index: 10;
-    opacity: 0.9;
+    opacity: 1; /* Full opacity */
+    text-shadow: 0 2px 15px rgba(0,0,0,0.9); /* Stronger shadow for readability */
     transition: all 0.6s var(--transition-slow);
 }
 
@@ -2013,26 +2087,25 @@ body {
         position: fixed !important;
         top: 0 !important;
         left: 0 !important;
-        right: 0 !important;
-        bottom: 0 !important;
+        width: 100% !important;
+        height: 100% !important; /* Use 100% for mobile address bar compatibility */
         background-color: #111111 !important;
-        padding: 80px 10px 0 10px !important; /* Expansion fringe lock */
-        overflow-y: scroll !important; /* Force native scroll context */
+        padding: 80px 20px 80px 20px !important; /* Balanced padding including bottom */
+        overflow-y: auto !important; /* Native vertical scroll */
         overflow-x: hidden !important;
-        -webkit-overflow-scrolling: touch !important; /* Silk-Smooth Physics */
-        overscroll-behavior: contain !important; /* Absolute scroll boundary */
-        scroll-behavior: auto !important; /* Native for touch */
-        touch-action: pan-y !important; /* Browser prioritize vertical */
+        -webkit-overflow-scrolling: touch !important; /* Momentum scrolling */
+        overscroll-behavior: contain !important;
         z-index: 20000 !important;
     }
     .menu-overlay.active {
-        display: block !important; /* Activate on click */
+        display: block !important; 
     }
     .menu-container {
         display: block !important;
         width: 100% !important;
-        min-height: calc(100% + 1px) !important; /* Force scroll engagement */
-        padding-bottom: 250px !important; /* Absolute clearance for scrolling */
+        height: auto !important; /* Allow height to be determined by content */
+        min-height: 100% !important;
+        padding-bottom: 150px !important; /* Robust clearance for bottom navigation */
     }
     .nav-large-links {
         display: flex !important;
