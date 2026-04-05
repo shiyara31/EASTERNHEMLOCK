@@ -119,8 +119,6 @@ function initCinematicIntro() {
     });
 
     scrollTl.to(nav, {
-        background: "rgba(17,17,17,0.95)", /* Midnight Graphite Translucent */
-        backdropFilter: "blur(25px)",
         padding: "0",
         ease: "none"
     }, 0);
@@ -153,21 +151,15 @@ function initParallax() {
     });
 }
 
-// 1.5 Scroll-Driven Luxury Showcase Animation
+// 1.5 Scroll-Driven Luxury Showcase Animation (Premium 3D Carousel)
 function initScrollStoryAnimation() {
     const section = document.querySelector('.scroll-story-section');
-    const cardCenter = document.querySelector('.card-center');
-    const cardLeftInner = document.querySelector('.card-left-inner');
-    const cardRightInner = document.querySelector('.card-right-inner');
-    const cardLeftOuter = document.querySelector('.card-left-outer');
-    const cardRightOuter = document.querySelector('.card-right-outer');
+    const cards = gsap.utils.toArray('.scroll-card');
+    const wrapper = document.querySelector('.scroll-cards-wrapper');
+    const indicators = document.querySelectorAll('.indicator');
 
-    if (!section || !cardCenter || !cardLeftInner || !cardRightInner) return;
+    if (!section || cards.length === 0) return;
 
-    const sideCards = [cardLeftOuter, cardLeftInner, cardRightInner, cardRightOuter];
-    const allCards = [cardCenter, ...sideCards];
-
-    // Responsive Animation Logic
     let mm = gsap.matchMedia();
 
     mm.add({
@@ -176,109 +168,120 @@ function initScrollStoryAnimation() {
     }, (context) => {
         let { isDesktop, isMobile } = context.conditions;
 
-        // 1. Initial State: Stacking cards behind center
-        gsap.set(allCards, { xPercent: -50, yPercent: -50 });
-        
-        gsap.set(sideCards, {
-            x: 0,
-            y: 0,
-            z: -300,
-            opacity: 0, // Keep clean start
-            scale: 0.8,
-            rotateY: 0,
-            force3D: true // Enable Hardware Acceleration
+        // Initial setup for cards
+        gsap.set(cards, {
+            xPercent: -50,
+            yPercent: -50,
+            opacity: 0,
+            scale: isDesktop ? 0.8 : 0.6,
+            z: -1000,
+            rotateY: isDesktop ? 15 : 10,
+            filter: "blur(15px)",
+            transformOrigin: "center center",
+            pointerEvents: "none"
         });
 
-        gsap.set(cardCenter, { z: 50, scale: 1, opacity: 1, x: 0, y: 0, force3D: true });
+        // Add slight slant to wrapper (reduced on mobile)
+        gsap.set(wrapper, {
+            rotateX: isDesktop ? 5 : 2,
+            rotateY: isDesktop ? -10 : -5,
+            transformStyle: "preserve-3d"
+        });
 
-        // 2. Scroll Animation Timeline (Scroll DOWN = Cards Spread OUT Widely)
         const tl = gsap.timeline({
             scrollTrigger: {
                 trigger: section,
                 start: "top top",
                 end: "bottom bottom",
-                scrub: 1.2, /* Slightly more 'drag' for reliability */
+                scrub: 1.2,
                 pin: ".scroll-sticky-container",
-                invalidateOnRefresh: true, 
-                pinSpacing: false
+                pinSpacing: false,
+                invalidateOnRefresh: true,
             }
         });
 
-        // Spread Ease
-        const spreadEase = "power2.out";
+        // Current transition logic
+        cards.forEach((card, i) => {
+            const isLast = i === cards.length - 1;
 
-        // Center card scales up slightly for focus
-        tl.to(cardCenter, { scale: 1.15, z: 250, duration: 1 }, 0);
+            // Current Card focus
+            tl.to(card, {
+                opacity: 1,
+                scale: isDesktop ? 1.15 : 1.05,
+                z: isDesktop ? 150 : 50,
+                rotateY: 0,
+                filter: "blur(0px)",
+                x: "0%",
+                duration: 1,
+                ease: "power2.inOut",
+                pointerEvents: "auto",
+                onStart: () => {
+                    card.style.zIndex = 100;
+                    indicators.forEach((dot, idx) => dot.classList.toggle('active', idx === i));
+                },
+                onReverseComplete: () => {
+                    card.style.zIndex = cards.length - i;
+                    if (i > 0) indicators.forEach((dot, idx) => dot.classList.toggle('active', idx === i - 1));
+                }
+            }, i);
 
-        // Inner side cards spread (increased wide values as requested)
-        tl.to(cardLeftInner, {
-            x: isDesktop ? '-65%' : '-55%',
-            rotateY: isDesktop ? 18 : 14,
-            z: 0,
-            opacity: 1,
-            scale: isDesktop ? 1 : 0.95,
-            ease: spreadEase
-        }, 0.1);
+            // Previous Card fade out left
+            if (i > 0) {
+                tl.to(cards[i - 1], {
+                    opacity: 0.3,
+                    scale: isDesktop ? 0.85 : 0.7,
+                    z: -400,
+                    rotateY: isDesktop ? 35 : 25,
+                    x: isDesktop ? "-110%" : "-80%",
+                    filter: "blur(10px)",
+                    duration: 1,
+                    ease: "power2.inOut",
+                    pointerEvents: "none",
+                    onStart: () => cards[i-1].style.zIndex = 1
+                }, i);
+            }
 
-        tl.to(cardRightInner, {
-            x: isDesktop ? '65%' : '55%',
-            rotateY: isDesktop ? -18 : -14,
-            z: 0,
-            opacity: 1,
-            scale: isDesktop ? 1 : 0.95,
-            ease: spreadEase
-        }, 0.1);
+            // Next Card peek from right
+            if (i < cards.length - 1) {
+                tl.fromTo(cards[i + 1], {
+                    opacity: 0,
+                    x: isDesktop ? "110%" : "80%",
+                    z: -400,
+                    rotateY: isDesktop ? -35 : -25,
+                    filter: "blur(10px)",
+                    scale: isDesktop ? 0.85 : 0.7
+                }, {
+                    opacity: 0.4,
+                    x: isDesktop ? "110%" : "80%",
+                    z: -400,
+                    rotateY: isDesktop ? -35 : -25,
+                    filter: "blur(10px)",
+                    scale: isDesktop ? 0.85 : 0.7,
+                    duration: 1,
+                    ease: "power2.inOut"
+                }, i);
+            }
+            
+            if (!isLast) {
+                tl.to({}, { duration: 0.5 }); // Buffer pause
+            }
+        });
 
-        // Outer side cards spread even further (Extra wide spread)
-        tl.to(cardLeftOuter, {
-            x: isDesktop ? '-140%' : '-125%',
-            rotateY: isDesktop ? 30 : 25,
-            z: -100,
-            opacity: 0.9,
-            scale: isDesktop ? 0.9 : 0.85,
-            ease: spreadEase
-        }, 0.2);
-
-        tl.to(cardRightOuter, {
-            x: isDesktop ? '140%' : '125%',
-            rotateY: isDesktop ? -30 : -25,
-            z: -100,
-            opacity: 0.9,
-            scale: isDesktop ? 0.9 : 0.85,
-            ease: spreadEase
-        }, 0.2);
-
-        // Ambient Glow Drifting (Matching Dark Theme)
+        // Ambient background
         const glows = document.querySelectorAll('.ambient-glow');
         glows.forEach((glow, index) => {
             tl.to(glow, {
-                x: index % 2 === 0 ? (isDesktop ? '35%' : '20%') : (isDesktop ? '-35%' : '-20%'),
-                y: index % 2 === 0 ? '20%' : '-20%',
-                scale: isDesktop ? 1.5 : 1.2,
-                duration: 1,
+                x: index % 2 === 0 ? "35%" : "-35%",
+                y: index % 2 === 0 ? "15%" : "-15%",
+                opacity: 0.12,
+                duration: cards.length,
                 ease: "none"
             }, 0);
         });
-        
-        // Final refresh to ensure mobile layout sync
-        ScrollTrigger.refresh();
 
         return () => {
-            // Cleanup logic if needed
+            // Clean up
         };
-    });
-
-    // 3. Subtle Floating "Bouncing" Animation (Persistent)
-    allCards.forEach((card, index) => {
-        if (card) {
-            gsap.to(card, {
-                y: "-=20",
-                duration: 2.5 + (index * 0.3),
-                repeat: -1,
-                yoyo: true,
-                ease: "sine.inOut"
-            });
-        }
     });
 }
 
