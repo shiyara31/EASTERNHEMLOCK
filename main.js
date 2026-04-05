@@ -4,15 +4,14 @@ gsap.config({ force3D: true, nullTargetWarn: false }); // Enable GPU acceleratio
 
 // Initialize Lenis for Smooth Scrolling
 const lenis = new Lenis({
-    duration: 1.2, /* Slightly faster for snappier feel */
+    duration: 1.2,
     easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)), 
     orientation: 'vertical',
     gestureOrientation: 'vertical',
     smoothWheel: true,
-    lerp: 0.1, /* Snappier response */
+    lerp: 0.07, /* Enhanced buttery smooth response */
     wheelMultiplier: 1,
-    smoothTouch: true, /* Enabled: Pure smooth momentum-based touch scrolling for mobile */
-    touchMultiplier: 1.5,
+    smoothTouch: false, /* Disabled for better native performance on mobile */
     infinite: false,
 });
 
@@ -21,6 +20,24 @@ gsap.ticker.add((time) => {
     lenis.raf(time * 1000);
 });
 gsap.ticker.lagSmoothing(0);
+
+// Smooth Anchor Scroll Logic
+document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+    anchor.addEventListener('click', function(e) {
+        const href = this.getAttribute('href');
+        if (href === '#') return;
+        
+        const target = document.querySelector(href);
+        if (target) {
+            e.preventDefault();
+            lenis.scrollTo(target, {
+                offset: -50,
+                duration: 1.5,
+                easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t))
+            });
+        }
+    });
+});
 
 // Cinematic Intro Branding Animation
 function initCinematicIntro() {

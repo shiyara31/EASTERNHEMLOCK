@@ -4,7 +4,7 @@
 */
 
 html {
-    scroll-behavior: initial !important; /* Final safety kickstart for smooth scroll */
+    scroll-behavior: auto !important; /* Reverting to auto - Lenis takes over the engine */
 }
 
 :root {
