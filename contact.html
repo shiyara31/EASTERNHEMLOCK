@@ -17,14 +17,22 @@
     <div class="cursor-dot"></div>
     <div class="cursor-ring"></div>
 
-    <nav class="nav-minimal">
+    <nav class="nav-minimal nav-dark-elements">
+
         <div class="nav-container">
             <div class="nav-left">
+                <a href="index.html" class="back-link" style="margin-right: 25px;">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                        <path d="M19 12H5M5 12L12 19M5 12L12 5"/>
+                    </svg>
+                    <span>Back</span>
+                </a>
                 <a href="index.html" class="logo" style="text-decoration:none; color:inherit;">
                 <img src="assets/logo_emblem.png" alt="EH Logo" class="brand-icon" width="55" height="55" style="object-fit: contain;  ">
                 <span>EASTERN HEMLOCK</span>
             </a>
             </div>
+
 
             <div class="nav-right" style="display:flex; align-items:center;">
                 <button class="hamburger" aria-label="Open Menu" style="margin-right: 30px !important;">
@@ -119,34 +127,34 @@
                 
                 <!-- Left Form Column -->
                 <div class="form-col" style="flex: 2.5; padding: 60px; border-right: 1px solid #f0f0f0; min-width: 300px;">
-                    <form action="#" method="POST" class="luxury-form">
+                    <form action="https://formspree.io/f/mbdpqwbk" method="POST" class="luxury-form">
                         
                         <div style="display:flex; gap: 30px; margin-bottom: 30px; flex-wrap:wrap;">
                             <div style="flex:1; min-width:200px;">
                                 <label style="display:block; font-size: 0.8rem; letter-spacing: 2px; color: #333; margin-bottom: 10px; text-transform:uppercase;">First Name</label>
-                                <input type="text" placeholder="Your first name" style="width:100%; padding: 15px 20px; border: 1px solid #e5e5e5; background: #fff; font-family: 'Inter', sans-serif; font-size:1rem; border-radius:4px; outline:none;">
+                                <input type="text" name="first_name" placeholder="Your first name" style="width:100%; padding: 15px 20px; border: 1px solid #e5e5e5; background: #fff; font-family: 'Inter', sans-serif; font-size:1rem; border-radius:4px; outline:none;" required>
                             </div>
                             <div style="flex:1; min-width:200px;">
                                 <label style="display:block; font-size: 0.8rem; letter-spacing: 2px; color: #333; margin-bottom: 10px; text-transform:uppercase;">Last Name</label>
-                                <input type="text" placeholder="Your last name" style="width:100%; padding: 15px 20px; border: 1px solid #e5e5e5; background: #fff; font-family: 'Inter', sans-serif; font-size:1rem; border-radius:4px; outline:none;">
+                                <input type="text" name="last_name" placeholder="Your last name" style="width:100%; padding: 15px 20px; border: 1px solid #e5e5e5; background: #fff; font-family: 'Inter', sans-serif; font-size:1rem; border-radius:4px; outline:none;" required>
                             </div>
                         </div>
 
                         <div style="display:flex; gap: 30px; margin-bottom: 30px; flex-wrap:wrap;">
                             <div style="flex:1; min-width:200px;">
                                 <label style="display:block; font-size: 0.8rem; letter-spacing: 2px; color: #333; margin-bottom: 10px; text-transform:uppercase;">Email Address</label>
-                                <input type="email" placeholder="Your email" style="width:100%; padding: 15px 20px; border: 1px solid #e5e5e5; background: #fff; font-family: 'Inter', sans-serif; font-size:1rem; border-radius:4px; outline:none;">
+                                <input type="email" name="email" placeholder="Your email" style="width:100%; padding: 15px 20px; border: 1px solid #e5e5e5; background: #fff; font-family: 'Inter', sans-serif; font-size:1rem; border-radius:4px; outline:none;" required>
                             </div>
                             <div style="flex:1; min-width:200px;">
                                 <label style="display:block; font-size: 0.8rem; letter-spacing: 2px; color: #333; margin-bottom: 10px; text-transform:uppercase;">Phone/WhatsApp</label>
-                                <input type="tel" placeholder="+971" style="width:100%; padding: 15px 20px; border: 1px solid #e5e5e5; background: #fff; font-family: 'Inter', sans-serif; font-size:1rem; border-radius:4px; outline:none;">
+                                <input type="tel" name="phone" placeholder="+971" style="width:100%; padding: 15px 20px; border: 1px solid #e5e5e5; background: #fff; font-family: 'Inter', sans-serif; font-size:1rem; border-radius:4px; outline:none;" required>
                             </div>
                         </div>
 
                         <div style="display:flex; gap: 30px; margin-bottom: 30px;">
                             <div style="flex:1;">
                                 <label style="display:block; font-size: 0.8rem; letter-spacing: 2px; color: #333; margin-bottom: 10px; text-transform:uppercase;">Select Inquiry Type</label>
-                                <select style="width:100%; padding: 15px 20px; border: 1px solid #e5e5e5; background: #fff; font-family: 'Inter', sans-serif; font-size:1rem; border-radius:4px; outline:none; appearance: none; cursor:pointer;">
+                                <select name="inquiry_type" style="width:100%; padding: 15px 20px; border: 1px solid #e5e5e5; background: #fff; font-family: 'Inter', sans-serif; font-size:1rem; border-radius:4px; outline:none; appearance: none; cursor:pointer;">
                                     <option>Home Improvement</option>
                                     <option>Outdoor works</option>
                                     <option>Maintenance</option>
@@ -157,8 +165,9 @@
 
                         <div style="margin-bottom: 40px;">
                             <label style="display:block; font-size: 0.8rem; letter-spacing: 2px; color: #333; margin-bottom: 10px; text-transform:uppercase;">Brief Project Description</label>
-                            <textarea placeholder="Tell us about your space..." rows="5" style="width:100%; padding: 15px 20px; border: 1px solid #e5e5e5; background: #fff; font-family: 'Inter', sans-serif; font-size:1rem; border-radius:4px; outline:none; resize:vertical;"></textarea>
+                            <textarea name="message" placeholder="Tell us about your space..." rows="5" style="width:100%; padding: 15px 20px; border: 1px solid #e5e5e5; background: #fff; font-family: 'Inter', sans-serif; font-size:1rem; border-radius:4px; outline:none; resize:vertical;"></textarea>
                         </div>
+
 
                         <button type="submit" style="background:#0a0a0a; color:#fff; border:none; padding:18px 50px; font-family:'Inter',sans-serif; font-size:1rem; letter-spacing:2px; text-transform:uppercase; border-radius:50px; cursor:pointer;" onMouseOver="this.style.background='#333'" onMouseOut="this.style.background='#0a0a0a'">
                             Submit
@@ -205,7 +214,8 @@
                     <img src="assets/logo_emblem.png" alt="EH Logo" class="brand-icon" width="45" height="45" style="object-fit: contain; ">
                     <span>EASTERN HEMLOCK</span>
                 </div>
-                <p>&copy; 2026 Eastern Hemlock.<br>All rights reserved.</p>
+                <p>&copy; 2026 Eastern Hemlock<br>All rights reserved</p>
+
             </div>
             <div class="footer-developer" style="margin-top: 30px; text-align: center; border-top: 1px solid rgba(255,255,255,0.05); padding-top: 20px;">
                 <a href="https://www.instagram.com/intellex.web?igsh=MWZyenU0bWc3M2RxOQ==" target="_blank" style="text-decoration: none; color: rgba(255,255,255,0.4); font-size: 0.7rem; letter-spacing: 3px; text-transform: uppercase; display: inline-flex; align-items: center; gap: 10px; transition: color 0.3s;" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='rgba(255,255,255,0.4)'">

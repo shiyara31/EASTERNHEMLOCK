@@ -21,6 +21,17 @@ gsap.ticker.add((time) => {
 });
 gsap.ticker.lagSmoothing(0);
 
+// Toggle scrolled class for navigation visibility
+lenis.on('scroll', ({ scroll }) => {
+    const nav = document.querySelector('.nav-minimal');
+    if (scroll > 50) {
+        nav.classList.add('scrolled');
+    } else {
+        nav.classList.remove('scrolled');
+    }
+});
+
+
 // Smooth Anchor Scroll Logic
 document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     anchor.addEventListener('click', function(e) {

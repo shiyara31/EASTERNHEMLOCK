@@ -16,14 +16,22 @@
     <div class="noise-overlay"></div>
 
     <!-- Navigation -->
-    <nav class="nav-minimal">
+    <nav class="nav-minimal nav-dark-elements">
+
         <div class="nav-container">
             <div class="nav-left">
+                <a href="index.html" class="back-link" style="margin-right: 25px;">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                        <path d="M19 12H5M5 12L12 19M5 12L12 5"/>
+                    </svg>
+                    <span>Back</span>
+                </a>
                 <a href="index.html" class="logo" style="text-decoration:none; color:inherit;">
                 <img src="assets/logo_emblem.png" alt="EH Logo" class="brand-icon" width="55" height="55" style="object-fit: contain; ">
                 <span>EASTERN HEMLOCK</span>
             </a>
             </div>
+
 
             <div class="nav-right" style="display:flex; align-items:center;">
                 <button class="hamburger" aria-label="Open Menu" style="margin-right: 30px !important;">
@@ -116,41 +124,43 @@
     <section class="careers-form-section section-spaced bg-black">
         <div class="container">
             <div class="form-container fade-slide-up">
-                <form action="mailto:hello@easternhemlock.ae" method="POST" enctype="multipart/form-data" class="luxury-form">
-                    <div class="form-group">
-                        <label>Full Name</label>
-                        <input type="text" name="name" placeholder="Your Name" required>
-                    </div>
-                    <div class="form-group">
-                        <label>Email Address</label>
-                        <input type="email" name="email" placeholder="email@example.com" style="text-transform: lowercase !important;" required>
-                    </div>
-                    <div class="form-group">
-                        <label>Phone Number</label>
-                        <input type="tel" name="phone" placeholder="+971 00 000 0000" required>
-                    </div>
-                    <div class="form-group">
-                        <label>Position Applied For</label>
-                        <input type="text" name="position" placeholder="e.g. Lead Architect" required>
-                    </div>
-                    <div class="form-group full-width">
-                        <label>Message / Cover Letter</label>
-                        <textarea rows="5" placeholder="Tell us about your passion..."></textarea>
-                    </div>
-                    <div class="form-group full-width">
-                        <label>Resume / CV upload</label>
-                        <div class="file-upload">
-                            <input type="file" id="cv-upload" style="display:none;" required>
-                            <label for="cv-upload" style="cursor:pointer; color: var(--white);">
-                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" style="margin-bottom: 10px;"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg>
-                                <br>Click or drag your CV here to upload
-                            </label>
+                    <form action="https://formspree.io/f/mbdpqwbk" method="POST" enctype="multipart/form-data" class="luxury-form">
+                        <div class="form-group">
+                            <label>Full Name</label>
+                            <input type="text" name="name" placeholder="Your Name" required>
                         </div>
-                    </div>
-                    <div class="form-group full-width" style="margin-top: 20px;">
-                        <button type="submit" class="btn btn-primary" style="width: 100%;">SUBMIT APPLICATION</button>
-                    </div>
-                </form>
+                        <div class="form-group">
+                            <label>Email Address</label>
+                            <input type="email" name="email" placeholder="email@example.com" style="text-transform: lowercase !important;" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Phone Number</label>
+                            <input type="tel" name="phone" placeholder="+971 00 000 0000" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Position Applied For</label>
+                            <input type="text" name="position" placeholder="e.g. Lead Architect" required>
+                        </div>
+                        <div class="form-group full-width">
+                            <label>Message / Cover Letter</label>
+                            <textarea name="message" rows="5" placeholder="Tell us about your passion..."></textarea>
+                        </div>
+                        <div class="form-group full-width">
+                            <label>Resume / CV upload</label>
+                            <div class="file-upload">
+                                <input type="file" id="cv-upload" name="upload" style="display:none;" required>
+                                <label for="cv-upload" style="cursor:pointer; color: var(--white);">
+                                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" style="margin-bottom: 10px;"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg>
+                                    <br><span id="file-label-text">Click or drag your CV here to upload</span>
+                                </label>
+                            </div>
+                        </div>
+                        <div class="form-group full-width" style="margin-top: 20px;">
+                            <button type="submit" class="btn btn-primary" style="width: 100%;">SUBMIT APPLICATION</button>
+                        </div>
+                    </form>
+
+
             </div>
         </div>
     </section>
@@ -163,7 +173,8 @@
                     <img src="assets/logo_emblem.png" alt="EH Logo" class="brand-icon" width="45" height="45" style="object-fit: contain; ">
                     <span>EASTERN HEMLOCK</span>
                 </div>
-                <p>&copy; 2026 Eastern Hemlock.<br>All rights reserved.</p>
+                <p>&copy; 2026 Eastern Hemlock<br>All rights reserved</p>
+
             </div>
             <div class="footer-developer" style="margin-top: 30px; text-align: center; border-top: 1px solid rgba(255,255,255,0.05); padding-top: 20px;">
                 <a href="https://www.instagram.com/intellex.web?igsh=MWZyenU0bWc3M2RxOQ==" target="_blank" style="text-decoration: none; color: rgba(255,255,255,0.4); font-size: 0.7rem; letter-spacing: 3px; text-transform: uppercase; display: inline-flex; align-items: center; gap: 10px; transition: color 0.3s;" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='rgba(255,255,255,0.4)'">
@@ -175,6 +186,14 @@
     </section>
 
     <script src="main.js"></script>
+    <script>
+        // Update file upload label with filename
+        document.getElementById('cv-upload').addEventListener('change', function(e) {
+            const fileName = e.target.files[0] ? e.target.files[0].name : "Click or drag your CV here to upload";
+            document.getElementById('file-label-text').textContent = fileName;
+        });
+    </script>
+
     <!-- WhatsApp Floating Button -->
     <a href="https://wa.me/9718004365625" class="whatsapp-btn" target="_blank" aria-label="Chat on WhatsApp">
         <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.414 0 .018 5.393 0 12.03c0 2.123.553 4.197 1.605 6.046L0 24l6.117-1.605A11.803 11.803 0 0012.043 24h.008c6.635 0 12.03-5.393 12.033-12.03a11.75 11.75 0 00-3.518-8.484l-.001-.001z"/></svg>
