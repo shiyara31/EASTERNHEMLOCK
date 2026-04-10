@@ -1,0 +1,6 @@
+User-agent: *
+Allow: /
+Disallow: /dashboard.html
+Disallow: /index_backup.html
+
+Sitemap: https://easternhemlock.ae/sitemap.xml
